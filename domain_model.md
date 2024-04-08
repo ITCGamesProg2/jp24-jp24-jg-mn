@@ -3,6 +3,7 @@
 
 
 classDiagram
+
     class Player {
         - positionX: int
         - positionY: int
