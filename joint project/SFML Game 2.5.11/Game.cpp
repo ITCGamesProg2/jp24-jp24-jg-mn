@@ -11,7 +11,8 @@ Game::Game() :
 	m_exitGame{false}, //when true game will exit
 	m_frameDuration(0.2f),
 	m_currentFrame(0),
-	m_gameState(GameState::MainMenu)
+	m_gameState(GameState::MainMenu),
+	m_playerCharacter(PlayerCharacter::None)
 {
 	setupFontAndText(); // load font 
 	setupSprite(); // load texture
@@ -54,20 +55,34 @@ void Game::processEvents()
 		{
 			m_exitGame = true;
 		}
-		else if (newEvent.type == sf::Event::MouseButtonPressed)
-		{
-			if (newEvent.mouseButton.button == sf::Mouse::Left)
-			{
-				// Check if the mouse click is on the play button
-				if (m_gameState == GameState::MainMenu &&
-					m_playButtonSprite.getGlobalBounds().contains(sf::Vector2f(newEvent.mouseButton.x, newEvent.mouseButton.y)))
-				{
-					m_gameState = GameState::Playing; // Switch to Playing state
-				}
-			}
-		}
-
-	}
+		else if (m_gameState == GameState::MainMenu)
+        {
+            if (newEvent.type == sf::Event::KeyPressed)
+            {
+                if (newEvent.key.code == sf::Keyboard::Num1)
+                {
+                    m_playerCharacter = PlayerCharacter::Crab;
+                }
+                else if (newEvent.key.code == sf::Keyboard::Num2)
+                {
+                    m_playerCharacter = PlayerCharacter::Fox;
+                }
+            }
+            else if (newEvent.type == sf::Event::MouseButtonPressed)
+            {
+                if (newEvent.mouseButton.button == sf::Mouse::Left)
+                {
+                    if (m_playButtonSprite.getGlobalBounds().contains(sf::Vector2f(newEvent.mouseButton.x, newEvent.mouseButton.y)))
+                    {
+                        if (m_playerCharacter != PlayerCharacter::None)
+                        {
+                            m_gameState = GameState::Playing;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 
@@ -103,6 +118,7 @@ void Game::update(sf::Time t_deltaTime)
 	}
 
 	m_crabSprite.setPosition(m_playerPosition);
+	m_foxSprite.setPosition(m_playerPosition);
 
 	updateAnimation();
 }
@@ -134,10 +150,19 @@ void Game::render()
 	if (m_gameState == GameState::MainMenu)
 	{
 		m_window.draw(m_playButtonSprite);
+		m_window.draw(m_crabSprite);
+		m_window.draw(m_foxSprite);
 	}
 	else if (m_gameState == GameState::Playing)
 	{
-		m_window.draw(m_crabSprite);
+		if (m_playerCharacter == PlayerCharacter::Crab)
+		{
+			m_window.draw(m_crabSprite);
+		}
+		else if (m_playerCharacter == PlayerCharacter::Fox)
+		{
+			m_window.draw(m_foxSprite);
+		}
 	}
 	m_window.display();
 }
@@ -182,6 +207,14 @@ void Game::setupSprite()
 	m_crabSprite.setTextureRect(initialFrameRect);
 	m_crabSprite.setPosition(40.0f, 40.0f); 
 	m_crabSprite.setScale(3.0f, 3.0f); 
+
+	if (!m_foxTexture.loadFromFile("ASSETS\\IMAGES\\fox.png"))
+	{
+		std::cout << "Problem loading fox sprite" << std::endl;
+	}
+	m_foxSprite.setTexture(m_foxTexture);
+	m_foxSprite.setPosition(200.0f, 40.0f); 
+	m_foxSprite.setScale(sf::Vector2f(3, 3));
 
 	if (!m_playButtonTexture.loadFromFile("ASSETS\\IMAGES\\play.png"))
 	{

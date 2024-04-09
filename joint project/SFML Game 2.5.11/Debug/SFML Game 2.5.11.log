@@ -1,10 +1,10 @@
 ﻿  Game.cpp
-C:\Users\Mony\Desktop\project\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(63,109): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\Mony\Desktop\project\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(75,128): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\Mony\Desktop\project\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(63,85): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\Mony\Desktop\project\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(75,104): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
           with
           [
               T=float

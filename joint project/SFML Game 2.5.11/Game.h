@@ -19,7 +19,14 @@ private:
 		Playing
 	};
 
+	enum class PlayerCharacter {
+		None,  
+		Crab,
+		Fox
+	};
+
 	GameState m_gameState;
+	PlayerCharacter m_playerCharacter;
 
 	void processEvents();
 	void processKeys(sf::Event t_event);
@@ -40,6 +47,9 @@ private:
 
 	sf::Texture m_crabTexture;
 	sf::Sprite m_crabSprite;
+
+	sf::Texture m_foxTexture;
+	sf::Sprite m_foxSprite;
 
 	sf::Vector2f m_playerPosition;
 
