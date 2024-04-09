@@ -1,0 +1,166 @@
+/// @author Monika Nusi and katrina Gorska
+/// @date 09/04/2024
+
+
+#include "Game.h"
+#include <iostream>
+
+
+Game::Game() :
+	m_window{ sf::VideoMode{ 800U, 600U, 32U }, "SFML Game" },
+	m_exitGame{false}, //when true game will exit
+	m_frameDuration(0.2f),
+	m_currentFrame(0)
+{
+	setupFontAndText(); // load font 
+	setupSprite(); // load texture
+}
+
+Game::~Game()
+{
+}
+
+
+void Game::run()
+{	
+	sf::Clock clock;
+	sf::Time timeSinceLastUpdate = sf::Time::Zero;
+	const float fps{ 60.0f };
+	sf::Time timePerFrame = sf::seconds(1.0f / fps); // 60 fps
+	while (m_window.isOpen())
+	{
+		processEvents(); // as many as possible
+		timeSinceLastUpdate += clock.restart();
+		while (timeSinceLastUpdate > timePerFrame)
+		{
+			timeSinceLastUpdate -= timePerFrame;
+			processEvents(); // at least 60 fps
+			update(timePerFrame); //60 fps
+		}
+		render(); // as many as possible
+	}
+}
+
+void Game::processEvents()
+{
+	sf::Event newEvent;
+	while (m_window.pollEvent(newEvent))
+	{
+		if ( sf::Event::Closed == newEvent.type) // window message
+		{
+			m_exitGame = true;
+		}
+		if (sf::Event::KeyPressed == newEvent.type) //user pressed a key
+		{
+			processKeys(newEvent);
+		}
+	}
+}
+
+
+void Game::processKeys(sf::Event t_event)
+{
+	if (sf::Keyboard::Escape == t_event.key.code)
+	{
+		m_exitGame = true;
+	}
+}
+
+
+void Game::update(sf::Time t_deltaTime)
+{
+	if (m_exitGame)
+	{
+		m_window.close();
+	}
+
+	const float movementSpeed = 2.0f; 
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+		m_playerPosition.y -= movementSpeed;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+		m_playerPosition.y += movementSpeed;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+		m_playerPosition.x -= movementSpeed;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+		m_playerPosition.x += movementSpeed;
+	}
+
+	m_crabSprite.setPosition(m_playerPosition);
+
+	updateAnimation();
+}
+
+void Game::updateAnimation() 
+{
+	if (m_animationClock.getElapsedTime().asSeconds() >= m_frameDuration)
+	{
+		m_animationClock.restart(); 
+
+		
+		m_currentFrame = (m_currentFrame + 1) % 4;
+
+		int frameWidth = 16;
+		int frameHeight = 16;
+		int framesPerRow = 4;
+		int frameX = (m_currentFrame % framesPerRow) * frameWidth;
+		int frameY = (m_currentFrame / framesPerRow) * frameHeight;
+
+		sf::IntRect frameRect(frameX, frameY, frameWidth, frameHeight);
+		m_crabSprite.setTextureRect(frameRect);
+	}
+}
+
+void Game::render()
+{
+	m_window.clear(sf::Color::White);
+
+	m_window.draw(m_crabSprite);
+	m_window.display();
+}
+
+
+void Game::setupFontAndText()
+{
+	if (!m_ArialBlackfont.loadFromFile("ASSETS\\FONTS\\ariblk.ttf"))
+	{
+		std::cout << "problem loading arial black font" << std::endl;
+	}
+	m_welcomeMessage.setFont(m_ArialBlackfont);
+	m_welcomeMessage.setString("SFML Game");
+	m_welcomeMessage.setStyle(sf::Text::Underlined | sf::Text::Italic | sf::Text::Bold);
+	m_welcomeMessage.setPosition(40.0f, 40.0f);
+	m_welcomeMessage.setCharacterSize(80U);
+	m_welcomeMessage.setOutlineColor(sf::Color::Red);
+	m_welcomeMessage.setFillColor(sf::Color::Black);
+	m_welcomeMessage.setOutlineThickness(3.0f);
+
+}
+
+
+void Game::setupSprite()
+{
+	if (!m_crabTexture.loadFromFile("ASSETS\\IMAGES\\crab.png"))
+	{
+		std::cout << "problem loading sprite" << std::endl;
+	}
+	m_crabSprite.setTexture(m_crabTexture);
+	m_crabSprite.setPosition(40.0f, 40.0f);
+	m_crabSprite.setScale(sf::Vector2f(3, 3));
+
+	if (!m_crabTexture.loadFromFile("ASSETS\\IMAGES\\crabSpritesheet.png"))
+	{
+		std::cout << "Problem loading spritesheet" << std::endl;
+		return;
+	}
+	sf::IntRect initialFrameRect(0, 0, 16, 16);
+
+	m_crabSprite.setTexture(m_crabTexture);
+	m_crabSprite.setTextureRect(initialFrameRect);
+	m_crabSprite.setPosition(40.0f, 40.0f); 
+	m_crabSprite.setScale(3.0f, 3.0f); 
+
+}
