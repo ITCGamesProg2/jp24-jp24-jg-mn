@@ -14,6 +14,13 @@ public:
 
 private:
 
+	enum class GameState {
+		MainMenu,
+		Playing
+	};
+
+	GameState m_gameState;
+
 	void processEvents();
 	void processKeys(sf::Event t_event);
 	void update(sf::Time t_deltaTime);
@@ -27,6 +34,9 @@ private:
 	sf::Clock m_animationClock;
 	float m_frameDuration;
 	int m_currentFrame;
+
+	sf::Texture m_playButtonTexture;
+	sf::Sprite m_playButtonSprite;
 
 	sf::Texture m_crabTexture;
 	sf::Sprite m_crabSprite;

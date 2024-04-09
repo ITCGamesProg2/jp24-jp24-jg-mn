@@ -10,7 +10,8 @@ Game::Game() :
 	m_window{ sf::VideoMode{ 800U, 600U, 32U }, "SFML Game" },
 	m_exitGame{false}, //when true game will exit
 	m_frameDuration(0.2f),
-	m_currentFrame(0)
+	m_currentFrame(0),
+	m_gameState(GameState::MainMenu)
 {
 	setupFontAndText(); // load font 
 	setupSprite(); // load texture
@@ -35,7 +36,10 @@ void Game::run()
 		{
 			timeSinceLastUpdate -= timePerFrame;
 			processEvents(); // at least 60 fps
-			update(timePerFrame); //60 fps
+			if (m_gameState == GameState::Playing)
+			{
+				update(timePerFrame);
+			}
 		}
 		render(); // as many as possible
 	}
@@ -50,10 +54,19 @@ void Game::processEvents()
 		{
 			m_exitGame = true;
 		}
-		if (sf::Event::KeyPressed == newEvent.type) //user pressed a key
+		else if (newEvent.type == sf::Event::MouseButtonPressed)
 		{
-			processKeys(newEvent);
+			if (newEvent.mouseButton.button == sf::Mouse::Left)
+			{
+				// Check if the mouse click is on the play button
+				if (m_gameState == GameState::MainMenu &&
+					m_playButtonSprite.getGlobalBounds().contains(sf::Vector2f(newEvent.mouseButton.x, newEvent.mouseButton.y)))
+				{
+					m_gameState = GameState::Playing; // Switch to Playing state
+				}
+			}
 		}
+
 	}
 }
 
@@ -118,7 +131,14 @@ void Game::render()
 {
 	m_window.clear(sf::Color::White);
 
-	m_window.draw(m_crabSprite);
+	if (m_gameState == GameState::MainMenu)
+	{
+		m_window.draw(m_playButtonSprite);
+	}
+	else if (m_gameState == GameState::Playing)
+	{
+		m_window.draw(m_crabSprite);
+	}
 	m_window.display();
 }
 
@@ -162,5 +182,13 @@ void Game::setupSprite()
 	m_crabSprite.setTextureRect(initialFrameRect);
 	m_crabSprite.setPosition(40.0f, 40.0f); 
 	m_crabSprite.setScale(3.0f, 3.0f); 
+
+	if (!m_playButtonTexture.loadFromFile("ASSETS\\IMAGES\\play.png"))
+	{
+		std::cout << "Problem loading play button texture" << std::endl;
+	}
+	m_playButtonSprite.setTexture(m_playButtonTexture);
+	m_playButtonSprite.setPosition(200.0f, 250.0f);
+	m_playButtonSprite.setScale(sf::Vector2f(4, 4));
 
 }
