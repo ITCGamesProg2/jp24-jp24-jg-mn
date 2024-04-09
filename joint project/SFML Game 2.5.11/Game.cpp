@@ -140,6 +140,7 @@ void Game::updateAnimation()
 
 		sf::IntRect frameRect(frameX, frameY, frameWidth, frameHeight);
 		m_crabSprite.setTextureRect(frameRect);
+		m_foxSprite.setTextureRect(frameRect);
 	}
 }
 
@@ -208,13 +209,17 @@ void Game::setupSprite()
 	m_crabSprite.setPosition(40.0f, 40.0f); 
 	m_crabSprite.setScale(3.0f, 3.0f); 
 
-	if (!m_foxTexture.loadFromFile("ASSETS\\IMAGES\\fox.png"))
+	if (!m_foxTexture.loadFromFile("ASSETS\\IMAGES\\foxSpritesheet.png"))
 	{
-		std::cout << "Problem loading fox sprite" << std::endl;
+		std::cout << "Problem loading spritesheet" << std::endl;
+		return;
 	}
+	sf::IntRect foxFrameRect(0, 0, 16, 16);
+
 	m_foxSprite.setTexture(m_foxTexture);
-	m_foxSprite.setPosition(200.0f, 40.0f); 
-	m_foxSprite.setScale(sf::Vector2f(3, 3));
+	m_foxSprite.setTextureRect(foxFrameRect);
+	m_foxSprite.setPosition(200.0f, 40.0f);
+	m_foxSprite.setScale(3.0f, 3.0f);
 
 	if (!m_playButtonTexture.loadFromFile("ASSETS\\IMAGES\\play.png"))
 	{
