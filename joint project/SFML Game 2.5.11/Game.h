@@ -45,6 +45,9 @@ private:
 	sf::Texture m_playButtonTexture;
 	sf::Sprite m_playButtonSprite;
 
+	sf::Texture m_exitButtonTexture;
+	sf::Sprite m_exitButtonSprite;
+
 	sf::Texture m_crabTexture;
 	sf::Sprite m_crabSprite;
 

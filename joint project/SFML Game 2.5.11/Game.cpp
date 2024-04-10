@@ -42,6 +42,11 @@ void Game::run()
 				update(timePerFrame);
 			}
 		}
+		if (m_exitGame)
+		{
+			m_window.close();
+		}
+
 		render(); // as many as possible
 	}
 }
@@ -62,6 +67,12 @@ void Game::processEvents()
 				if (newEvent.mouseButton.button == sf::Mouse::Left)
 				{
 					sf::Vector2f mousePosition = sf::Vector2f(newEvent.mouseButton.x, newEvent.mouseButton.y);
+
+					if (m_exitButtonSprite.getGlobalBounds().contains(mousePosition))
+					{
+						std::cout << "Exiting Game!" << std::endl;
+						m_exitGame = true;
+					}
 
 					if (m_crabSprite.getGlobalBounds().contains(mousePosition))
 					{
@@ -98,6 +109,15 @@ void Game::processEvents()
 				else
 				{
 					m_playButtonSprite.setColor(sf::Color::White); 
+				}
+
+				if (m_exitButtonSprite.getGlobalBounds().contains(mousePosition))
+				{
+					m_exitButtonSprite.setColor(sf::Color(200, 200, 200));
+				}
+				else
+				{
+					m_exitButtonSprite.setColor(sf::Color::White);
 				}
 
 				if (m_crabSprite.getGlobalBounds().contains(mousePosition))
@@ -187,6 +207,7 @@ void Game::render()
 	if (m_gameState == GameState::MainMenu)
 	{
 		m_window.draw(m_playButtonSprite);
+		m_window.draw(m_exitButtonSprite);
 		m_window.draw(m_crabSprite);
 		m_window.draw(m_foxSprite);
 	}
@@ -264,5 +285,13 @@ void Game::setupSprite()
 	m_playButtonSprite.setTexture(m_playButtonTexture);
 	m_playButtonSprite.setPosition(200.0f, 250.0f);
 	m_playButtonSprite.setScale(sf::Vector2f(4, 4));
+
+	if (!m_exitButtonTexture.loadFromFile("ASSETS\\IMAGES\\exit.png"))
+	{
+		std::cout << "Problem loading play button texture" << std::endl;
+	}
+	m_exitButtonSprite.setTexture(m_exitButtonTexture);
+	m_exitButtonSprite.setPosition(255.0f, 350.0f);
+	m_exitButtonSprite.setScale(sf::Vector2f(4, 4));
 
 }
