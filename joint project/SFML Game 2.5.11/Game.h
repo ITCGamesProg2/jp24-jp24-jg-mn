@@ -59,6 +59,12 @@ private:
 	sf::Font font;
 	sf::Text title;
 
+	sf::Texture backgroundTexture;
+	sf::Sprite backgroundSprite;
+
+	sf::Texture gameBackgroundTexture;
+	sf::Sprite gameBackgroundSprite;
+
 	sf::RenderWindow m_window; // main SFML window
 	//sf::Font m_ArialBlackfont; // font used by message
 	sf::Text m_welcomeMessage; // text used for message on screen

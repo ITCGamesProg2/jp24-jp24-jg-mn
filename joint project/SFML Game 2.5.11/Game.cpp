@@ -206,6 +206,7 @@ void Game::render()
 
 	if (m_gameState == GameState::MainMenu)
 	{
+		m_window.draw(backgroundSprite);
 		m_window.draw(m_playButtonSprite);
 		m_window.draw(m_exitButtonSprite);
 		m_window.draw(m_crabSprite);
@@ -214,6 +215,7 @@ void Game::render()
 	}
 	else if (m_gameState == GameState::Playing)
 	{
+		m_window.draw(gameBackgroundSprite);
 		if (m_playerCharacter == PlayerCharacter::Crab)
 		{
 			m_window.draw(m_crabSprite);
@@ -235,7 +237,6 @@ void Game::setupFontAndText()
 	}
 	title.setFont(font);
 	title.setString("Wildlife Warfare");
-	//title.setStyle(sf::Text::Underlined | sf::Text::Italic | sf::Text::Bold);
 	title.setPosition(200.0f, 40.0f);
 	title.setCharacterSize(100U);
 	title.setFillColor(sf::Color::Black);
@@ -293,4 +294,17 @@ void Game::setupSprite()
 	m_exitButtonSprite.setPosition(255.0f, 350.0f);
 	m_exitButtonSprite.setScale(sf::Vector2f(4, 4));
 
+	if (!backgroundTexture.loadFromFile("ASSETS\\IMAGES\\background.jpg"))
+	{
+		std::cout << "Problem loading play button texture" << std::endl;
+	}
+	backgroundSprite.setTexture(backgroundTexture);
+	backgroundSprite.setScale(sf::Vector2f(1.7, 2.30));
+
+	if (!gameBackgroundTexture.loadFromFile("ASSETS\\IMAGES\\gameBackground.jpg"))
+	{
+		std::cout << "Problem loading play button texture" << std::endl;
+	}
+	gameBackgroundSprite.setTexture(gameBackgroundTexture);
+	gameBackgroundSprite.setScale(sf::Vector2f(1.2, 1.2));
 }
