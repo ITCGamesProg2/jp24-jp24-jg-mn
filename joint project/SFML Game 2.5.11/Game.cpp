@@ -146,7 +146,7 @@ void Game::processKeys(sf::Event t_event)
 {
 	if (sf::Keyboard::Escape == t_event.key.code)
 	{
-		m_exitGame = true;
+		m_exitGame = true; //exiting game
 	}
 }
 
