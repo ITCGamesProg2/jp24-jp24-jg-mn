@@ -2,15 +2,15 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Users\katri\OneDrive\Desktop\New folder (2)\jp24-jp24-jg-mn\joint project\Debug\Joint Project 2024.exe</FullPath>
+      <FullPath>C:\Users\Mony\Desktop\Joint Project\jp24-jp24-jg-mn\joint project\Debug\Joint Project 2024.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
-      <FullPath>C:\Users\katri\OneDrive\Desktop\New folder (2)\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\ASSETS\FONTS\ariblk.ttf</FullPath>
+      <FullPath>C:\Users\Mony\Desktop\Joint Project\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\ASSETS\FONTS\ariblk.ttf</FullPath>
     </ContentFile>
     <ContentFile>
-      <FullPath>C:\Users\katri\OneDrive\Desktop\New folder (2)\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\ASSETS\IMAGES\SFML-LOGO.png</FullPath>
+      <FullPath>C:\Users\Mony\Desktop\Joint Project\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\ASSETS\IMAGES\SFML-LOGO.png</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />
