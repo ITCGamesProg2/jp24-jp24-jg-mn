@@ -207,6 +207,7 @@ void Game::render()
 	if (m_gameState == GameState::MainMenu)
 	{
 		m_window.draw(backgroundSprite);
+		m_window.draw(m_tileSprite);
 		m_window.draw(m_playButtonSprite);
 		m_window.draw(m_exitButtonSprite);
 		m_window.draw(m_crabSprite);
@@ -246,13 +247,6 @@ void Game::setupFontAndText()
 
 void Game::setupSprite()
 {
-	if (!m_crabTexture.loadFromFile("ASSETS\\IMAGES\\crab.png"))
-	{
-		std::cout << "problem loading sprite" << std::endl;
-	}
-	m_crabSprite.setTexture(m_crabTexture);
-	m_crabSprite.setPosition(40.0f, 40.0f);
-	m_crabSprite.setScale(sf::Vector2f(3, 3));
 
 	if (!m_crabTexture.loadFromFile("ASSETS\\IMAGES\\crabSpritesheet.png"))
 	{
@@ -263,7 +257,7 @@ void Game::setupSprite()
 
 	m_crabSprite.setTexture(m_crabTexture);
 	m_crabSprite.setTextureRect(initialFrameRect);
-	m_crabSprite.setPosition(350.0f, 150.0f);
+	m_crabSprite.setPosition(310.0f, 165.0f);
 	m_crabSprite.setScale(3.0f, 3.0f);
 
 	if (!m_foxTexture.loadFromFile("ASSETS\\IMAGES\\foxSpritesheet.png"))
@@ -275,7 +269,7 @@ void Game::setupSprite()
 
 	m_foxSprite.setTexture(m_foxTexture);
 	m_foxSprite.setTextureRect(foxFrameRect);
-	m_foxSprite.setPosition(420.0f, 150.0f);
+	m_foxSprite.setPosition(385.0f, 165.0f);
 	m_foxSprite.setScale(3.0f, 3.0f);
 
 	if (!m_playButtonTexture.loadFromFile("ASSETS\\IMAGES\\play.png"))
@@ -307,4 +301,12 @@ void Game::setupSprite()
 	}
 	gameBackgroundSprite.setTexture(gameBackgroundTexture);
 	gameBackgroundSprite.setScale(sf::Vector2f(1.2, 1.2));
+
+	if (!m_tileTexture.loadFromFile("ASSETS\\IMAGES\\tile.png"))
+	{
+		std::cout << "Problem loading play button texture" << std::endl;
+	}
+	m_tileSprite.setTexture(m_tileTexture);
+	m_tileSprite.setPosition(255.0f, 130.0f);
+	m_tileSprite.setScale(sf::Vector2f(3, 3));
 }
