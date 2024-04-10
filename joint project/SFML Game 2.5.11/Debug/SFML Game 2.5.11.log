@@ -1,51 +1,26 @@
-﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (SFML Game 2.5.11.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (SFML Game 2.5.11.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   Game.cpp
-<<<<<<< HEAD
-C:\Users\Mony\Desktop\Joint Project\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(64,92): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\Mony\Desktop\Joint Project\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(64,68): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\Mony\Desktop\Joint Project\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(92,87): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\Mony\Desktop\Joint Project\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(92,65): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-  SFML Game 2.5.11.vcxproj -> C:\Users\Mony\Desktop\Joint Project\jp24-jp24-jg-mn\joint project\Debug\Joint Project 2024.exe
-=======
-C:\Users\katri\OneDrive\Desktop\Joint Project - Copy\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(75,113): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\katri\OneDrive\Desktop\Joint Project - Copy\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(75,113): warning C4244:         with
-C:\Users\katri\OneDrive\Desktop\Joint Project - Copy\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(75,113): warning C4244:         [
-C:\Users\katri\OneDrive\Desktop\Joint Project - Copy\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(75,113): warning C4244:             T=float
-C:\Users\katri\OneDrive\Desktop\Joint Project - Copy\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(75,113): warning C4244:         ]
-C:\Users\katri\OneDrive\Desktop\Joint Project - Copy\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(75,89): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\katri\OneDrive\Desktop\Joint Project - Copy\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(75,89): warning C4244:         with
-C:\Users\katri\OneDrive\Desktop\Joint Project - Copy\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(75,89): warning C4244:         [
-C:\Users\katri\OneDrive\Desktop\Joint Project - Copy\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(75,89): warning C4244:             T=float
-C:\Users\katri\OneDrive\Desktop\Joint Project - Copy\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(75,89): warning C4244:         ]
-C:\Users\katri\OneDrive\Desktop\Joint Project - Copy\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(86,129): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\katri\OneDrive\Desktop\Joint Project - Copy\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(86,129): warning C4244:         with
-C:\Users\katri\OneDrive\Desktop\Joint Project - Copy\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(86,129): warning C4244:         [
-C:\Users\katri\OneDrive\Desktop\Joint Project - Copy\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(86,129): warning C4244:             T=float
-C:\Users\katri\OneDrive\Desktop\Joint Project - Copy\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(86,129): warning C4244:         ]
-C:\Users\katri\OneDrive\Desktop\Joint Project - Copy\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(86,107): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\katri\OneDrive\Desktop\Joint Project - Copy\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(86,107): warning C4244:         with
-C:\Users\katri\OneDrive\Desktop\Joint Project - Copy\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(86,107): warning C4244:         [
-C:\Users\katri\OneDrive\Desktop\Joint Project - Copy\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(86,107): warning C4244:             T=float
-C:\Users\katri\OneDrive\Desktop\Joint Project - Copy\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(86,107): warning C4244:         ]
+C:\Users\katri\OneDrive\Desktop\PROJECT\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(64,92): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\katri\OneDrive\Desktop\PROJECT\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(64,92): warning C4244:         with
+C:\Users\katri\OneDrive\Desktop\PROJECT\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(64,92): warning C4244:         [
+C:\Users\katri\OneDrive\Desktop\PROJECT\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(64,92): warning C4244:             T=float
+C:\Users\katri\OneDrive\Desktop\PROJECT\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(64,92): warning C4244:         ]
+C:\Users\katri\OneDrive\Desktop\PROJECT\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(64,68): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\katri\OneDrive\Desktop\PROJECT\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(64,68): warning C4244:         with
+C:\Users\katri\OneDrive\Desktop\PROJECT\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(64,68): warning C4244:         [
+C:\Users\katri\OneDrive\Desktop\PROJECT\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(64,68): warning C4244:             T=float
+C:\Users\katri\OneDrive\Desktop\PROJECT\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(64,68): warning C4244:         ]
+C:\Users\katri\OneDrive\Desktop\PROJECT\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(92,87): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\katri\OneDrive\Desktop\PROJECT\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(92,87): warning C4244:         with
+C:\Users\katri\OneDrive\Desktop\PROJECT\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(92,87): warning C4244:         [
+C:\Users\katri\OneDrive\Desktop\PROJECT\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(92,87): warning C4244:             T=float
+C:\Users\katri\OneDrive\Desktop\PROJECT\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(92,87): warning C4244:         ]
+C:\Users\katri\OneDrive\Desktop\PROJECT\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(92,65): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\katri\OneDrive\Desktop\PROJECT\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(92,65): warning C4244:         with
+C:\Users\katri\OneDrive\Desktop\PROJECT\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(92,65): warning C4244:         [
+C:\Users\katri\OneDrive\Desktop\PROJECT\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(92,65): warning C4244:             T=float
+C:\Users\katri\OneDrive\Desktop\PROJECT\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(92,65): warning C4244:         ]
   main.cpp
   player.cpp
   Generating Code...
-  LINK : C:\Users\katri\OneDrive\Desktop\Joint Project - Copy\jp24-jp24-jg-mn\joint project\Debug\Joint Project 2024.exe not found or not built by the last incremental link; performing full link
-  SFML Game 2.5.11.vcxproj -> C:\Users\katri\OneDrive\Desktop\Joint Project - Copy\jp24-jp24-jg-mn\joint project\Debug\Joint Project 2024.exe
->>>>>>> ad537beb7c597d9305a86d23695eefd99e9752d7
+  SFML Game 2.5.11.vcxproj -> C:\Users\katri\OneDrive\Desktop\PROJECT\jp24-jp24-jg-mn\joint project\Debug\Joint Project 2024.exe
