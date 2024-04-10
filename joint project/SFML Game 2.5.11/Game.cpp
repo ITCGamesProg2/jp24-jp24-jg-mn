@@ -210,6 +210,7 @@ void Game::render()
 		m_window.draw(m_exitButtonSprite);
 		m_window.draw(m_crabSprite);
 		m_window.draw(m_foxSprite);
+		m_window.draw(title);
 	}
 	else if (m_gameState == GameState::Playing)
 	{
@@ -228,18 +229,16 @@ void Game::render()
 
 void Game::setupFontAndText()
 {
-	if (!m_ArialBlackfont.loadFromFile("ASSETS\\FONTS\\ariblk.ttf"))
+	if (!font.loadFromFile("ASSETS\\FONTS\\font.otf"))
 	{
 		std::cout << "problem loading arial black font" << std::endl;
 	}
-	m_welcomeMessage.setFont(m_ArialBlackfont);
-	m_welcomeMessage.setString("SFML Game");
-	m_welcomeMessage.setStyle(sf::Text::Underlined | sf::Text::Italic | sf::Text::Bold);
-	m_welcomeMessage.setPosition(40.0f, 40.0f);
-	m_welcomeMessage.setCharacterSize(80U);
-	m_welcomeMessage.setOutlineColor(sf::Color::Red);
-	m_welcomeMessage.setFillColor(sf::Color::Black);
-	m_welcomeMessage.setOutlineThickness(3.0f);
+	title.setFont(font);
+	title.setString("Wildlife Warfare");
+	//title.setStyle(sf::Text::Underlined | sf::Text::Italic | sf::Text::Bold);
+	title.setPosition(200.0f, 40.0f);
+	title.setCharacterSize(100U);
+	title.setFillColor(sf::Color::Black);
 
 }
 
@@ -263,7 +262,7 @@ void Game::setupSprite()
 
 	m_crabSprite.setTexture(m_crabTexture);
 	m_crabSprite.setTextureRect(initialFrameRect);
-	m_crabSprite.setPosition(350.0f, 40.0f);
+	m_crabSprite.setPosition(350.0f, 150.0f);
 	m_crabSprite.setScale(3.0f, 3.0f);
 
 	if (!m_foxTexture.loadFromFile("ASSETS\\IMAGES\\foxSpritesheet.png"))
@@ -275,7 +274,7 @@ void Game::setupSprite()
 
 	m_foxSprite.setTexture(m_foxTexture);
 	m_foxSprite.setTextureRect(foxFrameRect);
-	m_foxSprite.setPosition(420.0f, 40.0f);
+	m_foxSprite.setPosition(420.0f, 150.0f);
 	m_foxSprite.setScale(3.0f, 3.0f);
 
 	if (!m_playButtonTexture.loadFromFile("ASSETS\\IMAGES\\play.png"))

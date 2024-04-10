@@ -56,8 +56,11 @@ private:
 
 	sf::Vector2f m_playerPosition;
 
+	sf::Font font;
+	sf::Text title;
+
 	sf::RenderWindow m_window; // main SFML window
-	sf::Font m_ArialBlackfont; // font used by message
+	//sf::Font m_ArialBlackfont; // font used by message
 	sf::Text m_welcomeMessage; // text used for message on screen
 
 	bool m_exitGame; // control exiting game
