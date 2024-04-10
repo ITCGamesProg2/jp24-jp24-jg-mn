@@ -1,12 +1,16 @@
-﻿  Game.cpp
-C:\Users\Mony\Desktop\project\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(75,128): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-C:\Users\Mony\Desktop\project\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(75,104): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-          with
-          [
-              T=float
-          ]
-  SFML Game 2.5.11.vcxproj -> C:\Users\Mony\Desktop\project\jp24-jp24-jg-mn\joint project\Debug\SFML Game 2.5.11.exe
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (SFML Game 2.5.11.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Game.cpp
+C:\Users\katri\OneDrive\Desktop\New folder (2)\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(75,128): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\katri\OneDrive\Desktop\New folder (2)\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(75,128): warning C4244:         with
+C:\Users\katri\OneDrive\Desktop\New folder (2)\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(75,128): warning C4244:         [
+C:\Users\katri\OneDrive\Desktop\New folder (2)\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(75,128): warning C4244:             T=float
+C:\Users\katri\OneDrive\Desktop\New folder (2)\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(75,128): warning C4244:         ]
+C:\Users\katri\OneDrive\Desktop\New folder (2)\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(75,104): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\katri\OneDrive\Desktop\New folder (2)\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(75,104): warning C4244:         with
+C:\Users\katri\OneDrive\Desktop\New folder (2)\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(75,104): warning C4244:         [
+C:\Users\katri\OneDrive\Desktop\New folder (2)\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(75,104): warning C4244:             T=float
+C:\Users\katri\OneDrive\Desktop\New folder (2)\jp24-jp24-jg-mn\joint project\SFML Game 2.5.11\Game.cpp(75,104): warning C4244:         ]
+  main.cpp
+  player.cpp
+  Generating Code...
+  SFML Game 2.5.11.vcxproj -> C:\Users\katri\OneDrive\Desktop\New folder (2)\jp24-jp24-jg-mn\joint project\Debug\Joint Project 2024.exe
