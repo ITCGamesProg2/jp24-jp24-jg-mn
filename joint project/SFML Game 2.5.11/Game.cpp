@@ -57,47 +57,70 @@ void Game::processEvents()
 		}
 		else if (m_gameState == GameState::MainMenu)
 		{
-			if (newEvent.type == sf::Event::KeyPressed)
-			{
-				if (newEvent.key.code == sf::Keyboard::Num1)
-				{
-					m_playerCharacter = PlayerCharacter::Crab;
-				}
-				else if (newEvent.key.code == sf::Keyboard::Num2)
-				{
-					m_playerCharacter = PlayerCharacter::Fox;
-				}
-			}
-			else if (newEvent.type == sf::Event::MouseButtonPressed)
+			if (newEvent.type == sf::Event::MouseButtonPressed)
 			{
 				if (newEvent.mouseButton.button == sf::Mouse::Left)
 				{
-					if (m_playButtonSprite.getGlobalBounds().contains(sf::Vector2f(newEvent.mouseButton.x, newEvent.mouseButton.y)))
+					sf::Vector2f mousePosition = sf::Vector2f(newEvent.mouseButton.x, newEvent.mouseButton.y);
+
+					if (m_crabSprite.getGlobalBounds().contains(mousePosition))
+					{
+						m_playerCharacter = PlayerCharacter::Crab;
+						std::cout << "Selected Crab!" << std::endl;
+					}
+					else if (m_foxSprite.getGlobalBounds().contains(mousePosition))
+					{
+						m_playerCharacter = PlayerCharacter::Fox;
+						std::cout << "Selected Fox!" << std::endl;
+					}
+					else if (m_playButtonSprite.getGlobalBounds().contains(mousePosition))
 					{
 						if (m_playerCharacter != PlayerCharacter::None)
 						{
 							m_gameState = GameState::Playing;
+							std::cout << "Starting Game!" << std::endl;
+						}
+						else
+						{
+							std::cout << "Please select a character first!" << std::endl;
 						}
 					}
 				}
 			}
 			else if (newEvent.type == sf::Event::MouseMoved)
 			{
-				bool isMouseOverButton = m_playButtonSprite.getGlobalBounds().contains(sf::Vector2f(newEvent.mouseMove.x, newEvent.mouseMove.y));
+				sf::Vector2f mousePosition = sf::Vector2f(newEvent.mouseMove.x, newEvent.mouseMove.y);
 
-				if (isMouseOverButton)
+				if (m_playButtonSprite.getGlobalBounds().contains(mousePosition))
 				{
-					m_playButtonSprite.setColor(sf::Color(200, 200, 200));
+					m_playButtonSprite.setColor(sf::Color(200, 200, 200)); 
 				}
 				else
 				{
-					m_playButtonSprite.setColor(sf::Color::White);
+					m_playButtonSprite.setColor(sf::Color::White); 
+				}
+
+				if (m_crabSprite.getGlobalBounds().contains(mousePosition))
+				{
+					 m_crabSprite.setColor(sf::Color(200, 200, 200));
+				}
+				else
+				{
+					 m_crabSprite.setColor(sf::Color::White);
+				}
+
+				if (m_foxSprite.getGlobalBounds().contains(mousePosition))
+				{
+					 m_foxSprite.setColor(sf::Color(200, 200, 200));
+				}
+				else
+				{
+					 m_foxSprite.setColor(sf::Color::White);
 				}
 			}
 		}
 	}
 }
-
 
 void Game::processKeys(sf::Event t_event)
 {
