@@ -8,7 +8,7 @@
 
 Game::Game() :
 	m_window{ sf::VideoMode{ 800U, 600U, 32U }, "SFML Game" },
-	m_exitGame{false}, //when true game will exit
+	m_exitGame{ false }, //when true game will exit
 	m_frameDuration(0.2f),
 	m_currentFrame(0),
 	m_gameState(GameState::MainMenu),
@@ -24,7 +24,7 @@ Game::~Game()
 
 
 void Game::run()
-{	
+{
 	sf::Clock clock;
 	sf::Time timeSinceLastUpdate = sf::Time::Zero;
 	const float fps{ 60.0f };
@@ -51,38 +51,51 @@ void Game::processEvents()
 	sf::Event newEvent;
 	while (m_window.pollEvent(newEvent))
 	{
-		if ( sf::Event::Closed == newEvent.type) // window message
+		if (sf::Event::Closed == newEvent.type) // window message
 		{
 			m_exitGame = true;
 		}
 		else if (m_gameState == GameState::MainMenu)
-        {
-            if (newEvent.type == sf::Event::KeyPressed)
-            {
-                if (newEvent.key.code == sf::Keyboard::Num1)
-                {
-                    m_playerCharacter = PlayerCharacter::Crab;
-                }
-                else if (newEvent.key.code == sf::Keyboard::Num2)
-                {
-                    m_playerCharacter = PlayerCharacter::Fox;
-                }
-            }
-            else if (newEvent.type == sf::Event::MouseButtonPressed)
-            {
-                if (newEvent.mouseButton.button == sf::Mouse::Left)
-                {
-                    if (m_playButtonSprite.getGlobalBounds().contains(sf::Vector2f(newEvent.mouseButton.x, newEvent.mouseButton.y)))
-                    {
-                        if (m_playerCharacter != PlayerCharacter::None)
-                        {
-                            m_gameState = GameState::Playing;
-                        }
-                    }
-                }
-            }
-        }
-    }
+		{
+			if (newEvent.type == sf::Event::KeyPressed)
+			{
+				if (newEvent.key.code == sf::Keyboard::Num1)
+				{
+					m_playerCharacter = PlayerCharacter::Crab;
+				}
+				else if (newEvent.key.code == sf::Keyboard::Num2)
+				{
+					m_playerCharacter = PlayerCharacter::Fox;
+				}
+			}
+			else if (newEvent.type == sf::Event::MouseButtonPressed)
+			{
+				if (newEvent.mouseButton.button == sf::Mouse::Left)
+				{
+					if (m_playButtonSprite.getGlobalBounds().contains(sf::Vector2f(newEvent.mouseButton.x, newEvent.mouseButton.y)))
+					{
+						if (m_playerCharacter != PlayerCharacter::None)
+						{
+							m_gameState = GameState::Playing;
+						}
+					}
+				}
+			}
+			else if (newEvent.type == sf::Event::MouseMoved)
+			{
+				bool isMouseOverButton = m_playButtonSprite.getGlobalBounds().contains(sf::Vector2f(newEvent.mouseMove.x, newEvent.mouseMove.y));
+
+				if (isMouseOverButton)
+				{
+					m_playButtonSprite.setColor(sf::Color(200, 200, 200));
+				}
+				else
+				{
+					m_playButtonSprite.setColor(sf::Color::White);
+				}
+			}
+		}
+	}
 }
 
 
@@ -102,7 +115,7 @@ void Game::update(sf::Time t_deltaTime)
 		m_window.close();
 	}
 
-	const float movementSpeed = 2.0f; 
+	const float movementSpeed = 2.0f;
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 		m_playerPosition.y -= movementSpeed;
@@ -123,13 +136,13 @@ void Game::update(sf::Time t_deltaTime)
 	updateAnimation();
 }
 
-void Game::updateAnimation() 
+void Game::updateAnimation()
 {
 	if (m_animationClock.getElapsedTime().asSeconds() >= m_frameDuration)
 	{
-		m_animationClock.restart(); 
+		m_animationClock.restart();
 
-		
+
 		m_currentFrame = (m_currentFrame + 1) % 4;
 
 		int frameWidth = 16;
@@ -206,8 +219,8 @@ void Game::setupSprite()
 
 	m_crabSprite.setTexture(m_crabTexture);
 	m_crabSprite.setTextureRect(initialFrameRect);
-	m_crabSprite.setPosition(40.0f, 40.0f); 
-	m_crabSprite.setScale(3.0f, 3.0f); 
+	m_crabSprite.setPosition(350.0f, 40.0f);
+	m_crabSprite.setScale(3.0f, 3.0f);
 
 	if (!m_foxTexture.loadFromFile("ASSETS\\IMAGES\\foxSpritesheet.png"))
 	{
@@ -218,7 +231,7 @@ void Game::setupSprite()
 
 	m_foxSprite.setTexture(m_foxTexture);
 	m_foxSprite.setTextureRect(foxFrameRect);
-	m_foxSprite.setPosition(200.0f, 40.0f);
+	m_foxSprite.setPosition(420.0f, 40.0f);
 	m_foxSprite.setScale(3.0f, 3.0f);
 
 	if (!m_playButtonTexture.loadFromFile("ASSETS\\IMAGES\\play.png"))
