@@ -52,10 +52,10 @@ private:
 	float m_frameDuration;
 	int m_currentFrame;
 
+	std::vector<Projectile> m_projectiles;
+
 	sf::Time m_shootCooldown;
 	sf::Clock m_shootTimer;
-
-	std::vector<Projectile> m_projectiles;
 
 	sf::Texture m_playButtonTexture;
 	sf::Sprite m_playButtonSprite;
@@ -85,6 +85,10 @@ private:
 
 	sf::Texture m_tileTexture;
 	sf::Sprite m_tileSprite;
+
+	sf::Texture m_crabProjectileTexture; // Texture for crab's projectile
+	sf::Texture m_foxProjectileTexture;  // Texture for fox's projectile
+	sf::Texture m_goatProjectileTexture;
 
 
 	Rectangle rect1;

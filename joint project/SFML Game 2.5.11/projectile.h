@@ -6,7 +6,7 @@
 class Projectile
 {
 public:
-    Projectile(const sf::Vector2f& position, float angle);
+    Projectile(const sf::Vector2f& position, float angle, const sf::Texture& texture);
     ~Projectile();
 
     void update(sf::Time deltaTime);
@@ -15,9 +15,8 @@ public:
     sf::Vector2f getPosition() const;
 
 private:
-    sf::CircleShape m_shape;
+    sf::Sprite m_sprite;
     sf::Vector2f m_velocity;
-  //  std::vector<Projectile> m_projectiles;
 };
 
 #endif // PROJECTILE_HPP

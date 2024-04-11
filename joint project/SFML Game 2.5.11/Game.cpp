@@ -56,7 +56,7 @@ void Game::run()
 			m_window.close();
 		}
 
-		render(); // as many as possible
+		render();
 	}
 }
 
@@ -175,12 +175,18 @@ void Game::processEvents()
 
 void Game::shoot()
 {
-	if (m_shootTimer.getElapsedTime() >= m_shootCooldown)
+	if(m_shootTimer.getElapsedTime() >= m_shootCooldown)
 	{
-		sf::Vector2f playerCenter = m_crabSprite.getPosition();
-		sf::Vector2f aimDirection = sf::Vector2f(1.f, 0.f);
+		sf::Vector2f playerCenter = m_crabSprite.getPosition(); 
+		sf::Vector2f aimDirection = sf::Vector2f(1.f, 0.f); 
 
-		Projectile projectile(playerCenter, std::atan2(aimDirection.y, aimDirection.x));
+		
+		sf::Texture& projectileTexture = (m_playerCharacter == PlayerCharacter::Crab) ? m_crabProjectileTexture :
+			(m_playerCharacter == PlayerCharacter::Fox) ? m_foxProjectileTexture :
+			(m_playerCharacter == PlayerCharacter::Goat) ? m_goatProjectileTexture:
+			m_crabTexture;
+
+		Projectile projectile(playerCenter, std::atan2(aimDirection.y, aimDirection.x), projectileTexture);
 		m_projectiles.push_back(projectile);
 
 		m_shootTimer.restart();
@@ -371,6 +377,21 @@ void Game::setupSprite()
 	m_goatSprite.setTextureRect(goatFrameRect);
 	m_goatSprite.setPosition(440.0f, 165.0f);
 	m_goatSprite.setScale(3.0f, 3.0f);
+
+	if (!m_crabProjectileTexture.loadFromFile("ASSETS\\IMAGES\\cheese.png"))
+	{
+		std::cout << "Problem loading crab projectile texture" << std::endl;
+	}
+
+	if (!m_foxProjectileTexture.loadFromFile("ASSETS\\IMAGES\\snowball.png"))
+	{
+		std::cout << "Problem loading fox projectile texture" << std::endl;
+	}
+
+	if (!m_goatProjectileTexture.loadFromFile("ASSETS\\IMAGES\\cheese.png"))
+	{
+		std::cout << "Problem loading goat projectile texture" << std::endl;
+	}
 
 	if (!m_playButtonTexture.loadFromFile("ASSETS\\IMAGES\\play.png"))
 	{

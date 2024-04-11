@@ -1,13 +1,12 @@
 #include "Projectile.h"
 
-Projectile::Projectile(const sf::Vector2f& position, float angle)
+Projectile::Projectile(const sf::Vector2f& position, float angle, const sf::Texture& texture)
 {
-    m_shape.setRadius(5.f);
-    m_shape.setFillColor(sf::Color::Red);
-    m_shape.setPosition(position);
+    m_sprite.setTexture(texture);
+    m_sprite.setPosition(position);
+    m_sprite.setScale(sf::Vector2f(2, 2));
 
-    // Calculate velocity based on angle (convert angle to radians)
-    float speed = 500.f; // Adjust speed as needed
+    float speed = 500.f;
     m_velocity.x = speed * std::cos(angle);
     m_velocity.y = speed * std::sin(angle);
 }
@@ -19,15 +18,15 @@ Projectile::~Projectile()
 void Projectile::update(sf::Time deltaTime)
 {
     // Update projectile position
-    m_shape.move(m_velocity * deltaTime.asSeconds());
+    m_sprite.move(m_velocity * deltaTime.asSeconds());
 }
 
 void Projectile::draw(sf::RenderWindow& window) const
 {
-    window.draw(m_shape);
+    window.draw(m_sprite);
 }
 
 sf::Vector2f Projectile::getPosition() const
-{
-    return m_shape.getPosition();
+{ 
+    return m_sprite.getPosition();
 }
