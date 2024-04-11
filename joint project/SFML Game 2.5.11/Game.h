@@ -3,6 +3,10 @@
 #define GAME_HPP
 
 #include <SFML/Graphics.hpp>
+struct Rectangle {
+	float x, y; // top left corner coordinates
+	float width, height;
+};
 
 class Game
 {
@@ -37,6 +41,9 @@ private:
 	void setupSprite();
 	void updateAnimation();
 
+	bool checkCollisions(float objX, float objY, float objWidth, float objHeight, const std::vector<Rectangle>& rectangles);
+	bool checkCollision(float objX, float objY, float objWidth, float objHeight, const Rectangle& rect);
+
 
 	sf::Clock m_animationClock;
 	float m_frameDuration;
@@ -67,6 +74,14 @@ private:
 
 	sf::Texture m_tileTexture;
 	sf::Sprite m_tileSprite;
+
+
+	Rectangle rect1;
+	float x1 = 100.0f;
+	float y1 = 200.0f;
+	float width1 = 50.0f;
+	float height1 = 100.0f;
+
 
 	sf::RenderWindow m_window; // main SFML window
 	//sf::Font m_ArialBlackfont; // font used by message

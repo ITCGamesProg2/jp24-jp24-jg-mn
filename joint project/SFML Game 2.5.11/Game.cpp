@@ -8,18 +8,23 @@
 
 Game::Game() :
 	m_window{ sf::VideoMode{ 800U, 600U, 32U }, "SFML Game" },
-	m_exitGame{ false }, //when true game will exit
+	m_exitGame{ false }, 
 	m_frameDuration(0.2f),
 	m_currentFrame(0),
 	m_gameState(GameState::MainMenu),
 	m_playerCharacter(PlayerCharacter::None)
 {
-	setupFontAndText(); // load font 
-	setupSprite(); // load texture
+	setupFontAndText(); 
+	setupSprite(); 
+
+	std::vector<Rectangle> buildings;
+	buildings.push_back(rect1);
+	buildings.push_back(Rectangle{ x1, y1, width1, height1 });
 }
 
 Game::~Game()
 {
+
 }
 
 
@@ -198,6 +203,22 @@ void Game::updateAnimation()
 		m_crabSprite.setTextureRect(frameRect);
 		m_foxSprite.setTextureRect(frameRect);
 	}
+}
+
+bool Game::checkCollision(float objX, float objY, float objWidth, float objHeight, const Rectangle& rect) {
+	return (objX < rect.x + rect.width && objX + objWidth > rect.x &&
+		objY < rect.y + rect.height && objY + objHeight > rect.y);
+}
+
+bool Game::checkCollisions(float objX, float objY, float objWidth, float objHeight, const std::vector<Rectangle>& rectangles) {
+	for (const auto& rect : rectangles) {
+		if (checkCollision(objX, objY, objWidth, objHeight, rect)) {
+			
+			return true;
+		}
+	}
+	
+	return false;
 }
 
 void Game::render()
