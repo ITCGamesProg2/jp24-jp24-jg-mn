@@ -22,7 +22,8 @@ private:
 	enum class PlayerCharacter {
 		None,  
 		Crab,
-		Fox
+		Fox,
+		Goat
 	};
 
 	GameState m_gameState;
@@ -53,6 +54,9 @@ private:
 
 	sf::Texture m_foxTexture;
 	sf::Sprite m_foxSprite;
+
+	sf::Texture m_goatTexture;
+	sf::Sprite m_goatSprite;
 
 	sf::Vector2f m_playerPosition;
 
