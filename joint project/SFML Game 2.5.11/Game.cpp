@@ -12,10 +12,12 @@ Game::Game() :
 	m_frameDuration(0.2f),
 	m_currentFrame(0),
 	m_gameState(GameState::MainMenu),
-	m_playerCharacter(PlayerCharacter::None)
+	m_playerCharacter(PlayerCharacter::None),
+	m_shootCooldown(sf::seconds(0.3f))
 {
 	setupFontAndText(); // load font 
 	setupSprite(); // load texture
+
 }
 
 Game::~Game()
@@ -154,6 +156,30 @@ void Game::processEvents()
 			}
 		}
 	}
+	if (m_gameState == GameState::Playing)
+	{
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		{
+			shoot();
+		}
+	}
+
+}
+
+void Game::shoot()
+{
+	if (m_shootTimer.getElapsedTime() >= m_shootCooldown)
+	{
+		sf::Vector2f playerCenter = m_crabSprite.getPosition(); // Assuming player is crab for now
+		sf::Vector2f aimDirection = sf::Vector2f(1.f, 0.f); // Initial direction (to the right)
+
+		// Create a new projectile
+		Projectile projectile(playerCenter, std::atan2(aimDirection.y, aimDirection.x));
+		m_projectiles.push_back(projectile);
+
+		// Reset the shoot timer
+		m_shootTimer.restart();
+	}
 }
 
 void Game::processKeys(sf::Event t_event)
@@ -192,6 +218,22 @@ void Game::update(sf::Time t_deltaTime)
 	m_goatSprite.setPosition(m_playerPosition);
 
 	updateAnimation();
+
+	for (auto it = m_projectiles.begin(); it != m_projectiles.end(); )
+	{
+		it->update(t_deltaTime);
+
+		// Remove projectiles that go out of the window
+		if (it->getPosition().x < 0 || it->getPosition().x > m_window.getSize().x ||
+			it->getPosition().y < 0 || it->getPosition().y > m_window.getSize().y)
+		{
+			it = m_projectiles.erase(it); // Erase the projectile
+		}
+		else
+		{
+			++it;
+		}
+	}
 }
 
 void Game::updateAnimation()
@@ -246,6 +288,11 @@ void Game::render()
 		{
 			m_window.draw(m_goatSprite);
 		}
+	}
+
+	for (const auto& projectile : m_projectiles)
+	{
+		projectile.draw(m_window);
 	}
 	m_window.display();
 }

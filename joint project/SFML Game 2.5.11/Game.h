@@ -3,6 +3,7 @@
 #define GAME_HPP
 
 #include <SFML/Graphics.hpp>
+#include "Projectile.h"
 
 class Game
 {
@@ -38,10 +39,17 @@ private:
 	void setupSprite();
 	void updateAnimation();
 
+	std::vector<Projectile> m_projectiles;
+
+	void shoot();
+
 
 	sf::Clock m_animationClock;
 	float m_frameDuration;
 	int m_currentFrame;
+
+	sf::Time m_shootCooldown;
+	sf::Clock m_shootTimer;
 
 	sf::Texture m_playButtonTexture;
 	sf::Sprite m_playButtonSprite;
