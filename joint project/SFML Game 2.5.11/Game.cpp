@@ -8,13 +8,19 @@
 
 Game::Game() :
 	m_window{ sf::VideoMode{ 800U, 600U, 32U }, "SFML Game" },
-	m_exitGame{ false }, //when true game will exit
+	m_exitGame{ false }, 
 	m_frameDuration(0.2f),
 	m_currentFrame(0),
 	m_gameState(GameState::MainMenu),
 	m_playerCharacter(PlayerCharacter::None),
 	m_shootCooldown(sf::seconds(0.3f))
 {
+	setupFontAndText(); 
+	setupSprite(); 
+
+	std::vector<Rectangle> buildings;
+	buildings.push_back(rect1);
+	buildings.push_back(Rectangle{ x1, y1, width1, height1 });
 	setupFontAndText(); // load font 
 	setupSprite(); // load texture
 
@@ -22,6 +28,7 @@ Game::Game() :
 
 Game::~Game()
 {
+
 }
 
 
@@ -170,14 +177,12 @@ void Game::shoot()
 {
 	if (m_shootTimer.getElapsedTime() >= m_shootCooldown)
 	{
-		sf::Vector2f playerCenter = m_crabSprite.getPosition(); // Assuming player is crab for now
-		sf::Vector2f aimDirection = sf::Vector2f(1.f, 0.f); // Initial direction (to the right)
+		sf::Vector2f playerCenter = m_crabSprite.getPosition();
+		sf::Vector2f aimDirection = sf::Vector2f(1.f, 0.f);
 
-		// Create a new projectile
 		Projectile projectile(playerCenter, std::atan2(aimDirection.y, aimDirection.x));
 		m_projectiles.push_back(projectile);
 
-		// Reset the shoot timer
 		m_shootTimer.restart();
 	}
 }
@@ -223,11 +228,10 @@ void Game::update(sf::Time t_deltaTime)
 	{
 		it->update(t_deltaTime);
 
-		// Remove projectiles that go out of the window
 		if (it->getPosition().x < 0 || it->getPosition().x > m_window.getSize().x ||
 			it->getPosition().y < 0 || it->getPosition().y > m_window.getSize().y)
 		{
-			it = m_projectiles.erase(it); // Erase the projectile
+			it = m_projectiles.erase(it);
 		}
 		else
 		{
@@ -256,6 +260,22 @@ void Game::updateAnimation()
 		m_foxSprite.setTextureRect(frameRect);
 		m_goatSprite.setTextureRect(frameRect);
 	}
+}
+
+bool Game::checkCollision(float objX, float objY, float objWidth, float objHeight, const Rectangle& rect) {
+	return (objX < rect.x + rect.width && objX + objWidth > rect.x &&
+		objY < rect.y + rect.height && objY + objHeight > rect.y);
+}
+
+bool Game::checkCollisions(float objX, float objY, float objWidth, float objHeight, const std::vector<Rectangle>& rectangles) {
+	for (const auto& rect : rectangles) {
+		if (checkCollision(objX, objY, objWidth, objHeight, rect)) {
+			
+			return true;
+		}
+	}
+	
+	return false;
 }
 
 void Game::render()

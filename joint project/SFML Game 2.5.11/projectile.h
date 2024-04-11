@@ -17,6 +17,7 @@ public:
 private:
     sf::CircleShape m_shape;
     sf::Vector2f m_velocity;
+  //  std::vector<Projectile> m_projectiles;
 };
 
 #endif // PROJECTILE_HPP
