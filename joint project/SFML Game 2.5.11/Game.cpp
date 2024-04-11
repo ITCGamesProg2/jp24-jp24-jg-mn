@@ -13,7 +13,8 @@ Game::Game() :
 	m_currentFrame(0),
 	m_gameState(GameState::MainMenu),
 	m_playerCharacter(PlayerCharacter::None),
-	m_shootCooldown(sf::seconds(0.3f))
+	m_shootCooldown(sf::seconds(0.3f)),
+	m_pickup(pickupTexture)
 {
 	setupFontAndText(); 
 	setupSprite(); 
@@ -209,7 +210,10 @@ void Game::update(sf::Time t_deltaTime)
 		m_window.close();
 	}
 
-	const float movementSpeed = 2.0f;
+	float movementSpeed = 2.0f;
+	if (m_pickup.isActive()) {
+		movementSpeed = 4.0f;
+	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 		m_playerPosition.y -= movementSpeed;
@@ -244,7 +248,43 @@ void Game::update(sf::Time t_deltaTime)
 			++it;
 		}
 	}
+	if (m_gameState == GameState::Playing)
+	{
+
+		if (m_pickup.isCollected(m_crabSprite.getGlobalBounds()))
+		{
+			m_pickup.applyEffect(m_crabSprite); 
+			m_pickup.spawn(sf::Vector2f(rand() % 700 + 50, rand() % 500 + 50)); 
+		}
+		else if (m_pickup.isCollected(m_foxSprite.getGlobalBounds()))
+		{
+			m_pickup.applyEffect(m_foxSprite);
+			m_pickup.spawn(sf::Vector2f(rand() % 700 + 50, rand() % 500 + 50));
+		}
+		else if (m_pickup.isCollected(m_goatSprite.getGlobalBounds()))
+		{
+			m_pickup.applyEffect(m_goatSprite);
+			m_pickup.spawn(sf::Vector2f(rand() % 700 + 50, rand() % 500 + 50));
+		}
+
+		updatePlayerSpriteColor(m_crabSprite);
+		updatePlayerSpriteColor(m_foxSprite);
+		updatePlayerSpriteColor(m_goatSprite);
+	}
 }
+
+void Game::updatePlayerSpriteColor(sf::Sprite& playerSprite)
+{
+	if (m_pickup.isActive())
+	{
+		playerSprite.setColor(sf::Color::Red);
+	}
+	else
+	{
+		playerSprite.setColor(sf::Color::White);
+	}
+}
+
 
 void Game::updateAnimation()
 {
@@ -314,12 +354,15 @@ void Game::render()
 		{
 			m_window.draw(m_goatSprite);
 		}
+		m_pickup.draw(m_window);
 	}
 
 	for (const auto& projectile : m_projectiles)
 	{
 		projectile.draw(m_window);
 	}
+
+
 	m_window.display();
 }
 
@@ -392,6 +435,15 @@ void Game::setupSprite()
 	{
 		std::cout << "Problem loading goat projectile texture" << std::endl;
 	}
+
+	if (!pickupTexture.loadFromFile("ASSETS\\IMAGES\\strawberry.png"))
+	{
+		std::cout << "Problem loading pickup texture" << std::endl;
+		return;
+	}
+	m_pickup = Pickup(pickupTexture);
+	sf::Vector2f randomPosition = sf::Vector2f(rand() % 700 + 50, rand() % 500 + 50);
+	m_pickup.spawn(randomPosition);
 
 	if (!m_playButtonTexture.loadFromFile("ASSETS\\IMAGES\\play.png"))
 	{

@@ -4,6 +4,8 @@
 
 #include <SFML/Graphics.hpp>
 #include "Projectile.h"
+#include "pickup.h"
+
 struct Rectangle {
 	float x, y; // top left corner coordinates
 	float width, height;
@@ -42,6 +44,7 @@ private:
 	void setupFontAndText();
 	void setupSprite();
 	void updateAnimation();
+	void updatePlayerSpriteColor(sf::Sprite& playerSprite);
 
 	bool checkCollision(float objX, float objY, float objWidth, float objHeight, const Rectangle& rect);
 	bool checkCollisions(float objX, float objY, float objWidth, float objHeight, const std::vector<Rectangle>& rectangles);
@@ -53,6 +56,9 @@ private:
 	int m_currentFrame;
 
 	std::vector<Projectile> m_projectiles;
+
+	Pickup m_pickup;
+	sf::Texture pickupTexture;
 
 	sf::Time m_shootCooldown;
 	sf::Clock m_shootTimer;
@@ -86,9 +92,9 @@ private:
 	sf::Texture m_tileTexture;
 	sf::Sprite m_tileSprite;
 
-	sf::Texture m_crabProjectileTexture; // Texture for crab's projectile
-	sf::Texture m_foxProjectileTexture;  // Texture for fox's projectile
-	sf::Texture m_goatProjectileTexture;
+	sf::Texture m_crabProjectileTexture;
+    sf::Texture m_foxProjectileTexture; 
+    sf::Texture m_goatProjectileTexture;
 
 
 	Rectangle rect1;
