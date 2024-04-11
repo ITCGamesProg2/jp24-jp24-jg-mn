@@ -89,6 +89,11 @@ void Game::processEvents()
 						m_playerCharacter = PlayerCharacter::Fox;
 						std::cout << "Selected Fox!" << std::endl;
 					}
+					else if (m_goatSprite.getGlobalBounds().contains(mousePosition))
+					{
+						m_playerCharacter = PlayerCharacter::Goat;
+						std::cout << "Selected Goat!" << std::endl;
+					}
 					else if (m_playButtonSprite.getGlobalBounds().contains(mousePosition))
 					{
 						if (m_playerCharacter != PlayerCharacter::None)
@@ -142,6 +147,15 @@ void Game::processEvents()
 				{
 					 m_foxSprite.setColor(sf::Color::White);
 				}
+
+				if (m_goatSprite.getGlobalBounds().contains(mousePosition))
+				{
+					m_goatSprite.setColor(sf::Color(200, 200, 200));
+				}
+				else
+				{
+					m_goatSprite.setColor(sf::Color::White);
+				}
 			}
 		}
 	}
@@ -151,7 +165,7 @@ void Game::processKeys(sf::Event t_event)
 {
 	if (sf::Keyboard::Escape == t_event.key.code)
 	{
-		m_exitGame = true; //exiting game
+		m_exitGame = true;
 	}
 }
 
@@ -180,6 +194,7 @@ void Game::update(sf::Time t_deltaTime)
 
 	m_crabSprite.setPosition(m_playerPosition);
 	m_foxSprite.setPosition(m_playerPosition);
+	m_goatSprite.setPosition(m_playerPosition);
 
 	updateAnimation();
 }
@@ -202,6 +217,7 @@ void Game::updateAnimation()
 		sf::IntRect frameRect(frameX, frameY, frameWidth, frameHeight);
 		m_crabSprite.setTextureRect(frameRect);
 		m_foxSprite.setTextureRect(frameRect);
+		m_goatSprite.setTextureRect(frameRect);
 	}
 }
 
@@ -233,6 +249,7 @@ void Game::render()
 		m_window.draw(m_exitButtonSprite);
 		m_window.draw(m_crabSprite);
 		m_window.draw(m_foxSprite);
+		m_window.draw(m_goatSprite);
 		m_window.draw(title);
 	}
 	else if (m_gameState == GameState::Playing)
@@ -245,6 +262,10 @@ void Game::render()
 		else if (m_playerCharacter == PlayerCharacter::Fox)
 		{
 			m_window.draw(m_foxSprite);
+		}
+		else if (m_playerCharacter == PlayerCharacter::Goat)
+		{
+			m_window.draw(m_goatSprite);
 		}
 	}
 	m_window.display();
@@ -278,7 +299,7 @@ void Game::setupSprite()
 
 	m_crabSprite.setTexture(m_crabTexture);
 	m_crabSprite.setTextureRect(initialFrameRect);
-	m_crabSprite.setPosition(310.0f, 165.0f);
+	m_crabSprite.setPosition(290.0f, 165.0f);
 	m_crabSprite.setScale(3.0f, 3.0f);
 
 	if (!m_foxTexture.loadFromFile("ASSETS\\IMAGES\\foxSpritesheet.png"))
@@ -290,8 +311,20 @@ void Game::setupSprite()
 
 	m_foxSprite.setTexture(m_foxTexture);
 	m_foxSprite.setTextureRect(foxFrameRect);
-	m_foxSprite.setPosition(385.0f, 165.0f);
+	m_foxSprite.setPosition(360.0f, 165.0f);
 	m_foxSprite.setScale(3.0f, 3.0f);
+
+	if (!m_goatTexture.loadFromFile("ASSETS\\IMAGES\\goatSpritesheet.png"))
+	{
+		std::cout << "Problem loading spritesheet" << std::endl;
+		return;
+	}
+	sf::IntRect goatFrameRect(0, 0, 16, 16);
+
+	m_goatSprite.setTexture(m_goatTexture);
+	m_goatSprite.setTextureRect(goatFrameRect);
+	m_goatSprite.setPosition(440.0f, 165.0f);
+	m_goatSprite.setScale(3.0f, 3.0f);
 
 	if (!m_playButtonTexture.loadFromFile("ASSETS\\IMAGES\\play.png"))
 	{
@@ -318,7 +351,7 @@ void Game::setupSprite()
 
 	if (!gameBackgroundTexture.loadFromFile("ASSETS\\IMAGES\\gameBackground.jpg"))
 	{
-		std::cout << "Problem loading play button texture" << std::endl;
+		std::cout << "Problem loading play button texture" << std::endl;	
 	}
 	gameBackgroundSprite.setTexture(gameBackgroundTexture);
 	gameBackgroundSprite.setScale(sf::Vector2f(1.2, 1.2));
@@ -328,6 +361,6 @@ void Game::setupSprite()
 		std::cout << "Problem loading play button texture" << std::endl;
 	}
 	m_tileSprite.setTexture(m_tileTexture);
-	m_tileSprite.setPosition(255.0f, 130.0f);
+	m_tileSprite.setPosition(235.0f, 130.0f);
 	m_tileSprite.setScale(sf::Vector2f(3, 3));
 }
