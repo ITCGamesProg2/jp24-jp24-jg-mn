@@ -81,11 +81,43 @@ void Game::processEvents()
 				handleMainMenuHover(sf::Vector2f(newEvent.mouseMove.x, newEvent.mouseMove.y));
 			}
 		}
+
+		else if (m_gameState == GameState::Playing || m_gameState == GameState::Paused)
+		{
+			if (newEvent.type == sf::Event::MouseButtonPressed && newEvent.mouseButton.button == sf::Mouse::Left)
+			{
+				sf::Vector2f mousePosition = sf::Vector2f(newEvent.mouseButton.x, newEvent.mouseButton.y);
+				if (m_pauseButtonSprite.getGlobalBounds().contains(mousePosition))
+				{
+					togglePause();
+				}
+			}
+			else if (newEvent.type == sf::Event::KeyReleased && newEvent.key.code == sf::Keyboard::Escape)
+			{
+				togglePause();
+			}
+		}
 	}
+
+
 
 	if (m_gameState == GameState::Playing && sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
 		shoot();
+	}
+}
+
+void Game::togglePause()
+{
+	if (m_gameState == GameState::Playing)
+	{
+		m_gameState = GameState::Paused;
+		std::cout << "Game Paused" << std::endl;
+	}
+	else if (m_gameState == GameState::Paused)
+	{
+		m_gameState = GameState::Playing;
+		std::cout << "Game Resumed" << std::endl;
 	}
 }
 
@@ -352,6 +384,22 @@ void Game::render()
 			m_window.draw(m_goatSprite);
 		}
 		m_pickup.draw(m_window);
+
+		m_window.draw(m_pauseButtonSprite);
+	}
+	else if (m_gameState == GameState::Paused)
+	{
+		m_window.draw(m_pauseButtonSprite);
+
+		sf::Text pauseText;
+		pauseText.setFont(font);
+		pauseText.setString("Game Paused");
+		pauseText.setPosition(250.0f, 250.0f);
+		pauseText.setCharacterSize(100U);
+		pauseText.setFillColor(sf::Color::Black);
+
+		m_window.draw(pauseText);
+
 	}
 
 	for (const auto& projectile : m_projectiles)
@@ -441,6 +489,14 @@ void Game::setupSprite()
 	m_pickup = Pickup(pickupTexture);
 	sf::Vector2f randomPosition = sf::Vector2f(rand() % 700 + 50, rand() % 500 + 50);
 	m_pickup.spawn(randomPosition);
+
+	if (!m_pauseButtonTexture.loadFromFile("ASSETS\\IMAGES\\pause.png"))
+	{
+		std::cout << "Problem loading pause button texture" << std::endl;
+	}
+	m_pauseButtonSprite.setTexture(m_pauseButtonTexture);
+	m_pauseButtonSprite.setPosition(720.0f, 10.0f);
+	m_pauseButtonSprite.setScale(sf::Vector2f(2, 2));
 	
 	if (!m_playButtonTexture.loadFromFile("ASSETS\\IMAGES\\play.png"))
 	{

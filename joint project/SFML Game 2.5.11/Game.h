@@ -23,7 +23,8 @@ private:
 
 	enum class GameState {
 		MainMenu,
-		Playing
+		Playing,
+		Paused
 	};
 
 	enum class PlayerCharacter {
@@ -56,6 +57,7 @@ private:
 	void startPlaying();
 	void handleMainMenuHover(const sf::Vector2f& mousePosition);
 	void handleMainMenuClick(const sf::Vector2f& mousePosition);
+	void togglePause();
 
 	sf::Clock m_animationClock;
 	float m_frameDuration;
@@ -65,6 +67,9 @@ private:
 
 	Pickup m_pickup;
 	sf::Texture pickupTexture;
+
+	sf::Sprite m_pauseButtonSprite;
+	sf::Texture m_pauseButtonTexture;
 
 	sf::Time m_shootCooldown;
 	sf::Clock m_shootTimer;
