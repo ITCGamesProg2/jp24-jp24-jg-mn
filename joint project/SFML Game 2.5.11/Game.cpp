@@ -367,6 +367,31 @@ void Game::render()
 		m_window.draw(m_foxSprite);
 		m_window.draw(m_goatSprite);
 		m_window.draw(title);
+
+		sf::Text selectedCharacterText;
+		selectedCharacterText.setFont(font);
+		selectedCharacterText.setCharacterSize(30);
+		selectedCharacterText.setFillColor(sf::Color::Black);
+
+		if (m_playerCharacter == PlayerCharacter::Crab)
+		{
+			selectedCharacterText.setString("Selected Character: Crab");
+		}
+		else if (m_playerCharacter == PlayerCharacter::Fox)
+		{
+			selectedCharacterText.setString("Selected Character: Fox");
+		}
+		else if (m_playerCharacter == PlayerCharacter::Goat)
+		{
+			selectedCharacterText.setString("Selected Character: Goat");
+		}
+		else
+		{
+			selectedCharacterText.setString("Selected Character:");
+		}
+
+		selectedCharacterText.setPosition(300.0f, 230.0f);
+		m_window.draw(selectedCharacterText);
 	}
 	else if (m_gameState == GameState::Playing)
 	{
