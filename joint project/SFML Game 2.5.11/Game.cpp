@@ -66,113 +66,110 @@ void Game::processEvents()
 	sf::Event newEvent;
 	while (m_window.pollEvent(newEvent))
 	{
-		if (sf::Event::Closed == newEvent.type) // window message
+		if (newEvent.type == sf::Event::Closed)
 		{
 			m_exitGame = true;
 		}
 		else if (m_gameState == GameState::MainMenu)
 		{
-			if (newEvent.type == sf::Event::MouseButtonPressed)
+			if (newEvent.type == sf::Event::MouseButtonPressed && newEvent.mouseButton.button == sf::Mouse::Left)
 			{
-				if (newEvent.mouseButton.button == sf::Mouse::Left)
-				{
-					sf::Vector2f mousePosition = sf::Vector2f(newEvent.mouseButton.x, newEvent.mouseButton.y);
-
-					if (m_exitButtonSprite.getGlobalBounds().contains(mousePosition))
-					{
-						std::cout << "Exiting Game!" << std::endl;
-						m_exitGame = true;
-					}
-
-					if (m_crabSprite.getGlobalBounds().contains(mousePosition))
-					{
-						m_playerCharacter = PlayerCharacter::Crab;
-						std::cout << "Selected Crab!" << std::endl;
-					}
-					else if (m_foxSprite.getGlobalBounds().contains(mousePosition))
-					{
-						m_playerCharacter = PlayerCharacter::Fox;
-						std::cout << "Selected Fox!" << std::endl;
-					}
-					else if (m_goatSprite.getGlobalBounds().contains(mousePosition))
-					{
-						m_playerCharacter = PlayerCharacter::Goat;
-						std::cout << "Selected Goat!" << std::endl;
-					}
-					else if (m_playButtonSprite.getGlobalBounds().contains(mousePosition))
-					{
-						if (m_playerCharacter != PlayerCharacter::None)
-						{
-							m_gameState = GameState::Playing;
-							std::cout << "Starting Game!" << std::endl;
-						}
-						else
-						{
-							std::cout << "Please select a character first!" << std::endl;
-						}
-					}
-				}
+				handleMainMenuClick(sf::Vector2f(newEvent.mouseButton.x, newEvent.mouseButton.y));
 			}
 			else if (newEvent.type == sf::Event::MouseMoved)
 			{
-				sf::Vector2f mousePosition = sf::Vector2f(newEvent.mouseMove.x, newEvent.mouseMove.y);
-
-				if (m_playButtonSprite.getGlobalBounds().contains(mousePosition))
-				{
-					m_playButtonSprite.setColor(sf::Color(200, 200, 200)); 
-				}
-				else
-				{
-					m_playButtonSprite.setColor(sf::Color::White); 
-				}
-
-				if (m_exitButtonSprite.getGlobalBounds().contains(mousePosition))
-				{
-					m_exitButtonSprite.setColor(sf::Color(200, 200, 200));
-				}
-				else
-				{
-					m_exitButtonSprite.setColor(sf::Color::White);
-				}
-
-				if (m_crabSprite.getGlobalBounds().contains(mousePosition))
-				{
-					 m_crabSprite.setColor(sf::Color(200, 200, 200));
-				}
-				else
-				{
-					 m_crabSprite.setColor(sf::Color::White);
-				}
-
-				if (m_foxSprite.getGlobalBounds().contains(mousePosition))
-				{
-					 m_foxSprite.setColor(sf::Color(200, 200, 200));
-				}
-				else
-				{
-					 m_foxSprite.setColor(sf::Color::White);
-				}
-
-				if (m_goatSprite.getGlobalBounds().contains(mousePosition))
-				{
-					m_goatSprite.setColor(sf::Color(200, 200, 200));
-				}
-				else
-				{
-					m_goatSprite.setColor(sf::Color::White);
-				}
+				handleMainMenuHover(sf::Vector2f(newEvent.mouseMove.x, newEvent.mouseMove.y));
 			}
 		}
 	}
-	if (m_gameState == GameState::Playing)
+
+	if (m_gameState == GameState::Playing && sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		shoot();
+	}
+}
+
+void Game::handleMainMenuClick(const sf::Vector2f& mousePosition)
+{
+	if (m_exitButtonSprite.getGlobalBounds().contains(mousePosition))
+	{
+		std::cout << "Exiting Game!" << std::endl;
+		m_exitGame = true;
+	}
+	else if (m_crabSprite.getGlobalBounds().contains(mousePosition))
+	{
+		selectCharacter(PlayerCharacter::Crab);
+	}
+	else if (m_foxSprite.getGlobalBounds().contains(mousePosition))
+	{
+		selectCharacter(PlayerCharacter::Fox);
+	}
+	else if (m_goatSprite.getGlobalBounds().contains(mousePosition))
+	{
+		selectCharacter(PlayerCharacter::Goat);
+	}
+	else if (m_playButtonSprite.getGlobalBounds().contains(mousePosition))
+	{
+		if (m_playerCharacter != PlayerCharacter::None)
 		{
-			shoot();
+			startPlaying();
+		}
+		else
+		{
+			std::cout << "Please select a character first!" << std::endl;
 		}
 	}
-
 }
+
+void Game::handleMainMenuHover(const sf::Vector2f& mousePosition)
+{
+	updateButtonColor(m_playButtonSprite, mousePosition);
+	updateButtonColor(m_exitButtonSprite, mousePosition);
+	updateButtonColor(m_crabSprite, mousePosition);
+	updateButtonColor(m_foxSprite, mousePosition);
+	updateButtonColor(m_goatSprite, mousePosition);
+}
+
+void Game::updateButtonColor(sf::Sprite& button, const sf::Vector2f& mousePosition)
+{
+	if (button.getGlobalBounds().contains(mousePosition))
+	{
+		button.setColor(sf::Color(200, 200, 200));
+	}
+	else
+	{
+		button.setColor(sf::Color::White);
+	}
+}
+
+void Game::selectCharacter(PlayerCharacter character)
+{
+	m_playerCharacter = character;
+	std::cout << "Selected ";
+	switch (character)
+	{
+	case PlayerCharacter::Crab:
+		std::cout << "Crab";
+		break;
+	case PlayerCharacter::Fox:
+		std::cout << "Fox";
+		break;
+	case PlayerCharacter::Goat:
+		std::cout << "Goat";
+		break;
+	default:
+		std::cout << "None";
+		break;
+	}
+	std::cout << "!" << std::endl;
+}
+
+void Game::startPlaying()
+{
+	m_gameState = GameState::Playing;
+	std::cout << "Starting Game!" << std::endl;
+}
+
 
 void Game::shoot()
 {
@@ -444,7 +441,7 @@ void Game::setupSprite()
 	m_pickup = Pickup(pickupTexture);
 	sf::Vector2f randomPosition = sf::Vector2f(rand() % 700 + 50, rand() % 500 + 50);
 	m_pickup.spawn(randomPosition);
-
+	
 	if (!m_playButtonTexture.loadFromFile("ASSETS\\IMAGES\\play.png"))
 	{
 		std::cout << "Problem loading play button texture" << std::endl;

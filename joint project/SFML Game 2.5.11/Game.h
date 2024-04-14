@@ -51,6 +51,12 @@ private:
 
 	void shoot();
 
+	void selectCharacter(PlayerCharacter character);
+	void updateButtonColor(sf::Sprite& button, const sf::Vector2f& mousePosition);
+	void startPlaying();
+	void handleMainMenuHover(const sf::Vector2f& mousePosition);
+	void handleMainMenuClick(const sf::Vector2f& mousePosition);
+
 	sf::Clock m_animationClock;
 	float m_frameDuration;
 	int m_currentFrame;
