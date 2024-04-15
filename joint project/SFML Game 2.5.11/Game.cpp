@@ -157,7 +157,7 @@ void Game::handleMainMenuHover(const sf::Vector2f& mousePosition)
 {
 	updateButtonColor(m_playButtonSprite, mousePosition);
 	updateButtonColor(m_exitButtonSprite, mousePosition);
-	updateButtonColor(m_crabSprite, mousePosition);
+	updateButtonColor(m_crabSprite, mousePosition);																							
 	updateButtonColor(m_foxSprite, mousePosition);
 	updateButtonColor(m_goatSprite, mousePosition);
 }
@@ -261,6 +261,23 @@ void Game::update(sf::Time t_deltaTime)
 	m_foxSprite.setPosition(m_playerPosition);
 	m_goatSprite.setPosition(m_playerPosition);
 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) ||
+		sf::Keyboard::isKeyPressed(sf::Keyboard::S) ||
+		sf::Keyboard::isKeyPressed(sf::Keyboard::A) ||
+		sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+
+		for (int i = 0; i < 5; ++i) {
+			sf::Vector2f randomOffset = sf::Vector2f((rand() % 10) - 5, (rand() % 10) - 5);
+			sf::Vector2f particlePosition = m_playerPosition + sf::Vector2f(0.0f, 40.0f) + randomOffset;
+			sf::Vector2f randomVelocity = sf::Vector2f((rand() % 100) - 50, (rand() % 100) - 50);
+			sf::Color particleColor = sf::Color::Black;
+			float lifetime = 0.2;
+			Particle particle(particlePosition, randomVelocity, particleColor, lifetime);
+			m_particles.push_back(particle);
+		}
+	}
+	updateParticles(t_deltaTime);
+
 	updateAnimation();
 
 	for (auto it = m_projectiles.begin(); it != m_projectiles.end(); )
@@ -299,6 +316,24 @@ void Game::update(sf::Time t_deltaTime)
 		updatePlayerSpriteColor(m_crabSprite);
 		updatePlayerSpriteColor(m_foxSprite);
 		updatePlayerSpriteColor(m_goatSprite);
+	}
+}
+
+void Game::updateParticles(sf::Time deltaTime) {
+	for (auto it = m_particles.begin(); it != m_particles.end();) {
+		it->update(deltaTime);
+		if (!it->isAlive()) {
+			it = m_particles.erase(it);
+		}
+		else {
+			++it;
+		}
+	}
+}
+
+void Game::drawParticles() {
+	for (const auto& particle : m_particles) {
+		particle.draw(m_window);
 	}
 }
 
@@ -396,6 +431,9 @@ void Game::render()
 	else if (m_gameState == GameState::Playing)
 	{
 		m_window.draw(gameBackgroundSprite);
+
+		drawParticles();
+
 		if (m_playerCharacter == PlayerCharacter::Crab)
 		{
 			m_window.draw(m_crabSprite);

@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include "Projectile.h"
 #include "pickup.h"
+#include "particle.h"
 
 struct Rectangle {
 	float x, y; // top left corner coordinates
@@ -67,6 +68,10 @@ private:
 
 	Pickup m_pickup;
 	sf::Texture pickupTexture;
+
+	std::vector<Particle> m_particles;
+	void updateParticles(sf::Time deltaTime);
+	void drawParticles();
 
 	sf::Sprite m_pauseButtonSprite;
 	sf::Texture m_pauseButtonTexture;
