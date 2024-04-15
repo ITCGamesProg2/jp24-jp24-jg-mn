@@ -19,23 +19,29 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Door.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="grid.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="particle.cpp" />
     <ClCompile Include="pickup.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="projectile.cpp" />
+    <ClCompile Include="Room.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Door.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="grid.h" />
     <ClInclude Include="LevelLoader.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="particle.h" />
     <ClInclude Include="pickup.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="projectile.h" />
+    <ClInclude Include="Room.h" />
     <ClInclude Include="ScreenSize.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>

@@ -28,6 +28,7 @@ public:
     void init(sf::Texture& t_textures, sf::Texture& t_bulletTexture);
 
     sf::Vector2f getPosition() { return m_playerSprite.getPosition(); };
+    void setPosition(sf::Vector2f t_position) { m_playerPosition = t_position; };
 
     void move();
     void changeDirection();

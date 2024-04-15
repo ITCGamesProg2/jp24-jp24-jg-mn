@@ -8,6 +8,7 @@
 #include "particle.h"
 #include"player.h"
 #include"ScreenSize.h"
+#include"Map.h"
 
 struct Rectangle {
 	float x, y;
@@ -106,6 +107,11 @@ private:
 	float width1 = 50.0f;
 	float height1 = 100.0f;
 
+	sf::View m_gameView;
+	void setView();
+
+	//Map
+	Map m_map;
 
 	sf::RenderWindow m_window; // main SFML window
 	//sf::Font m_ArialBlackfont; // font used by message

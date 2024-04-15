@@ -21,6 +21,7 @@ Game::Game() :
 	buildings.push_back(Rectangle{ x1, y1, width1, height1 }); 
 	setupFontAndText(); // load font 
 	setupSprite(); // load texture
+
 }
 
 Game::~Game()
@@ -164,6 +165,11 @@ void Game::togglePause()
 	}
 }
 
+void Game::setView()
+{
+	m_gameView.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+}
+
 void Game::handleMainMenuClick(const sf::Vector2f& mousePosition)
 {
 	if (m_exitButtonSprite.getGlobalBounds().contains(mousePosition))
@@ -244,8 +250,8 @@ void Game::update(sf::Time t_deltaTime)
 
 	if (m_gameState == GameState::Playing)
 	{
-
-		if (m_pickup.isCollected(m_player.getSprite().getGlobalBounds()))
+		setView(); // load view
+		if (m_pickup.isCollected(m_crabSprite.getGlobalBounds()))
 		{
 			m_pickup.applyEffect(m_player.getSprite());
 			m_player.updatePlayerSpriteColour(true);
@@ -267,6 +273,8 @@ void Game::updateParticles(sf::Time deltaTime) {
 		else {
 			++it;
 		}
+
+		m_map.update(m_player);
 	}
 }
 
@@ -314,7 +322,7 @@ bool Game::checkCollisions(float objX, float objY, float objWidth, float objHeig
 void Game::render()
 {
 	m_window.clear(sf::Color::White);
-
+	
 	if (m_gameState == GameState::MainMenu)
 	{
 		m_window.draw(backgroundSprite);
@@ -325,6 +333,7 @@ void Game::render()
 		m_window.draw(m_foxSprite);
 		m_window.draw(m_goatSprite);
 		m_window.draw(title);
+
 
 		sf::Text selectedCharacterText;
 		selectedCharacterText.setFont(font);
@@ -353,15 +362,18 @@ void Game::render()
 	}
 	else if (m_gameState == GameState::Playing)
 	{
-		m_window.draw(gameBackgroundSprite);
+		m_map.render(m_window);
 
 		drawParticles();
 
 		//Player drawings
 		m_player.render(m_window);
 		//Pickups
-		m_pickup.draw(m_window);
-
+ 	    m_pickup.draw(m_window);
+		
+		m_window.setView(m_gameView);
+		
+		
 		m_window.draw(m_pauseButtonSprite);
 	}
 	else if (m_gameState == GameState::Paused)
