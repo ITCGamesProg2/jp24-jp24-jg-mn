@@ -21,7 +21,7 @@ Game::Game() :
 
 	std::vector<Rectangle> buildings;
 	buildings.push_back(rect1);
-	buildings.push_back(Rectangle{ x1, y1, width1, height1 });
+	buildings.push_back(Rectangle{ x1, y1, width1, height1 }); 
 	setupFontAndText(); // load font 
 	setupSprite(); // load texture
 
