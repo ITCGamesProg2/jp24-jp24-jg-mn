@@ -252,9 +252,11 @@ void Game::update(sf::Time t_deltaTime)
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
 		m_playerPosition.x -= movementSpeed;
+		m_playerDirection = Direction::Left;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 		m_playerPosition.x += movementSpeed;
+		m_playerDirection = Direction::Right;
 	}
 
 	m_crabSprite.setPosition(m_playerPosition);
@@ -436,14 +438,23 @@ void Game::render()
 
 		if (m_playerCharacter == PlayerCharacter::Crab)
 		{
+			m_crabSprite.setPosition(m_playerPosition);
+			m_crabSprite.setScale((m_playerDirection == Direction::Left) ?
+				sf::Vector2f(-3.0f, 3.0f) : sf::Vector2f(3.0f, 3.0f));
 			m_window.draw(m_crabSprite);
 		}
 		else if (m_playerCharacter == PlayerCharacter::Fox)
 		{
+			m_foxSprite.setPosition(m_playerPosition);
+			m_foxSprite.setScale((m_playerDirection == Direction::Left) ?
+				sf::Vector2f(-3.0f, 3.0f) : sf::Vector2f(3.0f, 3.0f));
 			m_window.draw(m_foxSprite);
 		}
 		else if (m_playerCharacter == PlayerCharacter::Goat)
 		{
+			m_goatSprite.setPosition(m_playerPosition);
+			m_goatSprite.setScale((m_playerDirection == Direction::Left) ?
+				sf::Vector2f(-3.0f, 3.0f) : sf::Vector2f(3.0f, 3.0f));
 			m_window.draw(m_goatSprite);
 		}
 		m_pickup.draw(m_window);

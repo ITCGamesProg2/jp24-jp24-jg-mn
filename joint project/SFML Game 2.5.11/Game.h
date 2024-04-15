@@ -8,7 +8,7 @@
 #include "particle.h"
 
 struct Rectangle {
-	float x, y; // top left corner coordinates
+	float x, y;
 	float width, height;
 };
 
@@ -34,6 +34,13 @@ private:
 		Fox,
 		Goat
 	};
+
+	enum class Direction {
+		Left,
+		Right
+	};
+
+	Direction m_playerDirection;
 
 	GameState m_gameState;
 	PlayerCharacter m_playerCharacter;
