@@ -30,6 +30,7 @@
   <ItemGroup>
     <ClInclude Include="Game.h" />
     <ClInclude Include="grid.h" />
+    <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="particle.h" />
     <ClInclude Include="pickup.h" />
     <ClInclude Include="player.h" />
