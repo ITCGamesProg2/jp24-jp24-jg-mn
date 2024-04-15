@@ -2,6 +2,22 @@
 #define PLAYER_HPP
 
 #include <SFML/Graphics.hpp>
+#include"Weapon.h"
+#include"ScreenSize.h"
+
+enum class PlayerCharacter {
+    None,
+    Crab,
+    Fox,
+    Goat
+};
+
+enum class Direction {
+    Left,
+    Right
+};
+
+
 
 class Player
 {
@@ -9,13 +25,40 @@ public:
     Player();
     ~Player();
 
-    void update(sf::Time t_deltaTime);
-    void setPosition(float x, float y);
-    sf::Vector2f getPosition() const;
+    void init(sf::Texture& t_textures, sf::Texture& t_bulletTexture);
 
+    sf::Vector2f getPosition() { return m_playerSprite.getPosition(); };
+
+    void move();
+    void changeDirection();
+
+    void update(sf::Time t_deltaTime);
+    void render(sf::RenderWindow& m_window);
+
+    void animate();
+
+    void updatePlayerSpriteColour(bool pickUpActive);
+
+    void selectCharacter(PlayerCharacter t_playerCharacter);
+    PlayerCharacter getSelectedCharacter() { return m_playerCharacter; };
+    sf::Sprite getSprite() { return m_playerSprite; };
+
+    bool isMoving = false;
 private:
-    sf::Vector2f m_position;
+    Weapon m_weapon;
+
+    PlayerCharacter m_playerCharacter;
+    Direction m_playerDirection;
+
+    sf::Sprite m_playerSprite;
+    sf::Vector2f m_playerPosition{100,100};
+
     float m_movementSpeed;
+
+    //animation
+    sf::Clock m_animationClock;
+    float m_frameDuration{ 0.2f };
+    int m_currentFrame{ 0 };
 };
 
 #endif // PLAYER_HPP
