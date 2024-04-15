@@ -30,7 +30,11 @@
   <ItemGroup>
     <ClInclude Include="Game.h" />
     <ClInclude Include="grid.h" />
+<<<<<<< Updated upstream
     <ClInclude Include="particle.h" />
+=======
+    <ClInclude Include="LevelLoader.h" />
+>>>>>>> Stashed changes
     <ClInclude Include="pickup.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="projectile.h" />
