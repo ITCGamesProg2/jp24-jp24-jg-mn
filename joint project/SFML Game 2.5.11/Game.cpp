@@ -106,7 +106,31 @@ void Game::processEvents()
 	{
 		shoot();
 	}
-}
+
+	if (!pickupTexture.loadFromFile("ASSETS\\IMAGES\\strawberry.png"))
+	{
+		std::cout << "Problem loading pickup texture" << std::endl;
+		return;
+	}
+	if (!m_crabTexture.loadFromFile("ASSETS\\IMAGES\\crabSpritesheet.png"))
+	{
+		std::cout << "Problem loading spritesheet" << std::endl;
+		return;
+	}
+	if (!m_foxTexture.loadFromFile("ASSETS\\IMAGES\\foxSpritesheet.png"))
+	{
+		std::cout << "Problem loading spritesheet" << std::endl;
+		return;
+	}
+	if (!m_goatTexture.loadFromFile("ASSETS\\IMAGES\\goatSpritesheet.png"))
+	{
+		std::cout << "Problem loading spritesheet" << std::endl;
+		return;
+	}
+	if (!m_crabProjectileTexture.loadFromFile("ASSETS\\IMAGES\\starfish.png"))
+	{
+		std::cout << "Problem loading crab projectile texture" << std::endl;
+	}
 
 void Game::togglePause()
 {
@@ -340,15 +364,22 @@ void Game::drawParticles() {
 	}
 }
 
-void Game::updatePlayerSpriteColor(sf::Sprite& playerSprite)
+void Game::applyParticles()
 {
-	if (m_pickup.isActive())
-	{
-		playerSprite.setColor(sf::Color::Red);
-	}
-	else
-	{
-		playerSprite.setColor(sf::Color::White);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)||
+		sf::Keyboard::isKeyPressed(sf::Keyboard::A)||
+		sf::Keyboard::isKeyPressed(sf::Keyboard::S)||
+		sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+		for (int i = 0; i < 5; ++i) {
+			sf::Vector2f randomOffset = sf::Vector2f((rand() % 10) - 5, (rand() % 10) - 5);
+			sf::Vector2f particlePosition = m_player.getPosition()  + randomOffset;
+			particlePosition.y += 25.0f;
+			sf::Vector2f randomVelocity = sf::Vector2f((rand() % 100) - 50, (rand() % 100) - 50);
+			sf::Color particleColor = sf::Color::Black;
+			float lifetime = 0.2;
+			Particle particle(particlePosition, randomVelocity, particleColor, lifetime);
+			m_particles.push_back(particle);
+		}
 	}
 }
 
