@@ -3,16 +3,20 @@
 
 
 #include "Game.h"
+#include "ai_enemy.h"
 #include <iostream>
 
 
 Game::Game() :
-	m_window{ sf::VideoMode{ SCREEN_WIDTH, SCREEN_HEIGHT, 32U }, "SFML Game" },
+	m_window{ sf::VideoMode{ 800U, 600U, 32U }, "SFML Game" },
 	m_exitGame{ false }, 
+	m_frameDuration(0.2f),
+	m_currentFrame(0),
 	m_gameState(GameState::MainMenu),
+	m_playerCharacter(PlayerCharacter::None),
+	m_shootCooldown(sf::seconds(0.3f)),
 	m_pickup(pickupTexture)
 {
-	loadTextures();
 	setupFontAndText(); 
 	setupSprite(); 
 
@@ -95,61 +99,14 @@ void Game::processEvents()
 			}
 		}
 	}
-}
 
-void Game::loadTextures()
-{
-	if (!m_crabProjectileTexture.loadFromFile("ASSETS\\IMAGES\\cheese.png"))
-	{
-		std::cout << "Problem loading crab projectile texture" << std::endl;
-	}
 
-	if (!m_foxProjectileTexture.loadFromFile("ASSETS\\IMAGES\\snowball.png"))
-	{
-		std::cout << "Problem loading fox projectile texture" << std::endl;
-	}
 
-	if (!m_goatProjectileTexture.loadFromFile("ASSETS\\IMAGES\\cheese.png"))
+	if (m_gameState == GameState::Playing && sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
-		std::cout << "Problem loading goat projectile texture" << std::endl;
-	}
-
-	if (!pickupTexture.loadFromFile("ASSETS\\IMAGES\\strawberry.png"))
-	{
-		std::cout << "Problem loading pickup texture" << std::endl;
-		return;
-	}
-	if (!m_crabTexture.loadFromFile("ASSETS\\IMAGES\\crabSpritesheet.png"))
-	{
-		std::cout << "Problem loading spritesheet" << std::endl;
-		return;
-	}
-	if (!m_foxTexture.loadFromFile("ASSETS\\IMAGES\\foxSpritesheet.png"))
-	{
-		std::cout << "Problem loading spritesheet" << std::endl;
-		return;
-	}
-	if (!m_goatTexture.loadFromFile("ASSETS\\IMAGES\\goatSpritesheet.png"))
-	{
-		std::cout << "Problem loading spritesheet" << std::endl;
-		return;
-	}
-	if (!m_crabProjectileTexture.loadFromFile("ASSETS\\IMAGES\\cheese.png"))
-	{
-		std::cout << "Problem loading crab projectile texture" << std::endl;
-	}
-
-	if (!m_foxProjectileTexture.loadFromFile("ASSETS\\IMAGES\\snowball.png"))
-	{
-		std::cout << "Problem loading fox projectile texture" << std::endl;
-	}
-
-	if (!m_goatProjectileTexture.loadFromFile("ASSETS\\IMAGES\\cheese.png"))
-	{
-		std::cout << "Problem loading goat projectile texture" << std::endl;
+		shoot();
 	}
 }
-
 
 void Game::togglePause()
 {
@@ -165,11 +122,6 @@ void Game::togglePause()
 	}
 }
 
-void Game::setView()
-{
-	m_gameView.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-}
-
 void Game::handleMainMenuClick(const sf::Vector2f& mousePosition)
 {
 	if (m_exitButtonSprite.getGlobalBounds().contains(mousePosition))
@@ -179,22 +131,19 @@ void Game::handleMainMenuClick(const sf::Vector2f& mousePosition)
 	}
 	else if (m_crabSprite.getGlobalBounds().contains(mousePosition))
 	{
-		m_player.selectCharacter(PlayerCharacter::Crab);
-		m_player.init(m_crabTexture, m_crabProjectileTexture);
+		selectCharacter(PlayerCharacter::Crab);
 	}
 	else if (m_foxSprite.getGlobalBounds().contains(mousePosition))
 	{
-		m_player.selectCharacter(PlayerCharacter::Fox);
-		m_player.init(m_foxTexture, m_foxProjectileTexture);
+		selectCharacter(PlayerCharacter::Fox);
 	}
 	else if (m_goatSprite.getGlobalBounds().contains(mousePosition))
 	{
-		m_player.selectCharacter(PlayerCharacter::Goat);
-		m_player.init(m_goatTexture, m_goatProjectileTexture);
+		selectCharacter(PlayerCharacter::Goat);
 	}
 	else if (m_playButtonSprite.getGlobalBounds().contains(mousePosition))
 	{
-		if (m_player.getSelectedCharacter() != PlayerCharacter::None)
+		if (m_playerCharacter != PlayerCharacter::None)
 		{
 			startPlaying();
 		}
@@ -226,10 +175,53 @@ void Game::updateButtonColor(sf::Sprite& button, const sf::Vector2f& mousePositi
 	}
 }
 
+void Game::selectCharacter(PlayerCharacter character)
+{
+	m_playerCharacter = character;
+	std::cout << "Selected ";
+	switch (character)
+	{
+	case PlayerCharacter::Crab:
+		std::cout << "Crab";
+		break;
+	case PlayerCharacter::Fox:
+		std::cout << "Fox";
+		break;
+	case PlayerCharacter::Goat:
+		std::cout << "Goat";
+		break;
+	default:
+		std::cout << "None";
+		break;
+	}
+	std::cout << "!" << std::endl;
+}
+
 void Game::startPlaying()
 {
 	m_gameState = GameState::Playing;
 	std::cout << "Starting Game!" << std::endl;
+}
+
+
+void Game::shoot()
+{
+	if(m_shootTimer.getElapsedTime() >= m_shootCooldown)
+	{
+		sf::Vector2f playerCenter = m_crabSprite.getPosition(); 
+		sf::Vector2f aimDirection = sf::Vector2f(1.f, 0.f); 
+
+		
+		sf::Texture& projectileTexture = (m_playerCharacter == PlayerCharacter::Crab) ? m_crabProjectileTexture :
+			(m_playerCharacter == PlayerCharacter::Fox) ? m_foxProjectileTexture :
+			(m_playerCharacter == PlayerCharacter::Goat) ? m_goatProjectileTexture:
+			m_crabTexture;
+
+		Projectile projectile(playerCenter, std::atan2(aimDirection.y, aimDirection.x), projectileTexture);
+		m_projectiles.push_back(projectile);
+
+		m_shootTimer.restart();
+	}
 }
 
 void Game::processKeys(sf::Event t_event)
@@ -248,19 +240,85 @@ void Game::update(sf::Time t_deltaTime)
 		m_window.close();
 	}
 
+	float movementSpeed = 2.0f;
+	if (m_pickup.isActive()) {
+		movementSpeed = 4.0f;
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+		m_playerPosition.y -= movementSpeed;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+		m_playerPosition.y += movementSpeed;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+		m_playerPosition.x -= movementSpeed;
+		m_playerDirection = Direction::Left;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+		m_playerPosition.x += movementSpeed;
+		m_playerDirection = Direction::Right;
+	}
+
+	m_crabSprite.setPosition(m_playerPosition);
+	m_foxSprite.setPosition(m_playerPosition);
+	m_goatSprite.setPosition(m_playerPosition);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) ||
+		sf::Keyboard::isKeyPressed(sf::Keyboard::S) ||
+		sf::Keyboard::isKeyPressed(sf::Keyboard::A) ||
+		sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+
+		for (int i = 0; i < 5; ++i) {
+			sf::Vector2f randomOffset = sf::Vector2f((rand() % 10) - 5, (rand() % 10) - 5);
+			sf::Vector2f particlePosition = m_playerPosition + sf::Vector2f(0.0f, 40.0f) + randomOffset;
+			sf::Vector2f randomVelocity = sf::Vector2f((rand() % 100) - 50, (rand() % 100) - 50);
+			sf::Color particleColor = sf::Color::Black;
+			float lifetime = 0.2;
+			Particle particle(particlePosition, randomVelocity, particleColor, lifetime);
+			m_particles.push_back(particle);
+		}
+	}
+	updateParticles(t_deltaTime);
+
+	updateAnimation();
+
+	for (auto it = m_projectiles.begin(); it != m_projectiles.end(); )
+	{
+		it->update(t_deltaTime);
+
+		if (it->getPosition().x < 0 || it->getPosition().x > m_window.getSize().x ||
+			it->getPosition().y < 0 || it->getPosition().y > m_window.getSize().y)
+		{
+			it = m_projectiles.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
 	if (m_gameState == GameState::Playing)
 	{
-		setView(); // load view
+
 		if (m_pickup.isCollected(m_crabSprite.getGlobalBounds()))
 		{
-			m_pickup.applyEffect(m_player.getSprite());
-			m_player.updatePlayerSpriteColour(true);
+			m_pickup.applyEffect(m_crabSprite); 
 			m_pickup.spawn(sf::Vector2f(rand() % 700 + 50, rand() % 500 + 50)); 
 		}
-		
-		m_player.update(t_deltaTime);
-		applyParticles();
-		updateParticles(t_deltaTime);
+		else if (m_pickup.isCollected(m_foxSprite.getGlobalBounds()))
+		{
+			m_pickup.applyEffect(m_foxSprite);
+			m_pickup.spawn(sf::Vector2f(rand() % 700 + 50, rand() % 500 + 50));
+		}
+		else if (m_pickup.isCollected(m_goatSprite.getGlobalBounds()))
+		{
+			m_pickup.applyEffect(m_goatSprite);
+			m_pickup.spawn(sf::Vector2f(rand() % 700 + 50, rand() % 500 + 50));
+		}
+
+		updatePlayerSpriteColor(m_crabSprite);
+		updatePlayerSpriteColor(m_foxSprite);
+		updatePlayerSpriteColor(m_goatSprite);
 	}
 }
 
@@ -273,26 +331,6 @@ void Game::updateParticles(sf::Time deltaTime) {
 		else {
 			++it;
 		}
-
-		m_map.update(m_player);
-	}
-}
-
-void Game::applyParticles()
-{
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)||
-		sf::Keyboard::isKeyPressed(sf::Keyboard::A)||
-		sf::Keyboard::isKeyPressed(sf::Keyboard::S)||
-		sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-		for (int i = 0; i < 5; ++i) {
-			sf::Vector2f randomOffset = sf::Vector2f((rand() % 10) - 5, (rand() % 10) - 5);
-			sf::Vector2f particlePosition = m_player.getPosition()  + randomOffset;
-			sf::Vector2f randomVelocity = sf::Vector2f((rand() % 100) - 50, (rand() % 100) - 50);
-			sf::Color particleColor = sf::Color::Black;
-			float lifetime = 0.2;
-			Particle particle(particlePosition, randomVelocity, particleColor, lifetime);
-			m_particles.push_back(particle);
-		}
 	}
 }
 
@@ -302,6 +340,40 @@ void Game::drawParticles() {
 	}
 }
 
+void Game::updatePlayerSpriteColor(sf::Sprite& playerSprite)
+{
+	if (m_pickup.isActive())
+	{
+		playerSprite.setColor(sf::Color::Red);
+	}
+	else
+	{
+		playerSprite.setColor(sf::Color::White);
+	}
+}
+
+
+void Game::updateAnimation()
+{
+	if (m_animationClock.getElapsedTime().asSeconds() >= m_frameDuration)
+	{
+		m_animationClock.restart();
+
+
+		m_currentFrame = (m_currentFrame + 1) % 4;
+
+		int frameWidth = 16;
+		int frameHeight = 16;
+		int framesPerRow = 4;
+		int frameX = (m_currentFrame % framesPerRow) * frameWidth;
+		int frameY = (m_currentFrame / framesPerRow) * frameHeight;
+
+		sf::IntRect frameRect(frameX, frameY, frameWidth, frameHeight);
+		m_crabSprite.setTextureRect(frameRect);
+		m_foxSprite.setTextureRect(frameRect);
+		m_goatSprite.setTextureRect(frameRect);
+	}
+}
 
 bool Game::checkCollision(float objX, float objY, float objWidth, float objHeight, const Rectangle& rect) {
 	return (objX < rect.x + rect.width && objX + objWidth > rect.x &&
@@ -322,7 +394,7 @@ bool Game::checkCollisions(float objX, float objY, float objWidth, float objHeig
 void Game::render()
 {
 	m_window.clear(sf::Color::White);
-	
+
 	if (m_gameState == GameState::MainMenu)
 	{
 		m_window.draw(backgroundSprite);
@@ -334,21 +406,20 @@ void Game::render()
 		m_window.draw(m_goatSprite);
 		m_window.draw(title);
 
-
 		sf::Text selectedCharacterText;
 		selectedCharacterText.setFont(font);
 		selectedCharacterText.setCharacterSize(30);
 		selectedCharacterText.setFillColor(sf::Color::Black);
 
-		if (m_player.getSelectedCharacter() == PlayerCharacter::Crab)
+		if (m_playerCharacter == PlayerCharacter::Crab)
 		{
 			selectedCharacterText.setString("Selected Character: Crab");
 		}
-		else if (m_player.getSelectedCharacter() == PlayerCharacter::Fox)
+		else if (m_playerCharacter == PlayerCharacter::Fox)
 		{
 			selectedCharacterText.setString("Selected Character: Fox");
 		}
-		else if (m_player.getSelectedCharacter() == PlayerCharacter::Goat)
+		else if (m_playerCharacter == PlayerCharacter::Goat)
 		{
 			selectedCharacterText.setString("Selected Character: Goat");
 		}
@@ -362,18 +433,33 @@ void Game::render()
 	}
 	else if (m_gameState == GameState::Playing)
 	{
-		m_map.render(m_window);
+		m_window.draw(gameBackgroundSprite);
 
 		drawParticles();
 
-		//Player drawings
-		m_player.render(m_window);
-		//Pickups
- 	    m_pickup.draw(m_window);
-		
-		m_window.setView(m_gameView);
-		
-		
+		if (m_playerCharacter == PlayerCharacter::Crab)
+		{
+			m_crabSprite.setPosition(m_playerPosition);
+			m_crabSprite.setScale((m_playerDirection == Direction::Left) ?
+				sf::Vector2f(-3.0f, 3.0f) : sf::Vector2f(3.0f, 3.0f));
+			m_window.draw(m_crabSprite);
+		}
+		else if (m_playerCharacter == PlayerCharacter::Fox)
+		{
+			m_foxSprite.setPosition(m_playerPosition);
+			m_foxSprite.setScale((m_playerDirection == Direction::Left) ?
+				sf::Vector2f(-3.0f, 3.0f) : sf::Vector2f(3.0f, 3.0f));
+			m_window.draw(m_foxSprite);
+		}
+		else if (m_playerCharacter == PlayerCharacter::Goat)
+		{
+			m_goatSprite.setPosition(m_playerPosition);
+			m_goatSprite.setScale((m_playerDirection == Direction::Left) ?
+				sf::Vector2f(-3.0f, 3.0f) : sf::Vector2f(3.0f, 3.0f));
+			m_window.draw(m_goatSprite);
+		}
+		m_pickup.draw(m_window);
+
 		m_window.draw(m_pauseButtonSprite);
 	}
 	else if (m_gameState == GameState::Paused)
@@ -390,6 +476,13 @@ void Game::render()
 		m_window.draw(pauseText);
 
 	}
+
+	for (const auto& projectile : m_projectiles)
+	{
+		projectile.draw(m_window);
+	}
+
+
 	m_window.display();
 }
 
@@ -405,27 +498,69 @@ void Game::setupFontAndText()
 	title.setPosition(200.0f, 40.0f);
 	title.setCharacterSize(100U);
 	title.setFillColor(sf::Color::Black);
-}
 
+}
 
 
 void Game::setupSprite()
 {
+
+	if (!m_crabTexture.loadFromFile("ASSETS\\IMAGES\\crabSpritesheet.png"))
+	{
+		std::cout << "Problem loading spritesheet" << std::endl;
+		return;
+	}
+	sf::IntRect initialFrameRect(0, 0, 16, 16);
+
 	m_crabSprite.setTexture(m_crabTexture);
+	m_crabSprite.setTextureRect(initialFrameRect);
 	m_crabSprite.setPosition(290.0f, 165.0f);
 	m_crabSprite.setScale(3.0f, 3.0f);
-	m_crabSprite.setTextureRect(sf::IntRect(0, 0, 16, 16));
+
+	if (!m_foxTexture.loadFromFile("ASSETS\\IMAGES\\foxSpritesheet.png"))
+	{
+		std::cout << "Problem loading spritesheet" << std::endl;
+		return;
+	}
+	sf::IntRect foxFrameRect(0, 0, 16, 16);
 
 	m_foxSprite.setTexture(m_foxTexture);
+	m_foxSprite.setTextureRect(foxFrameRect);
 	m_foxSprite.setPosition(360.0f, 165.0f);
 	m_foxSprite.setScale(3.0f, 3.0f);
-	m_foxSprite.setTextureRect(sf::IntRect(0, 0, 16, 16));
+
+	if (!m_goatTexture.loadFromFile("ASSETS\\IMAGES\\goatSpritesheet.png"))
+	{
+		std::cout << "Problem loading spritesheet" << std::endl;
+		return;
+	}
+	sf::IntRect goatFrameRect(0, 0, 16, 16);
 
 	m_goatSprite.setTexture(m_goatTexture);
+	m_goatSprite.setTextureRect(goatFrameRect);
 	m_goatSprite.setPosition(440.0f, 165.0f);
 	m_goatSprite.setScale(3.0f, 3.0f);
-	m_goatSprite.setTextureRect(sf::IntRect(0, 0, 16, 16));
 
+	if (!m_crabProjectileTexture.loadFromFile("ASSETS\\IMAGES\\cheese.png"))
+	{
+		std::cout << "Problem loading crab projectile texture" << std::endl;
+	}
+
+	if (!m_foxProjectileTexture.loadFromFile("ASSETS\\IMAGES\\snowball.png"))
+	{
+		std::cout << "Problem loading fox projectile texture" << std::endl;
+	}
+
+	if (!m_goatProjectileTexture.loadFromFile("ASSETS\\IMAGES\\cheese.png"))
+	{
+		std::cout << "Problem loading goat projectile texture" << std::endl;
+	}
+
+	if (!pickupTexture.loadFromFile("ASSETS\\IMAGES\\strawberry.png"))
+	{
+		std::cout << "Problem loading pickup texture" << std::endl;
+		return;
+	}
 	m_pickup = Pickup(pickupTexture);
 	sf::Vector2f randomPosition = sf::Vector2f(rand() % 700 + 50, rand() % 500 + 50);
 	m_pickup.spawn(randomPosition);
