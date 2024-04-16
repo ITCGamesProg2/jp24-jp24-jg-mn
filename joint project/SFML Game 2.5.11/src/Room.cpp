@@ -16,6 +16,8 @@ void Room::init(sf::Vector2f t_position)
 
 	m_roomView.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 	m_roomView.setCenter(m_roomSprite.getPosition().x + (SCREEN_WIDTH / 2), m_roomSprite.getPosition().y + (SCREEN_HEIGHT / 2));
+
+	m_grid.generateGrid();
 }
 
 void Room::update(Player& t_player)
@@ -27,6 +29,7 @@ void Room::render(sf::RenderWindow& t_window)
 {
 	t_window.setView(m_roomView);
 	t_window.draw(m_roomSprite);
+	m_grid.render(t_window);
 	for (int i = 0; i < m_doors.size(); i++) {
 		m_doors[i]->render(t_window);
 	}

@@ -6,6 +6,7 @@
 #include"ScreenSize.h"
 #include"Structs.h"
 #include"player.h"
+#include"grid.h"
 
 class Room
 {
@@ -28,5 +29,7 @@ private:
 
 	sf::View m_roomView;
 	std::vector<Door*> m_doors;
+
+	grid m_grid;
 
 };
