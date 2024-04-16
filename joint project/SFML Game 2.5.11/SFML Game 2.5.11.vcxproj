@@ -19,25 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ai_enemy.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="grid.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="particle.cpp" />
-    <ClCompile Include="pickup.cpp" />
-    <ClCompile Include="player.cpp" />
-    <ClCompile Include="projectile.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="ai_enemy.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="grid.h" />
-    <ClInclude Include="particle.h" />
-    <ClInclude Include="pickup.h" />
-    <ClInclude Include="player.h" />
-    <ClInclude Include="projectile.h" />
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="ASSETS\IMAGES\SFML-LOGO.png">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
@@ -50,6 +31,44 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </Font>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\ai_enemy.h" />
+    <ClInclude Include="include\Door.h" />
+    <ClInclude Include="include\Game.h" />
+    <ClInclude Include="include\grid.h" />
+    <ClInclude Include="include\Map.h" />
+    <ClInclude Include="include\particle.h" />
+    <ClInclude Include="include\pickup.h" />
+    <ClInclude Include="include\player.h" />
+    <ClInclude Include="include\projectile.h" />
+    <ClInclude Include="include\Room.h" />
+    <ClInclude Include="include\ScreenSize.h" />
+    <ClInclude Include="include\Structs.h" />
+    <ClInclude Include="include\Weapon.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\ai_enemy.cpp" />
+    <ClCompile Include="src\Color.cpp" />
+    <ClCompile Include="src\Constants.cpp" />
+    <ClCompile Include="src\DirectedLight.cpp" />
+    <ClCompile Include="src\Door.cpp" />
+    <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\grid.cpp" />
+    <ClCompile Include="src\LightingArea.cpp" />
+    <ClCompile Include="src\LightSource.cpp" />
+    <ClCompile Include="src\Line.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Map.cpp" />
+    <ClCompile Include="src\particle.cpp" />
+    <ClCompile Include="src\pickup.cpp" />
+    <ClCompile Include="src\player.cpp" />
+    <ClCompile Include="src\Polygon.cpp" />
+    <ClCompile Include="src\projectile.cpp" />
+    <ClCompile Include="src\RadialLight.cpp" />
+    <ClCompile Include="src\Room.cpp" />
+    <ClCompile Include="src\VertexArray.cpp" />
+    <ClCompile Include="src\Weapon.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -109,10 +128,10 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SFML_SDK)/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SFML_SDK)/include;.\include;.\src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SFML_SDK)\lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SFML_SDK)\lib;.\lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
