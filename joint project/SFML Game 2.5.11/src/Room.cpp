@@ -6,12 +6,13 @@ Room::Room()
 
 void Room::init(sf::Vector2f t_position)
 {
-	if (!m_roomTexture.loadFromFile("ASSETS\\IMAGES\\gameBackground.jpg"))
+	if (!m_roomTexture.loadFromFile("ASSETS\\IMAGES\\map.png"))
 	{
 		std::cout << "Problem loading play button texture" << std::endl;
 	}
 	m_roomSprite.setTexture(m_roomTexture);
 	m_roomSprite.setPosition(t_position);
+	m_roomSprite.setScale(3.5, 3.5);
 
 	m_roomView.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 	m_roomView.setCenter(m_roomSprite.getPosition().x + (SCREEN_WIDTH / 2), m_roomSprite.getPosition().y + (SCREEN_HEIGHT / 2));

@@ -6,6 +6,9 @@
 #include "Projectile.h"
 #include "pickup.h"
 #include "particle.h"
+#include"player.h"
+#include"ScreenSize.h"
+#include"Map.h"
 
 struct Rectangle {
 	float x, y;
@@ -28,21 +31,7 @@ private:
 		Paused
 	};
 
-	enum class PlayerCharacter {
-		None,  
-		Crab,
-		Fox,
-		Goat
-	};
-
-	enum class Direction {
-		Left,
-		Right
-	};
-
-	Direction m_playerDirection;  
 	GameState m_gameState;
-	PlayerCharacter m_playerCharacter;
 
 	void processEvents();
 	void processKeys(sf::Event t_event);
@@ -50,40 +39,40 @@ private:
 	void render();
 	
 	void setupFontAndText();
+	void loadTextures();
 	void setupSprite();
-	void updateAnimation();
-	void updatePlayerSpriteColor(sf::Sprite& playerSprite);
 
 	bool checkCollision(float objX, float objY, float objWidth, float objHeight, const Rectangle& rect);
 	bool checkCollisions(float objX, float objY, float objWidth, float objHeight, const std::vector<Rectangle>& rectangles);
 
-	void shoot();
 
-	void selectCharacter(PlayerCharacter character);
 	void updateButtonColor(sf::Sprite& button, const sf::Vector2f& mousePosition);
 	void startPlaying();
 	void handleMainMenuHover(const sf::Vector2f& mousePosition);
 	void handleMainMenuClick(const sf::Vector2f& mousePosition);
 	void togglePause();
 
-	sf::Clock m_animationClock;
-	float m_frameDuration;
-	int m_currentFrame;
+	sf::Texture m_crabTexture;
+	sf::Texture m_foxTexture;
+	sf::Texture m_goatTexture;
+	sf::Texture m_crabProjectileTexture;
+	sf::Texture m_foxProjectileTexture;
+	sf::Texture m_goatProjectileTexture;
 
-	std::vector<Projectile> m_projectiles;
+	Player m_player;
 
 	Pickup m_pickup;
 	sf::Texture pickupTexture;
 
 	std::vector<Particle> m_particles;
 	void updateParticles(sf::Time deltaTime);
+	void applyParticles();
 	void drawParticles();
 
 	sf::Sprite m_pauseButtonSprite;
 	sf::Texture m_pauseButtonTexture;
 
-	sf::Time m_shootCooldown;
-	sf::Clock m_shootTimer;
+
 
 	sf::Texture m_playButtonTexture;
 	sf::Sprite m_playButtonSprite;
@@ -91,17 +80,13 @@ private:
 	sf::Texture m_exitButtonTexture;
 	sf::Sprite m_exitButtonSprite;
 
-	sf::Texture m_crabTexture;
 	sf::Sprite m_crabSprite;
 
-	sf::Texture m_foxTexture;
 	sf::Sprite m_foxSprite;
 
-	sf::Texture m_goatTexture;
 	sf::Sprite m_goatSprite;
 
-	sf::Vector2f m_playerPosition;
-
+	
 	sf::Font font;
 	sf::Text title;
 
@@ -114,9 +99,6 @@ private:
 	sf::Texture m_tileTexture;
 	sf::Sprite m_tileSprite;
 
-	sf::Texture m_crabProjectileTexture;
-    sf::Texture m_foxProjectileTexture; 
-    sf::Texture m_goatProjectileTexture;
 
 
 	Rectangle rect1;
@@ -125,6 +107,11 @@ private:
 	float width1 = 50.0f;
 	float height1 = 100.0f;
 
+	sf::View m_gameView;
+	void setView();
+
+	//Map
+	Map m_map;
 
 	sf::RenderWindow m_window; // main SFML window
 	//sf::Font m_ArialBlackfont; // font used by message
