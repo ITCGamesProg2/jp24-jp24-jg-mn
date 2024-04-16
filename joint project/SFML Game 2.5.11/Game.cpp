@@ -134,7 +134,7 @@ void Game::loadTextures()
 		std::cout << "Problem loading spritesheet" << std::endl;
 		return;
 	}
-	if (!m_crabProjectileTexture.loadFromFile("ASSETS\\IMAGES\\cheese.png"))
+	if (!m_crabProjectileTexture.loadFromFile("ASSETS\\IMAGES\\starfish.png"))
 	{
 		std::cout << "Problem loading crab projectile texture" << std::endl;
 	}
@@ -287,6 +287,7 @@ void Game::applyParticles()
 		for (int i = 0; i < 5; ++i) {
 			sf::Vector2f randomOffset = sf::Vector2f((rand() % 10) - 5, (rand() % 10) - 5);
 			sf::Vector2f particlePosition = m_player.getPosition()  + randomOffset;
+			particlePosition.y += 25.0f;
 			sf::Vector2f randomVelocity = sf::Vector2f((rand() % 100) - 50, (rand() % 100) - 50);
 			sf::Color particleColor = sf::Color::Black;
 			float lifetime = 0.2;
