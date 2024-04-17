@@ -364,6 +364,8 @@ void Game::render()
 	{
 		m_map.render(m_window);
 
+		m_window.draw(m_pauseButtonSprite);
+
 		drawParticles();
 
 		//Player drawings
@@ -373,8 +375,6 @@ void Game::render()
 		
 		m_window.setView(m_gameView);
 		
-		
-		m_window.draw(m_pauseButtonSprite);
 	}
 	else if (m_gameState == GameState::Paused)
 	{
