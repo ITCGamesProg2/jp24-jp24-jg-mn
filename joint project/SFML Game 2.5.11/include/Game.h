@@ -3,6 +3,8 @@
 #define GAME_HPP
 
 #include <SFML/Graphics.hpp>
+#include "Candle/RadialLight.hpp"
+#include <Candle/LightingArea.hpp>
 #include <SFML/Audio.hpp>
 #include "Projectile.h"
 #include "pickup.h"
@@ -104,6 +106,10 @@ private:
 
 	sf::Music m_backgroundMusic;
 	sf::Music m_menuMusic;
+
+	candle::LightingArea fog;
+
+	candle::RadialLight light;
 	
 
 	Rectangle rect1;

@@ -10,10 +10,14 @@ Game::Game() :
 	m_window{ sf::VideoMode{ SCREEN_WIDTH, SCREEN_HEIGHT, 32U }, "SFML Game" },
 	m_exitGame{ false }, 
 	m_gameState(GameState::MainMenu),
-	m_pickup(pickupTexture)
+	m_pickup(pickupTexture),
+	fog(candle::LightingArea::FOG, sf::Vector2f(-SCREEN_HEIGHT, -SCREEN_WIDTH) ,sf::Vector2f(SCREEN_WIDTH * 5,SCREEN_HEIGHT* 5))
 {
-
-
+	fog.setAreaColor(sf::Color::Black);
+	light.setRange(400);
+	light.setIntensity(0.5);
+	light.setColor(sf::Color::Red);
+		
 	loadTextures();
 	setupFontAndText(); 
 	setupSprite();
@@ -261,6 +265,7 @@ void Game::update(sf::Time t_deltaTime)
 			m_player.updatePlayerSpriteColour(true);
 			m_pickup.spawn(sf::Vector2f(rand() % 700 + 50, rand() % 500 + 50)); 
 		}
+		light.setPosition(m_player.getPosition());
 		
 		m_player.update(t_deltaTime);
 		applyParticles();
@@ -325,7 +330,11 @@ bool Game::checkCollisions(float objX, float objY, float objWidth, float objHeig
 
 void Game::render()
 {
+	fog.clear();
+	fog.draw(light);
+	fog.display();
 	m_window.clear(sf::Color::White);
+
 	
 	if (m_gameState == GameState::MainMenu)
 	{
@@ -368,6 +377,8 @@ void Game::render()
 	{
 		m_map.render(m_window);
 
+
+
 		m_window.draw(m_pauseButtonSprite);
 
 		drawParticles();
@@ -377,7 +388,13 @@ void Game::render()
 		//Pickups
  	    m_pickup.draw(m_window);
 		
-		m_window.setView(m_gameView);
+		//m_window.setView(m_gameView);
+
+		//sf::Vector2f worldPos = m_window.mapPixelToCoords(m_player.getPosition(),m_gameView);
+	//	m_player.setPosition(worldPos);
+
+		m_window.draw(fog);
+		m_window.draw(light);
 		
 	}
 	else if (m_gameState == GameState::Paused)
