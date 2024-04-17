@@ -16,7 +16,7 @@ Game::Game() :
 	fog.setAreaColor(sf::Color::Black);
 	light.setRange(400);
 	light.setIntensity(0.5);
-	light.setColor(sf::Color::Red);
+	light.setColor(sf::Color(255,140,0,150));
 		
 	loadTextures();
 	setupFontAndText(); 
