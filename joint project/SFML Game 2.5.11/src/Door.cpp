@@ -5,12 +5,12 @@ Door::Door(CurrentRoom currentRoom,DetectorPositions t_location, sf::Vector2f t_
 	hitbox.setFillColor(sf::Color::Red);
 	if (location == DetectorPositions::LEFT || location == DetectorPositions::RIGHT)
 	{
-		hitbox.setSize(sf::Vector2f(20, 100));
-		hitbox.setOrigin(10, 50);
+		hitbox.setSize(sf::Vector2f(20, 48));
+		hitbox.setOrigin(10, 24);
 	}
 	else {
-		hitbox.setSize(sf::Vector2f(100, 20));
-		hitbox.setOrigin(50, 10);
+		hitbox.setSize(sf::Vector2f(48, 20));
+		hitbox.setOrigin(24, 10);
 	}
 
 	hitbox.setPosition(t_position);

@@ -7,12 +7,13 @@
 #include"Structs.h"
 #include"player.h"
 #include"grid.h"
+#include"CollisionData.h"
 
 class Room
 {
 public:
 	Room();
-	void init(sf::Vector2f t_position);
+	void init(sf::Vector2f t_position, int t_roomNumber);
 	void update(Player& t_player);
 	void render(sf::RenderWindow& t_window);
 	void setUpDoors(std::vector<RoomLayout> t_layout);

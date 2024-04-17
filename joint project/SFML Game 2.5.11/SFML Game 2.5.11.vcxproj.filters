@@ -125,7 +125,7 @@
     <ClInclude Include="include\Weapon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="RoomCoords.h">
+    <ClInclude Include="include\CollisionData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

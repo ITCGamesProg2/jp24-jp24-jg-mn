@@ -1,27 +1,56 @@
 #pragma once
 #include<SFML/Graphics.hpp>
+#include"CollisionData.h"
 #include<vector>
+
+
 
 class cell {
 public:
 	cell(sf::Vector2f t_position) {
 		cellShape.setPosition(t_position);
-		cellShape.setSize(sf::Vector2f(50,40)); //our grid size
+		cellShape.setSize(sf::Vector2f(48,48)); //our grid size
 		cellShape.setFillColor(sf::Color::Transparent);
 		cellShape.setOutlineThickness(1);
-		cellShape.setOutlineColor(sf::Color::Blue);
+		cellShape.setOutlineColor(sf::Color::White);
 	};
+	void setRed() {
+		cellShape.setFillColor(sf::Color::Red);
+	}
 	sf::RectangleShape cellShape;
 };
 
 class grid {
 public:
-	void generateGrid()
+	void generateGrid(int t_obs, int t_x) 
 	{
-		for (int i = 0; i < 15; i++) { //15 cells long
-			for (int j = 0; j < 16; j++) //16 grids long
+		int temp = 0;
+		for (int i = 0; i < 19; i++) { //15 cells long
+			for (int j = 0; j < 25; j++) //16 grids long
 			{
-				m_cells.push_back(cell(sf::Vector2f(j * 50, i * 40))); //set positions
+				m_cells.push_back(cell(sf::Vector2f(t_x + j * 48, i * 48))); //set positions
+				switch (t_obs) {
+				case 0:
+					if (roomOne[temp] == 333) {
+						//m_obstacleCells.push_back(m_cells.at(temp));
+						//m_cells.at(temp).setRed();
+					}
+					break;
+				case 1:
+					if (roomOne[temp] == 333) {
+						//m_obstacleCells.push_back(m_cells.at(temp));
+						//m_cells.at(temp).setRed();
+					}
+					break;
+				case 2:
+					if (roomOne[temp] == 333) {
+						//m_obstacleCells.push_back(m_cells.at(temp));
+						//m_cells.at(temp).setRed();
+					}
+					break;
+				}
+				temp++;
+				
 			}
 		}
 	};
@@ -33,5 +62,9 @@ public:
 	};
 private:
 	std::vector<cell> m_cells;
+	std::vector<cell> m_obstacleCells;
+
+
+
 
 };

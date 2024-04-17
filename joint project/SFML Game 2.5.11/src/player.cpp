@@ -15,7 +15,7 @@ void Player::init(sf::Texture& t_textures, sf::Texture& t_bulletTexture)
 	m_playerSprite.setTexture(t_textures);
 	m_playerSprite.setTextureRect(sf::IntRect(0, 0, 16, 16));
 	m_playerSprite.setOrigin(8, 8);
-	m_playerSprite.setScale(3.0f, 3.0f);
+	m_playerSprite.setScale(2.0f, 2.0f);
 }
 
 void Player::move()
@@ -74,7 +74,7 @@ sf::Vector2f Player::getAimDirection() const
 void Player::changeDirection()
 {
 	m_playerSprite.setScale((m_playerDirection == Direction::Left) ?
-		sf::Vector2f(-3.0f, 3.0f) : sf::Vector2f(3.0f, 3.0f));
+		sf::Vector2f(-2.0f, 2.0f) : sf::Vector2f(2.0f, 2.0f));
 }
 
 void Player::update(sf::Time t_deltaTime)

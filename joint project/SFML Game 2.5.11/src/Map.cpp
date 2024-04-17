@@ -9,16 +9,18 @@ void Map::init()
 {
 	m_currentRoom = CurrentRoom::Room1;
 
-	m_baseRoom.init(sf::Vector2f(0,0));
-	m_secondRoom.init(sf::Vector2f(1000, 0));
+	m_baseRoom.init(sf::Vector2f(0,0),0);
+	m_secondRoom.init(sf::Vector2f(1000, 0),1); //set up third room
 
-	RoomLayout tempDoor = RoomLayout{sf::Vector2f(0,300), DetectorPositions::LEFT , CurrentRoom::Room1};
+	RoomLayout tempDoor = RoomLayout{sf::Vector2f(698,576), DetectorPositions::UP , CurrentRoom::Room1};
 	m_baseRoomLayout.push_back(tempDoor);
 	m_baseRoom.setUpDoors(m_baseRoomLayout);
 
-	RoomLayout temp1{ sf::Vector2f(1800,300),DetectorPositions::RIGHT, CurrentRoom::Room2 };
+	RoomLayout temp1{ sf::Vector2f(1312,624),DetectorPositions::DOWN, CurrentRoom::Room2 }; //add another tempdoor but ,make it up and set at stairs
 	m_secondRoomLayout.push_back(temp1);
 	m_secondRoom.setUpDoors(m_secondRoomLayout);
+
+	//set up a door for room 3
 
 	linkDoors();
 
@@ -68,8 +70,10 @@ void Map::update(Player& t_player)
 
 void Map::linkDoors()
 {
-	m_baseRoom.getDoor(DetectorPositions::LEFT)->setPartner(m_secondRoom.getDoor(DetectorPositions::RIGHT));
-	m_secondRoom.getDoor(DetectorPositions::RIGHT)->setPartner(m_baseRoom.getDoor(DetectorPositions::LEFT));
+	m_baseRoom.getDoor(DetectorPositions::UP)->setPartner(m_secondRoom.getDoor(DetectorPositions::DOWN));
+	m_secondRoom.getDoor(DetectorPositions::DOWN)->setPartner(m_baseRoom.getDoor(DetectorPositions::UP));
+
+	//link top door from room 2 to bottom door from room 3 and vice versa
 }
 
 

@@ -34,6 +34,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\ai_enemy.h" />
+    <ClInclude Include="include\CollisionData.h" />
     <ClInclude Include="include\Door.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\grid.h" />
@@ -46,7 +47,6 @@
     <ClInclude Include="include\ScreenSize.h" />
     <ClInclude Include="include\Structs.h" />
     <ClInclude Include="include\Weapon.h" />
-    <ClInclude Include="RoomCoords.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ai_enemy.cpp" />

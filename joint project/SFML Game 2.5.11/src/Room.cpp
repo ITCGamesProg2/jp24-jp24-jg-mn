@@ -4,20 +4,40 @@ Room::Room()
 {
 }
 
-void Room::init(sf::Vector2f t_position)
+void Room::init(sf::Vector2f t_position, int t_roomNumber) //make option either pass an enum and switch statement to change textures based on room
 {
-	if (!m_roomTexture.loadFromFile("ASSETS\\IMAGES\\map.png"))
-	{
-		std::cout << "Problem loading play button texture" << std::endl;
+	
+	switch (t_roomNumber) {
+	case 0:
+		if (!m_roomTexture.loadFromFile("ASSETS\\IMAGES\\main_floor.png"))
+		{
+			std::cout << "Problem loading play button texture" << std::endl;
+		}
+		m_grid.generateGrid(0, t_position.x);
+		break;
+	case 1:
+		if (!m_roomTexture.loadFromFile("ASSETS\\IMAGES\\secondFLoor.png"))
+		{
+			std::cout << "Problem loading play button texture" << std::endl;
+		}
+		m_grid.generateGrid(1, t_position.x);
+		break;
+	case 2:
+		if (!m_roomTexture.loadFromFile("ASSETS\\IMAGES\\thirdFloor.png"))
+		{
+			std::cout << "Problem loading play button texture" << std::endl;
+		}
+		m_grid.generateGrid(2, t_position.x);
+		break;
 	}
 	m_roomSprite.setTexture(m_roomTexture);
 	m_roomSprite.setPosition(t_position);
-	m_roomSprite.setScale(3.5, 3.5);
+	m_roomSprite.setScale(1.5, 1.5); // keep scale
 
 	m_roomView.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 	m_roomView.setCenter(m_roomSprite.getPosition().x + (SCREEN_WIDTH / 2), m_roomSprite.getPosition().y + (SCREEN_HEIGHT / 2));
 
-	m_grid.generateGrid();
+	
 }
 
 void Room::update(Player& t_player)

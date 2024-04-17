@@ -268,6 +268,7 @@ void Game::update(sf::Time t_deltaTime)
 		light.setPosition(m_player.getPosition());
 		
 		m_player.update(t_deltaTime);
+		m_map.update(m_player);
 		applyParticles();
 		updateParticles(t_deltaTime);
 	}
