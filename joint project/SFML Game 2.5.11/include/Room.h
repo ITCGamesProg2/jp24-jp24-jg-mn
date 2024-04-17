@@ -18,6 +18,7 @@ public:
 	void setUpDoors(std::vector<RoomLayout> t_layout);
 	bool doorCollision(sf::Sprite& t_playerSprite);
 	Door* getDoor(DetectorPositions t_doorPos);
+	//void gridCollisions(array[])
 	std::vector<Door*> getDoors() {
 		return m_doors;
 	};

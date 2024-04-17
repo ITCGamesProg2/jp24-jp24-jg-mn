@@ -46,6 +46,7 @@
     <ClInclude Include="include\ScreenSize.h" />
     <ClInclude Include="include\Structs.h" />
     <ClInclude Include="include\Weapon.h" />
+    <ClInclude Include="RoomCoords.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ai_enemy.cpp" />
