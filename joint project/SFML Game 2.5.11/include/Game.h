@@ -3,6 +3,7 @@
 #define GAME_HPP
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "Projectile.h"
 #include "pickup.h"
 #include "particle.h"
@@ -52,6 +53,8 @@ private:
 	void handleMainMenuClick(const sf::Vector2f& mousePosition);
 	void togglePause();
 
+	void loadAudio();
+
 	sf::Texture m_crabTexture;
 	sf::Texture m_foxTexture;
 	sf::Texture m_goatTexture;
@@ -99,7 +102,9 @@ private:
 	sf::Texture m_tileTexture;
 	sf::Sprite m_tileSprite;
 
-
+	sf::Music m_backgroundMusic;
+	sf::Music m_menuMusic;
+	
 
 	Rectangle rect1;
 	float x1 = 100.0f;

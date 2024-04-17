@@ -17,7 +17,6 @@ public:
 private:
     sf::Sprite m_sprite;
     sf::Vector2f m_velocity;
-    float m_rotationAngle;
 };
 
 #endif // PROJECTILE_HPP

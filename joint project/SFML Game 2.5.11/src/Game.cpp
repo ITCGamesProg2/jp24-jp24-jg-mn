@@ -12,15 +12,19 @@ Game::Game() :
 	m_gameState(GameState::MainMenu),
 	m_pickup(pickupTexture)
 {
+
+
 	loadTextures();
 	setupFontAndText(); 
-	setupSprite(); 
+	setupSprite();
+	loadAudio();
 
 	std::vector<Rectangle> buildings;
 	buildings.push_back(rect1);
 	buildings.push_back(Rectangle{ x1, y1, width1, height1 }); 
 	setupFontAndText(); // load font 
 	setupSprite(); // load texture
+
 
 }
 
@@ -475,4 +479,17 @@ void Game::setupSprite()
 	m_tileSprite.setTexture(m_tileTexture);
 	m_tileSprite.setPosition(235.0f, 130.0f);
 	m_tileSprite.setScale(sf::Vector2f(3, 3));
+}
+
+
+void Game::loadAudio()
+{
+	if (!m_backgroundMusic.openFromFile("ASSETS\\AUDIO\\oblivian.ogg"))
+	{
+		std::cout << "Error loading background music." << std::endl;
+	}
+	m_backgroundMusic.play();
+	m_backgroundMusic.setLoop(true);
+
+
 }
