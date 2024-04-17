@@ -14,7 +14,9 @@ enum class PlayerCharacter {
 
 enum class Direction {
     Left,
-    Right
+    Right,
+    Up,
+    Down
 };
 
 
@@ -43,6 +45,8 @@ public:
     void selectCharacter(PlayerCharacter t_playerCharacter);
     PlayerCharacter getSelectedCharacter() { return m_playerCharacter; };
     sf::Sprite getSprite() { return m_playerSprite; };
+
+    sf::Vector2f getAimDirection() const;
 
     bool isMoving = false;
 private:

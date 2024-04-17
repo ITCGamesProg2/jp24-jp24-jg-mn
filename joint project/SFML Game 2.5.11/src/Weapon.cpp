@@ -5,18 +5,21 @@ void Weapon::update(sf::Time t_deltaTime)
 	updateProjectiles(t_deltaTime);
 }
 
-void Weapon::shoot(sf::Vector2f t_playerPosition)
+
+
+void Weapon::shoot(sf::Vector2f t_playerPosition, const sf::Vector2f& aimDirection)
 {
-	if (m_shootTimer.getElapsedTime() >= m_shootCooldown)
-	{
-		sf::Vector2f playerCenter = t_playerPosition;
-		sf::Vector2f aimDirection = sf::Vector2f(1.f, 0.f);
+    if (m_shootTimer.getElapsedTime() >= m_shootCooldown)
+    {
+        sf::Vector2f playerCenter = t_playerPosition;
 
-		Projectile projectile(playerCenter, std::atan2(aimDirection.y, aimDirection.x), bulletTexture);
-		m_projectiles.push_back(projectile);
+        float angle = std::atan2(aimDirection.y, aimDirection.x);
 
-		m_shootTimer.restart();
-	}
+        Projectile projectile(playerCenter, angle, bulletTexture);
+        m_projectiles.push_back(projectile);
+
+        m_shootTimer.restart();
+    }
 }
 
 void Weapon::render(sf::RenderWindow& win)

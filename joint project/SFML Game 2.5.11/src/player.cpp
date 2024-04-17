@@ -27,10 +27,12 @@ void Player::move()
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 		m_playerPosition.y -= movementSpeed;
+		m_playerDirection = Direction::Up;
 		isMoving = true;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
 		m_playerPosition.y += movementSpeed;
+		m_playerDirection = Direction::Down;
 		isMoving = true;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
@@ -47,6 +49,27 @@ void Player::move()
 	m_playerSprite.setPosition(m_playerPosition);
 }
 
+sf::Vector2f Player::getAimDirection() const
+{
+	sf::Vector2f aimDirection;
+
+	switch (m_playerDirection)
+	{
+	case Direction::Left:
+		return sf::Vector2f(-1.f, 0.f);
+	case Direction::Right:
+		return sf::Vector2f(1.f, 0.f);
+	case Direction::Up:
+		return sf::Vector2f(0.f, -1.f);
+	case Direction::Down:
+		return sf::Vector2f(0.f, 1.f);
+	default:
+		return sf::Vector2f(0.f, 0.f);
+	}
+	return aimDirection;
+
+}
+
 void Player::changeDirection()
 {
 	m_playerSprite.setScale((m_playerDirection == Direction::Left) ?
@@ -59,8 +82,12 @@ void Player::update(sf::Time t_deltaTime)
 	changeDirection();
 	animate();
 	m_weapon.update(t_deltaTime);
+
+	sf::Vector2f aimDirection = getAimDirection();
+
+	// Pass aiming direction to the weapon when shooting
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-		m_weapon.shoot(m_playerSprite.getPosition());
+		m_weapon.shoot(m_playerSprite.getPosition(), aimDirection);
 	}
 }
 

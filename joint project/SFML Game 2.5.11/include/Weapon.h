@@ -8,7 +8,7 @@ class Weapon
 {
 public:
 	void update(sf::Time t_deltaTime);
-	void shoot(sf::Vector2f t_playerPosition);
+	void shoot(sf::Vector2f t_playerPosition, const sf::Vector2f& aimDirection);
 	void render(sf::RenderWindow& win);
 	void init(sf::Texture& t_texture);
 private:

@@ -134,7 +134,7 @@ void Game::loadTextures()
 		std::cout << "Problem loading spritesheet" << std::endl;
 		return;
 	}
-	if (!m_crabProjectileTexture.loadFromFile("ASSETS\\IMAGES\\cheese.png"))
+	if (!m_crabProjectileTexture.loadFromFile("ASSETS\\IMAGES\\starfish.png"))
 	{
 		std::cout << "Problem loading crab projectile texture" << std::endl;
 	}
