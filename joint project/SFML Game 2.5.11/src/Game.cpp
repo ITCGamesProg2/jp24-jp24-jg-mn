@@ -297,13 +297,13 @@ void Game::update(sf::Time t_deltaTime)
 	        
 		}
 
-
-		if (m_pickup.isCollected(m_crabSprite.getGlobalBounds()))
+		if (m_pickup.isCollected(m_player.getSprite().getGlobalBounds()))
 		{
 			m_pickup.applyEffect(m_player.getSprite());
-			//m_player.updatePlayerSpriteColour(true);
-			m_pickup.spawn(sf::Vector2f(rand() % 700 + 50, rand() % 500 + 50)); 
+
+			m_pickup.spawn(sf::Vector2f(rand() % 700 + 50, rand() % 500 + 50));
 		}
+
 		light.setPosition(m_player.getPosition());
 
 		m_enemy.update(m_player.getPosition(), m_enemySpeed);

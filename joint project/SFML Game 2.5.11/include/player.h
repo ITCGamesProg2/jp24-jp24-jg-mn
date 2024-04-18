@@ -40,7 +40,7 @@ public:
 
     void animate();
 
-    void updatePlayerSpriteColour( bool isHit);
+    void updatePlayerSpriteColour(bool isHit);
 
     void selectCharacter(PlayerCharacter t_playerCharacter);
     PlayerCharacter getSelectedCharacter() { return m_playerCharacter; };
