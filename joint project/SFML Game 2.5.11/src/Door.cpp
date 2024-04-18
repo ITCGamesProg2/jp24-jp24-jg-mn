@@ -2,7 +2,7 @@
 
 Door::Door(CurrentRoom currentRoom,DetectorPositions t_location, sf::Vector2f t_position) : location(t_location), position(t_position), m_room(currentRoom)
 {
-	hitbox.setFillColor(sf::Color::Red);
+	hitbox.setFillColor(sf::Color::Transparent);
 	if (location == DetectorPositions::LEFT || location == DetectorPositions::RIGHT)
 	{
 		hitbox.setSize(sf::Vector2f(20, 48));
@@ -15,7 +15,7 @@ Door::Door(CurrentRoom currentRoom,DetectorPositions t_location, sf::Vector2f t_
 
 	hitbox.setPosition(t_position);
 	
-	spawnPoint.setFillColor(sf::Color::Red);
+	spawnPoint.setFillColor(sf::Color::Transparent);
 	spawnPoint.setSize(sf::Vector2f(20, 20));
 	spawnPoint.setOrigin(10, 10);
 

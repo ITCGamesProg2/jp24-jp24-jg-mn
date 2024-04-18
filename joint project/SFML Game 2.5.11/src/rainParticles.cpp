@@ -6,8 +6,7 @@ RainParticle::RainParticle(float x, float y)
 
 void RainParticle::update(float deltaTime) {
     m_position.y += m_velocityY * deltaTime;
-    // Check if particle is below screen to mark it as dead
-    if (m_position.y > 1000.0f) { // Adjust 600.0f based on your screen height
+    if (m_position.y > 900.0f) { 
         m_alive = false;
     }
 }

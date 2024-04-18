@@ -20,11 +20,11 @@ void Map::init()
 	RoomLayout temp1{ sf::Vector2f(1312,624),DetectorPositions::DOWN, CurrentRoom::Room2 }; 
 	m_secondRoomLayout.push_back(temp1);
 	
-	RoomLayout temp2{ sf::Vector2f(1312,200),DetectorPositions::UP, CurrentRoom::Room2 };
+	RoomLayout temp2{ sf::Vector2f(1168,144),DetectorPositions::UP, CurrentRoom::Room2 };
 	m_secondRoomLayout.push_back(temp2);
 	m_secondRoom.setUpDoors(m_secondRoomLayout);
 
-	RoomLayout temp3{ sf::Vector2f(2240,192), DetectorPositions::DOWN, CurrentRoom::Room3 };
+	RoomLayout temp3{ sf::Vector2f(2168,576), DetectorPositions::DOWN, CurrentRoom::Room3 };
 	m_thirdRoomLayout.push_back(temp3);
 	m_thirdRoom.setUpDoors(m_thirdRoomLayout);
 
