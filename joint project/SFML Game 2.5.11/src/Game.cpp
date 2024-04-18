@@ -16,7 +16,7 @@ Game::Game() :
 	m_enemySpeed(1.5f)
 {
 	fog.setAreaColor(sf::Color::Black);
-	light.setRange(400);
+	light.setRange(600);
 	light.setIntensity(0.5);
 	light.setColor(sf::Color(255,140,0,150));
 		
@@ -280,11 +280,13 @@ void Game::update(sf::Time t_deltaTime)
 		{
 			int damageAmount = 1;
 			m_player.decreaseHealth(damageAmount);
-			std::cout << "Health: " << damageAmount << std::endl;
+
 			std::cout << "Player's remaining health: " << m_player.getHealth() << std::endl;
 
-			if (m_player.getHealth() <= 0) {
+			if (m_player.getHealth() <= 0)
+			{
 				std::cout << "Game over." << std::endl;
+				m_gameState = GameState::GameOver;
 			}
 
 	        
@@ -465,6 +467,17 @@ void Game::render()
 
 		m_window.draw(pauseText);
 
+	}
+	else if (m_gameState == GameState::GameOver)
+	{
+		sf::Text gameOverText;
+		gameOverText.setFont(font);
+		gameOverText.setString("Game Over!");
+		gameOverText.setCharacterSize(180);
+		gameOverText.setFillColor(sf::Color::Red);
+		gameOverText.setPosition(400, 300);
+
+		m_window.draw(gameOverText);
 	}
 	m_window.display();
 }

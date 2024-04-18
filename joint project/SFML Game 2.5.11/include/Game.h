@@ -36,7 +36,8 @@ private:
 	enum class GameState {
 		MainMenu,
 		Playing,
-		Paused
+		Paused,
+		GameOver
 	};
 
 	GameState m_gameState;
@@ -122,6 +123,7 @@ private:
 	sf::Texture m_enemyTexture;
 	sf::Vector2f m_enemyPosition;
 	float m_enemySpeed;
+
 
 	Rectangle rect1;
 	float x1 = 100.0f;

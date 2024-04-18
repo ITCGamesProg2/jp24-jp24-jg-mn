@@ -142,7 +142,7 @@ int Player::getHealth() const {
 void Player::decreaseHealth(int amount) {
 	m_health -= amount;
 	if (m_health < 0) {
-		m_health = 0; // Ensure health doesn't go below zero
+		m_health = 0;
 	}
 }
 
