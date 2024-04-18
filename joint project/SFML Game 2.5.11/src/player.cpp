@@ -16,7 +16,7 @@ void Player::init(sf::Texture& t_textures, sf::Texture& t_bulletTexture)
 	m_playerSprite.setTextureRect(sf::IntRect(0, 0, 16, 16));
 	m_playerSprite.setOrigin(8, 8);
 	m_playerSprite.setScale(2.0f, 2.0f);
-	m_health = 300;
+	m_health = 100;
 	m_baseMovementSpeed = 2.0f;
 	m_movementSpeed = m_baseMovementSpeed;
 	m_isSpeedBoosted = false;

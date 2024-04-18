@@ -280,7 +280,16 @@ void Game::update(sf::Time t_deltaTime)
 		sf::FloatRect enemyBounds = m_enemy.getSprite().getGlobalBounds();
 		sf::FloatRect winBoxBounds = m_winBoxSprite.getGlobalBounds();
 
-		if (playerBounds.intersects(winBoxBounds)) 
+		int collectedCount = m_pickup.getCollectedCount();
+		collectedCountText.setString("Strawberries collected: " + std::to_string(collectedCount));
+		if (m_pickup.isCollected(m_player.getSprite().getGlobalBounds()))
+		{
+			//m_pickup.applyEffect(m_player.getSprite());
+
+			m_pickup.spawn(sf::Vector2f(rand() % 700 + 50, rand() % 500 + 50));
+		}
+
+		if (playerBounds.intersects(winBoxBounds) && collectedCount >= 1) 
 		{
 			std::cout << "You win!" << std::endl;
 		
@@ -311,14 +320,9 @@ void Game::update(sf::Time t_deltaTime)
 
 	        
 		}
-		int collectedCount = m_pickup.getCollectedCount();
-		collectedCountText.setString("Strawberries collected: " + std::to_string(collectedCount));
-		if (m_pickup.isCollected(m_player.getSprite().getGlobalBounds()))
-		{
-			//m_pickup.applyEffect(m_player.getSprite());
 
-			m_pickup.spawn(sf::Vector2f(rand() % 700 + 50, rand() % 500 + 50));
-		}
+
+
 
 		light.setPosition(m_player.getPosition());
 
