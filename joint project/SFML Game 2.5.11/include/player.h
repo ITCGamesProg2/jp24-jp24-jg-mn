@@ -46,6 +46,9 @@ public:
     PlayerCharacter getSelectedCharacter() { return m_playerCharacter; };
     sf::Sprite getSprite() { return m_playerSprite; };
 
+    int getHealth() const;
+    void decreaseHealth(int amount);
+
     sf::Vector2f getAimDirection() const;
 
     bool isMoving = false;
@@ -54,6 +57,7 @@ private:
 
     PlayerCharacter m_playerCharacter;
     Direction m_playerDirection;
+    int m_health;
 
     sf::Sprite m_playerSprite;
     sf::Vector2f m_playerPosition{100,100};

@@ -4,6 +4,7 @@
 
 #include "Game.h"
 #include <iostream>
+#include <sstream>
 
 
 Game::Game() :
@@ -160,7 +161,7 @@ void Game::loadTextures()
 		std::cout << "Problem loading goat projectile texture" << std::endl;
 	}
 
-	if (!m_enemyTexture.loadFromFile("ASSETS\\IMAGES\\gorilla.png")) 
+	if (!m_enemyTexture.loadFromFile("ASSETS\\IMAGES\\gorillaspritesheet.png")) 
 	{
 		std::cout << "Problem loading enemy texture" << std::endl;
 	}
@@ -267,6 +268,29 @@ void Game::update(sf::Time t_deltaTime)
 	if (m_gameState == GameState::Playing)
 	{
 		setView(); // load view
+
+		sf::FloatRect playerBounds = m_player.getSprite().getGlobalBounds();
+		sf::FloatRect enemyBounds = m_enemy.getSprite().getGlobalBounds();
+
+		std::stringstream ss;
+		ss << "Health: " << m_player.getHealth();
+		m_healthText.setString(ss.str());
+
+		if (playerBounds.intersects(enemyBounds))
+		{
+			int damageAmount = 1;
+			m_player.decreaseHealth(damageAmount);
+			std::cout << "Health: " << damageAmount << std::endl;
+			std::cout << "Player's remaining health: " << m_player.getHealth() << std::endl;
+
+			if (m_player.getHealth() <= 0) {
+				std::cout << "Game over." << std::endl;
+			}
+
+	        
+		}
+
+
 		if (m_pickup.isCollected(m_crabSprite.getGlobalBounds()))
 		{
 			m_pickup.applyEffect(m_player.getSprite());
@@ -404,8 +428,6 @@ void Game::render()
 	{
 		m_map.render(m_window);
 
-		m_window.draw(m_pauseButtonSprite);
-
 		drawParticles();
 
 		//Player drawings
@@ -418,12 +440,16 @@ void Game::render()
 		//m_window.setView(m_gameView);
 
 		//sf::Vector2f worldPos = m_window.mapPixelToCoords(m_player.getPosition(),m_gameView);
-	//	m_player.setPosition(worldPos);
+	    //m_player.setPosition(worldPos);
 
 		m_enemy.render(m_window);
 
+
 		m_window.draw(fog);
 		m_window.draw(light);
+		
+		m_window.draw(m_pauseButtonSprite);
+		m_window.draw(m_healthText);
 		
 	}
 	else if (m_gameState == GameState::Paused)
@@ -455,6 +481,12 @@ void Game::setupFontAndText()
 	title.setPosition(200.0f, 40.0f);
 	title.setCharacterSize(100U);
 	title.setFillColor(sf::Color::Black);
+
+
+	m_healthText.setFont(font);
+	m_healthText.setCharacterSize(24);
+	m_healthText.setFillColor(sf::Color::White);
+	m_healthText.setPosition(10.f, 10.f);
 }
 
 

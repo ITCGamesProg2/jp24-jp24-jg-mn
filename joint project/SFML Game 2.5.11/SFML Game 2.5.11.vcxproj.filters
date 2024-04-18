@@ -128,10 +128,10 @@
     <ClInclude Include="include\CollisionData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AIenemy.h">
+    <ClInclude Include="include\rainParticles.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\rainParticles.h">
+    <ClInclude Include="include\AIenemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

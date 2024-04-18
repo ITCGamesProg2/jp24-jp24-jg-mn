@@ -7,7 +7,7 @@ void AIenemy::init(sf::Texture& texture, const sf::Vector2f& position) {
     m_sprite.setTexture(texture);
     m_sprite.setPosition(position);
 
-    m_textureRect = sf::IntRect(0, 0, 32, 32);
+    m_textureRect = sf::IntRect(0, 0, 64, 64);
     m_frameCount = 8;
     m_currentFrame = 0;
     m_frameDuration = 0.2f;
@@ -37,6 +37,11 @@ void AIenemy::update(const sf::Vector2f& playerPosition, float speed) {
 void AIenemy::render(sf::RenderWindow& window)
 {
     window.draw(m_sprite);
+    m_sprite.setScale(2, 2);
+}
+
+sf::Sprite& AIenemy::getSprite() {
+    return m_sprite;
 }
 
 void AIenemy::animateEnemy() {

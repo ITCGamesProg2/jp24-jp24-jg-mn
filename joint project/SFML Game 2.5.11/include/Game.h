@@ -97,6 +97,8 @@ private:
 
 	sf::Sprite m_goatSprite;
 
+	sf::Text m_healthText;
+
 	sf::Font font;
 	sf::Text title;
 

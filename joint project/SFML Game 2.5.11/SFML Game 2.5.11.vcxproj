@@ -33,7 +33,7 @@
     </Font>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AIenemy.h" />
+    <ClInclude Include="include\AIenemy.h" />
     <ClInclude Include="include\CollisionData.h" />
     <ClInclude Include="include\Door.h" />
     <ClInclude Include="include\Game.h" />

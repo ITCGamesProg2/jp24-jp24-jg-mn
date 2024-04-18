@@ -16,6 +16,7 @@ void Player::init(sf::Texture& t_textures, sf::Texture& t_bulletTexture)
 	m_playerSprite.setTextureRect(sf::IntRect(0, 0, 16, 16));
 	m_playerSprite.setOrigin(8, 8);
 	m_playerSprite.setScale(2.0f, 2.0f);
+	m_health = 300;
 }
 
 void Player::move()
@@ -132,6 +133,17 @@ void Player::updatePlayerSpriteColour(bool pickUpActive)
 void Player::selectCharacter(PlayerCharacter t_playerCharacter)
 {
     m_playerCharacter = t_playerCharacter;
+}
+
+int Player::getHealth() const {
+	return m_health;
+}
+
+void Player::decreaseHealth(int amount) {
+	m_health -= amount;
+	if (m_health < 0) {
+		m_health = 0; // Ensure health doesn't go below zero
+	}
 }
 
 

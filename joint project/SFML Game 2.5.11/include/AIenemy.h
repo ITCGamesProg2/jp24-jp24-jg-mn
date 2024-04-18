@@ -1,5 +1,5 @@
-#ifndef ENEMY_HPP
-#define ENEMY_HPP
+#ifndef AIENEMY_HPP
+#define AIENEMY_HPP
 
 #include <SFML/Graphics.hpp>
 
@@ -10,7 +10,7 @@ public:
     void init(sf::Texture& texture, const sf::Vector2f& position);
     void update(const sf::Vector2f& playerPosition, float speed);
     void render(sf::RenderWindow& window);
-
+    sf::Sprite& getSprite();
 
 private:
 
@@ -25,4 +25,4 @@ private:
     sf::Clock m_animationClock;
 };
 
-#endif // ENEMY_HPP
+#endif // AIENEMY_HPP
