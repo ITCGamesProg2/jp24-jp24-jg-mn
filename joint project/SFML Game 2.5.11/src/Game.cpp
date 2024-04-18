@@ -11,7 +11,8 @@ Game::Game() :
 	m_exitGame{ false }, 
 	m_gameState(GameState::MainMenu),
 	m_pickup(pickupTexture),
-	fog(candle::LightingArea::FOG, sf::Vector2f(-SCREEN_HEIGHT, -SCREEN_WIDTH) ,sf::Vector2f(SCREEN_WIDTH * 5,SCREEN_HEIGHT* 5))
+	fog(candle::LightingArea::FOG, sf::Vector2f(-SCREEN_HEIGHT, -SCREEN_WIDTH) ,sf::Vector2f(SCREEN_WIDTH * 5,SCREEN_HEIGHT* 5)),
+	m_enemySpeed(1.5f)
 {
 	fog.setAreaColor(sf::Color::Black);
 	light.setRange(400);
@@ -22,6 +23,8 @@ Game::Game() :
 	setupFontAndText(); 
 	setupSprite();
 	loadAudio();
+
+	spawnEnemy();
 
 	std::vector<Rectangle> buildings;
 	buildings.push_back(rect1);
@@ -156,6 +159,11 @@ void Game::loadTextures()
 	{
 		std::cout << "Problem loading goat projectile texture" << std::endl;
 	}
+
+	if (!m_enemyTexture.loadFromFile("ASSETS\\IMAGES\\gorilla.png")) 
+	{
+		std::cout << "Problem loading enemy texture" << std::endl;
+	}
 }
 
 
@@ -266,6 +274,8 @@ void Game::update(sf::Time t_deltaTime)
 			m_pickup.spawn(sf::Vector2f(rand() % 700 + 50, rand() % 500 + 50)); 
 		}
 		light.setPosition(m_player.getPosition());
+
+		m_enemy.update(m_player.getPosition(), m_enemySpeed);
 		
 		m_player.update(t_deltaTime);
 		m_map.update(m_player);
@@ -374,6 +384,9 @@ void Game::render()
 
 		//sf::Vector2f worldPos = m_window.mapPixelToCoords(m_player.getPosition(),m_gameView);
 	//	m_player.setPosition(worldPos);
+
+		m_enemy.render(m_window);
+
 		//m_window.draw(fog);
 		//m_window.draw(light);
 		
@@ -462,13 +475,6 @@ void Game::setupSprite()
 	backgroundSprite.setTexture(backgroundTexture);
 	backgroundSprite.setScale(sf::Vector2f(1.7, 2.30));
 
-	if (!gameBackgroundTexture.loadFromFile("ASSETS\\IMAGES\\gameBackground.jpg"))
-	{
-		std::cout << "Problem loading play button texture" << std::endl;	
-	}
-	gameBackgroundSprite.setTexture(gameBackgroundTexture);
-	gameBackgroundSprite.setScale(sf::Vector2f(1.2, 1.2));
-
 	if (!m_tileTexture.loadFromFile("ASSETS\\IMAGES\\tile.png"))
 	{
 		std::cout << "Problem loading play button texture" << std::endl;
@@ -476,6 +482,10 @@ void Game::setupSprite()
 	m_tileSprite.setTexture(m_tileTexture);
 	m_tileSprite.setPosition(235.0f, 130.0f);
 	m_tileSprite.setScale(sf::Vector2f(3, 3));
+}
+
+void Game::spawnEnemy() {
+	m_enemy.init(m_enemyTexture, sf::Vector2f(200.0f, 700.0f)); // Initial position of enemy
 }
 
 

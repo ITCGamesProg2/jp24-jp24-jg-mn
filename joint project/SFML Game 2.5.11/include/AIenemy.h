@@ -3,23 +3,25 @@
 
 #include <SFML/Graphics.hpp>
 
-class Enemy {
+class AIenemy {
 public:
-    Enemy();
+    AIenemy();
 
     void init(sf::Texture& texture, const sf::Vector2f& position);
     void update(const sf::Vector2f& playerPosition, float speed);
     void render(sf::RenderWindow& window);
 
+
 private:
 
     void animateEnemy();
-
+    bool m_alive = true;
+    sf::Vector2f m_position;
     sf::Sprite m_sprite;
     sf::IntRect m_textureRect;
-    int m_frameCount;           
-    int m_currentFrame;         
-    float m_frameDuration;    
+    int m_frameCount;
+    int m_currentFrame;
+    float m_frameDuration;
     sf::Clock m_animationClock;
 };
 

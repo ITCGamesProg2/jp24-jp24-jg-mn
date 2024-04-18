@@ -12,6 +12,9 @@
 #include "Player.h"
 #include "ScreenSize.h"
 #include "Map.h"
+#include "AIenemy.h"
+
+
 
 struct Rectangle {
 	float x, y;
@@ -44,9 +47,6 @@ private:
 	void setupFontAndText();
 	void loadTextures();
 	void setupSprite();
-
-	bool checkCollision(float objX, float objY, float objWidth, float objHeight, const Rectangle& rect);
-	bool checkCollisions(float objX, float objY, float objWidth, float objHeight, const std::vector<Rectangle>& rectangles);
 
 
 	void updateButtonColor(sf::Sprite& button, const sf::Vector2f& mousePosition);
@@ -106,6 +106,12 @@ private:
 
 	candle::LightingArea fog;
 	candle::RadialLight light;
+
+	void spawnEnemy();
+	AIenemy m_enemy;
+	sf::Texture m_enemyTexture;
+	sf::Vector2f m_enemyPosition;
+	float m_enemySpeed;
 
 	Rectangle rect1;
 	float x1 = 100.0f;
