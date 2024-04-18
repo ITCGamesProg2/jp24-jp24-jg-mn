@@ -7,6 +7,7 @@
 #include <sstream>
 
 
+
 Game::Game() :
 	m_window{ sf::VideoMode{ SCREEN_WIDTH, SCREEN_HEIGHT, 32U }, "SFML Game" },
 	m_exitGame{ false }, 
@@ -30,8 +31,8 @@ Game::Game() :
 	std::vector<Rectangle> buildings;
 	buildings.push_back(rect1);
 	buildings.push_back(Rectangle{ x1, y1, width1, height1 }); 
-	setupFontAndText(); // load font 
-	setupSprite(); // load texture
+	setupFontAndText();  
+	setupSprite(); 
 
 
 }
@@ -270,9 +271,9 @@ void Game::update(sf::Time t_deltaTime)
 		setView(); // load view
 
 		sf::FloatRect playerBounds = m_player.getSprite().getGlobalBounds();
-		//sf::FloatRect enemyBounds = m_enemy.getSprite().getGlobalBounds();
+		sf::FloatRect enemyBounds = m_enemy.getSprite().getGlobalBounds();
 
-	/*	std::stringstream ss;
+		std::stringstream ss;
 		ss << "Health: " << m_player.getHealth();
 		m_healthText.setString(ss.str());
 
@@ -295,7 +296,7 @@ void Game::update(sf::Time t_deltaTime)
 			m_player.updatePlayerSpriteColour(false);
 
 	        
-		}*/
+		}
 
 		if (m_pickup.isCollected(m_player.getSprite().getGlobalBounds()))
 		{
@@ -306,7 +307,7 @@ void Game::update(sf::Time t_deltaTime)
 
 		light.setPosition(m_player.getPosition());
 
-		//m_enemy.update(m_player.getPosition(), m_enemySpeed);
+		m_enemy.update(m_player.getPosition(), m_enemySpeed);
 		
 		m_player.update(t_deltaTime);
 		m_map.update(m_player);
@@ -449,7 +450,7 @@ void Game::render()
 		//sf::Vector2f worldPos = m_window.mapPixelToCoords(m_player.getPosition(),m_gameView);
 	    //m_player.setPosition(worldPos);
 
-		//m_enemy.render(m_window);
+		m_enemy.render(m_window);
 
 
 		m_window.draw(fog);
@@ -570,7 +571,7 @@ void Game::setupSprite()
 }
 
 void Game::spawnEnemy() {
-	//m_enemy.init(m_enemyTexture, sf::Vector2f(200.0f, 700.0f)); // Initial position of enemy
+	m_enemy.init(m_enemyTexture, sf::Vector2f(200.0f, 700.0f)); 
 }
 
 

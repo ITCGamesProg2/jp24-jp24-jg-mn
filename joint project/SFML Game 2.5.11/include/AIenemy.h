@@ -7,14 +7,14 @@ class AIenemy {
 public:
     AIenemy();
 
-    //void init(sf::Texture& texture, const sf::Vector2f& position);
-    //void update(const sf::Vector2f& playerPosition, float speed);
-    //void render(sf::RenderWindow& window);
-    //sf::Sprite& getSprite();
+    void init(sf::Texture& texture, const sf::Vector2f& position);
+    void update(const sf::Vector2f& playerPosition, float speed);
+    void render(sf::RenderWindow& window);
+    sf::Sprite& getSprite();
 
 private:
 
-    //void animateEnemy();
+    void animateEnemy();
     bool m_alive = true;
     sf::Vector2f m_enemyPosition;
     sf::Sprite m_enemySprite;
