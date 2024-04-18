@@ -288,6 +288,11 @@ void Game::update(sf::Time t_deltaTime)
 				std::cout << "Game over." << std::endl;
 				m_gameState = GameState::GameOver;
 			}
+			 
+			m_player.updatePlayerSpriteColour(true);
+		}
+		else {
+			m_player.updatePlayerSpriteColour(false);
 
 	        
 		}
@@ -296,7 +301,7 @@ void Game::update(sf::Time t_deltaTime)
 		if (m_pickup.isCollected(m_crabSprite.getGlobalBounds()))
 		{
 			m_pickup.applyEffect(m_player.getSprite());
-			m_player.updatePlayerSpriteColour(true);
+			//m_player.updatePlayerSpriteColour(true);
 			m_pickup.spawn(sf::Vector2f(rand() % 700 + 50, rand() % 500 + 50)); 
 		}
 		light.setPosition(m_player.getPosition());

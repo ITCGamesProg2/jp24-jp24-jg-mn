@@ -40,7 +40,7 @@ public:
 
     void animate();
 
-    void updatePlayerSpriteColour(bool pickUpActive);
+    void updatePlayerSpriteColour( bool isHit);
 
     void selectCharacter(PlayerCharacter t_playerCharacter);
     PlayerCharacter getSelectedCharacter() { return m_playerCharacter; };
@@ -62,6 +62,7 @@ private:
 
     sf::Sprite m_playerSprite;
     sf::Vector2f m_playerPosition{100,100};
+    bool isHit;
 
     float m_movementSpeed;
 

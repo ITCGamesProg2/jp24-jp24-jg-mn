@@ -118,15 +118,22 @@ void Player::animate()
 	}
 }
 
-void Player::updatePlayerSpriteColour(bool pickUpActive)
+void Player::updatePlayerSpriteColour(bool isHit)
 {
-	if (pickUpActive)
+	/*if (pickUpActive)
 	{
 		m_playerSprite.setColor(sf::Color::Red);
 	}
 	else
 	{
 		m_playerSprite.setColor(sf::Color::White);
+	}*/
+
+	if (isHit) {
+		m_playerSprite.setColor(sf::Color::Red); 
+	}
+	else {
+		m_playerSprite.setColor(sf::Color::White); 
 	}
 }
 
