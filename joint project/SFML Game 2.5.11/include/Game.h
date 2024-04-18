@@ -13,6 +13,8 @@
 #include "ScreenSize.h"
 #include "Map.h"
 #include "AIenemy.h"
+#include "rainParticles.h"
+
 
 
 
@@ -69,10 +71,16 @@ private:
 	Pickup m_pickup;
 	sf::Texture pickupTexture;
 
+
+	std::vector<RainParticle> m_rainParticles;
 	std::vector<Particle> m_particles;
 	void updateParticles(sf::Time deltaTime);
 	void applyParticles();
 	void drawParticles();
+
+	void createRain();
+	void updateRain(float deltaTime);
+	void drawRain();
 
 	sf::Sprite m_pauseButtonSprite;
 	sf::Texture m_pauseButtonTexture;

@@ -280,6 +280,8 @@ void Game::update(sf::Time t_deltaTime)
 		m_player.update(t_deltaTime);
 		m_map.update(m_player);
 		applyParticles();
+		createRain();
+		updateRain(t_deltaTime.asSeconds());
 		updateParticles(t_deltaTime);
 	}
 }
@@ -322,6 +324,37 @@ void Game::drawParticles() {
 	}
 }
 
+void Game::updateRain(float deltaTime) {
+	// Update rain particles
+	for (auto& rain : m_rainParticles) {
+		rain.update(deltaTime);
+	}
+	// Remove dead rain particles
+	m_rainParticles.erase(std::remove_if(m_rainParticles.begin(), m_rainParticles.end(),
+		[](const RainParticle& rain) { return !rain.isAlive(); }), m_rainParticles.end());
+}
+
+void Game::createRain() {
+	// Create new rain particles
+	for (int i = 0; i < 10; ++i) {
+		float startX = static_cast<float>(rand() % SCREEN_WIDTH);
+		float startY = static_cast<float>(rand() % 200 - 100);
+		m_rainParticles.emplace_back(startX, startY);
+	}
+}
+
+
+void Game::drawRain() {
+	// Draw rain particles
+	sf::VertexArray lines(sf::Lines);
+	for (const auto& rain : m_rainParticles) {
+		sf::Vector2f endPos = rain.getPosition() + sf::Vector2f(0.0f, 10.0f); // Raindrop length
+		lines.append(sf::Vertex(rain.getPosition(), sf::Color::Blue));
+		lines.append(sf::Vertex(endPos, sf::Color::Blue));
+	}
+	m_window.draw(lines);
+}
+
 void Game::render()
 {
 	fog.clear();
@@ -341,7 +374,7 @@ void Game::render()
 		m_window.draw(m_goatSprite);
 		m_window.draw(title);
 
-
+		
 		sf::Text selectedCharacterText;
 		selectedCharacterText.setFont(font);
 		selectedCharacterText.setCharacterSize(30);
@@ -379,6 +412,8 @@ void Game::render()
 		m_player.render(m_window);
 		//Pickups
  	    m_pickup.draw(m_window);
+
+		drawRain();
 		
 		//m_window.setView(m_gameView);
 
@@ -387,8 +422,8 @@ void Game::render()
 
 		m_enemy.render(m_window);
 
-		//m_window.draw(fog);
-		//m_window.draw(light);
+		m_window.draw(fog);
+		m_window.draw(light);
 		
 	}
 	else if (m_gameState == GameState::Paused)

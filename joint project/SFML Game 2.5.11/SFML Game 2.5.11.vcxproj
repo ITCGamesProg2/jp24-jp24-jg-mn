@@ -43,6 +43,7 @@
     <ClInclude Include="include\Pickup.h" />
     <ClInclude Include="include\Player.h" />
     <ClInclude Include="include\Projectile.h" />
+    <ClInclude Include="include\rainParticles.h" />
     <ClInclude Include="include\Room.h" />
     <ClInclude Include="include\ScreenSize.h" />
     <ClInclude Include="include\Structs.h" />
@@ -67,6 +68,7 @@
     <ClCompile Include="src\Polygon.cpp" />
     <ClCompile Include="src\Projectile.cpp" />
     <ClCompile Include="src\RadialLight.cpp" />
+    <ClCompile Include="src\rainParticles.cpp" />
     <ClCompile Include="src\Room.cpp" />
     <ClCompile Include="src\VertexArray.cpp" />
     <ClCompile Include="src\Weapon.cpp" />
