@@ -37,7 +37,8 @@ private:
 		MainMenu,
 		Playing,
 		Paused,
-		GameOver
+		GameOver,
+		GameWin
 	};
 
 	GameState m_gameState;
@@ -103,6 +104,7 @@ private:
 	sf::Font font;
 	sf::Text title;
 
+
 	sf::Texture backgroundTexture;
 	sf::Sprite backgroundSprite;
 
@@ -111,18 +113,24 @@ private:
 
 	sf::Texture m_tileTexture;
 	sf::Sprite m_tileSprite;
-
+	
 	sf::Music m_backgroundMusic;
 	sf::Music m_menuMusic;
 
 	candle::LightingArea fog;
 	candle::RadialLight light;
 
+	sf::Text collectedCountText;
+
 	void spawnEnemy();
 	AIenemy m_enemy;
 	sf::Texture m_enemyTexture;
 	sf::Vector2f m_enemyPosition;
 	float m_enemySpeed;
+
+	sf::Sprite m_winBoxSprite;
+	sf::Texture m_winBoxTexture;
+
 
 
 	Rectangle rect1;

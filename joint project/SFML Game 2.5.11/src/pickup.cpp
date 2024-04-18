@@ -1,7 +1,8 @@
 #include "Pickup.h"
 
 Pickup::Pickup(sf::Texture& texture)
-    : m_active(false)
+    : m_active(false),
+    m_collectedCount(0)
 {
     m_sprite.setTexture(texture);
 }
@@ -27,9 +28,20 @@ bool Pickup::isCollected(const sf::FloatRect& playerBounds)
     if (m_active)
     {
         sf::FloatRect pickupBounds = m_sprite.getGlobalBounds();
-        return pickupBounds.intersects(playerBounds);
+      //  return pickupBounds.intersects(playerBounds);
+        if (pickupBounds.intersects(playerBounds))
+        {
+            m_active = false; // Mark pickup as collected
+            ++m_collectedCount; // Increment collected count
+            return true;
+        }
     }
     return false;
+}
+
+int Pickup::getCollectedCount() const
+{
+    return m_collectedCount;
 }
 
 void Pickup::applyEffect(sf::Sprite& playerSprite)

@@ -15,11 +15,14 @@ public:
     void applyEffect(sf::Sprite& playerSprite);
     bool isActive() const;
 
+    int getCollectedCount() const;
+
 private:
     sf::Sprite m_sprite;
     bool m_active;
     sf::Clock m_effectTimer;
     sf::Time m_duration;
+    int m_collectedCount;
 };
 
 #endif // PICKUP_HPP

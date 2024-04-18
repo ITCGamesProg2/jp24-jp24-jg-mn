@@ -166,6 +166,12 @@ void Game::loadTextures()
 	{
 		std::cout << "Problem loading enemy texture" << std::endl;
 	}
+
+	if (!m_winBoxTexture.loadFromFile("ASSETS\\IMAGES\\strawberry.png"))
+	{
+		std::cout << "Error loading win box texture!" << std::endl;
+	}
+
 }
 
 
@@ -272,6 +278,14 @@ void Game::update(sf::Time t_deltaTime)
 
 		sf::FloatRect playerBounds = m_player.getSprite().getGlobalBounds();
 		sf::FloatRect enemyBounds = m_enemy.getSprite().getGlobalBounds();
+		sf::FloatRect winBoxBounds = m_winBoxSprite.getGlobalBounds();
+
+		if (playerBounds.intersects(winBoxBounds)) 
+		{
+			std::cout << "You win!" << std::endl;
+		
+			m_gameState = GameState::GameWin;
+		}
 
 		std::stringstream ss;
 		ss << "Health: " << m_player.getHealth();
@@ -297,10 +311,11 @@ void Game::update(sf::Time t_deltaTime)
 
 	        
 		}
-
+		int collectedCount = m_pickup.getCollectedCount();
+		collectedCountText.setString("Strawberries collected: " + std::to_string(collectedCount));
 		if (m_pickup.isCollected(m_player.getSprite().getGlobalBounds()))
 		{
-			m_pickup.applyEffect(m_player.getSprite());
+			//m_pickup.applyEffect(m_player.getSprite());
 
 			m_pickup.spawn(sf::Vector2f(rand() % 700 + 50, rand() % 500 + 50));
 		}
@@ -452,20 +467,22 @@ void Game::render()
 
 		m_enemy.render(m_window);
 
+	
+		m_window.draw(m_winBoxSprite);
 
 		m_window.draw(fog);
 		m_window.draw(light);
 		
 		m_window.draw(m_pauseButtonSprite);
 		m_window.draw(m_healthText);
-		
+		m_window.draw(collectedCountText);
 	}
 	else if (m_gameState == GameState::Paused)
 	{
 		m_window.draw(m_pauseButtonSprite);
 
 		sf::Text pauseText;
-		pauseText.setFont(font);
+		pauseText.setFont(font); 
 		pauseText.setString("Game Paused");
 		pauseText.setPosition(250.0f, 250.0f);
 		pauseText.setCharacterSize(100U);
@@ -484,6 +501,17 @@ void Game::render()
 		gameOverText.setPosition(400, 300);
 
 		m_window.draw(gameOverText);
+	}
+	else if (m_gameState == GameState::GameWin)
+	{
+		sf::Text gameWinText;
+		gameWinText.setFont(font);
+		gameWinText.setString("YOU WON!");
+		gameWinText.setCharacterSize(180);
+		gameWinText.setFillColor(sf::Color::Black);
+		gameWinText.setPosition(2300, 200);
+
+		m_window.draw(gameWinText);
 	}
 	m_window.display();
 }
@@ -506,6 +534,14 @@ void Game::setupFontAndText()
 	m_healthText.setCharacterSize(24);
 	m_healthText.setFillColor(sf::Color::White);
 	m_healthText.setPosition(10.f, 10.f);
+
+	
+	
+	collectedCountText.setFont(font);
+	collectedCountText.setCharacterSize(24);
+	collectedCountText.setFillColor(sf::Color::White);
+	collectedCountText.setPosition(10.f, 40.f); // Adjust position as needed
+
 }
 
 
@@ -525,6 +561,10 @@ void Game::setupSprite()
 	m_goatSprite.setPosition(440.0f, 165.0f);
 	m_goatSprite.setScale(3.0f, 3.0f);
 	m_goatSprite.setTextureRect(sf::IntRect(0, 0, 16, 16));
+
+	m_winBoxSprite.setTexture(m_winBoxTexture);
+	m_winBoxSprite.setPosition(2900,270);
+	m_winBoxSprite.setScale(1,1);
 
 	m_pickup = Pickup(pickupTexture);
 	sf::Vector2f randomPosition = sf::Vector2f(rand() % 700 + 50, rand() % 500 + 50);
