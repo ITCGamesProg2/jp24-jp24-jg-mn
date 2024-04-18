@@ -1,40 +1,54 @@
 #include "ai_enemy.h"
+#include <cmath>
 
-AIEnemy::AIEnemy(float speed) : speed(speed)
-{
-	setUpSprite();
+Enemy::Enemy() {}
+
+void Enemy::init(sf::Texture& texture, const sf::Vector2f& position) {
+    m_sprite.setTexture(texture);
+    m_sprite.setPosition(position);
+
+    m_textureRect = sf::IntRect(0, 0, 32, 32); 
+    m_frameCount = 8;                          
+    m_currentFrame = 0;                       
+    m_frameDuration = 0.2f;
+
+    int frameWidth = texture.getSize().x / m_frameCount; 
+    int frameHeight = texture.getSize().y;               
+    m_textureRect = sf::IntRect(0, 0, frameWidth, frameHeight); 
+    m_sprite.setTextureRect(m_textureRect);
 }
 
-void AIEnemy::update(sf::Vector2f playerPosition, float deltaTime)
-{
-	sf::Vector2f direction = playerPosition - m_aiSprite.getPosition();
-	float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
-	if (length != 0)
-	{
-		direction /= length;
-	}
-	m_aiSprite.move(direction * speed * deltaTime);
-} 
+void Enemy::update(const sf::Vector2f& playerPosition, float speed) {
+   
+    sf::Vector2f direction = playerPosition - m_sprite.getPosition();
+    float distance = std::sqrt(direction.x * direction.x + direction.y * direction.y);
 
-void AIEnemy::render(sf::RenderWindow& window)
-{
+    if (distance != 0) {
+        direction /= distance;
+    }
 
+    m_sprite.move(direction * speed);
+
+    animateEnemy();
 }
 
-sf::Vector2f AIEnemy::getPosition() const
+void Enemy::render(sf::RenderWindow& window) 
 {
-	return sf::Vector2f();
+    window.draw(m_sprite);
 }
 
-void AIEnemy::setPosition(sf::Vector2f position)
-{
-}
+void Enemy::animateEnemy() {
+    if (m_animationClock.getElapsedTime().asSeconds() >= m_frameDuration) {
+        m_animationClock.restart();
 
-void AIEnemy::setUpSprite()
-{
-	if (!m_aiTexture.loadFromFile("ASSETS/IMAGES/gorilla.png "));
-}
+     
+        m_currentFrame = (m_currentFrame + 1) % m_frameCount;
 
-void AIEnemy::updateAnimation()
-{
+      
+        int frameWidth = m_sprite.getTexture()->getSize().x / m_frameCount;
+
+      
+        m_textureRect.left = m_currentFrame * frameWidth;
+        m_sprite.setTextureRect(m_textureRect);
+    }
 }

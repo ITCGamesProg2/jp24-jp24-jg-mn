@@ -12,6 +12,7 @@
 #include"player.h"
 #include"ScreenSize.h"
 #include"Map.h"
+#include "ai_enemy.h"
 
 struct Rectangle {
 	float x, y;
@@ -108,8 +109,16 @@ private:
 	sf::Music m_menuMusic;
 
 	candle::LightingArea fog;
-
 	candle::RadialLight light;
+
+	Enemy m_enemy;
+	sf::Texture m_enemyTexture;
+	sf::Vector2f m_enemyPosition;
+	float m_enemySpeed;
+
+	void loadEnemyTexture();
+	void spawnEnemy();
+
 	
 
 	Rectangle rect1;

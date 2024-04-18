@@ -11,7 +11,8 @@ Game::Game() :
 	m_exitGame{ false }, 
 	m_gameState(GameState::MainMenu),
 	m_pickup(pickupTexture),
-	fog(candle::LightingArea::FOG, sf::Vector2f(-SCREEN_HEIGHT, -SCREEN_WIDTH) ,sf::Vector2f(SCREEN_WIDTH * 5,SCREEN_HEIGHT* 5))
+	fog(candle::LightingArea::FOG, sf::Vector2f(-SCREEN_HEIGHT, -SCREEN_WIDTH) ,sf::Vector2f(SCREEN_WIDTH * 5,SCREEN_HEIGHT* 5)),
+	m_enemySpeed(1.5f)
 {
 	fog.setAreaColor(sf::Color::Black);
 	light.setRange(400);
@@ -22,6 +23,8 @@ Game::Game() :
 	setupFontAndText(); 
 	setupSprite();
 	loadAudio();
+
+	spawnEnemy();
 
 	std::vector<Rectangle> buildings;
 	buildings.push_back(rect1);
@@ -156,6 +159,11 @@ void Game::loadTextures()
 	{
 		std::cout << "Problem loading goat projectile texture" << std::endl;
 	}
+
+	if (!m_enemyTexture.loadFromFile("ASSETS\\IMAGES\\gorillaSpritesheetpng.png")) 
+	{
+		std::cout << "Problem loading enemy texture" << std::endl;
+	}
 }
 
 
@@ -259,6 +267,7 @@ void Game::update(sf::Time t_deltaTime)
 	if (m_gameState == GameState::Playing)
 	{
 		setView(); // load view
+		m_enemy.update(m_player.getPosition(), m_enemySpeed);
 		if (m_pickup.isCollected(m_crabSprite.getGlobalBounds()))
 		{
 			m_pickup.applyEffect(m_player.getSprite());
@@ -394,8 +403,10 @@ void Game::render()
 		//sf::Vector2f worldPos = m_window.mapPixelToCoords(m_player.getPosition(),m_gameView);
 	//	m_player.setPosition(worldPos);
 
-		m_window.draw(fog);
-		m_window.draw(light);
+		m_enemy.render(m_window);
+
+		//m_window.draw(fog);
+		//m_window.draw(light);
 		
 	}
 	else if (m_gameState == GameState::Paused)
@@ -497,6 +508,11 @@ void Game::setupSprite()
 	m_tileSprite.setTexture(m_tileTexture);
 	m_tileSprite.setPosition(235.0f, 130.0f);
 	m_tileSprite.setScale(sf::Vector2f(3, 3));
+}
+
+
+void Game::spawnEnemy() {
+	m_enemy.init(m_enemyTexture, sf::Vector2f(200.0f, 700.0f)); // Initial position of enemy
 }
 
 
