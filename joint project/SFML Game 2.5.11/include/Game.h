@@ -7,12 +7,12 @@
 #include <Candle/LightingArea.hpp>
 #include <SFML/Audio.hpp>
 #include "Projectile.h"
-#include "pickup.h"
-#include "particle.h"
-#include"player.h"
-#include"ScreenSize.h"
-#include"Map.h"
-#include "ai_enemy.h"
+#include "Pickup.h"
+#include "Particle.h"
+#include "Player.h"
+#include "ScreenSize.h"
+#include "Map.h"
+#include "AIEnemy.h"
 
 struct Rectangle {
 	float x, y;
