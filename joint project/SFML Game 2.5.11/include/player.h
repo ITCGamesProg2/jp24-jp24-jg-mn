@@ -64,7 +64,12 @@ private:
     sf::Vector2f m_playerPosition{100,100};
     bool isHit;
 
+    float m_baseMovementSpeed;
     float m_movementSpeed;
+    bool m_isSpeedBoosted;
+    sf::Clock m_speedBoostClock;
+    sf::Time m_speedBoostDuration;
+    sf::Time m_speedBoostCooldown;
 
     //animation
     sf::Clock m_animationClock;

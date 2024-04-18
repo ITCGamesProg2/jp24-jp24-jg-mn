@@ -36,7 +36,7 @@ void AIenemy::update(const sf::Vector2f& playerPosition, float speed) {
 
 void AIenemy::render(sf::RenderWindow& window)
 {
-    //window.draw(m_enemySprite);
+    window.draw(m_enemySprite);
     m_enemySprite.setScale(2, 2);
 }
 

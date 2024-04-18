@@ -17,33 +17,58 @@ void Player::init(sf::Texture& t_textures, sf::Texture& t_bulletTexture)
 	m_playerSprite.setOrigin(8, 8);
 	m_playerSprite.setScale(2.0f, 2.0f);
 	m_health = 300;
+	m_baseMovementSpeed = 2.0f;
+	m_movementSpeed = m_baseMovementSpeed;
+	m_isSpeedBoosted = false;
+	m_speedBoostDuration = sf::seconds(1.0f);
+	m_speedBoostCooldown = sf::seconds(3.0f);
 }
 
 void Player::move()
 {
 
-	float movementSpeed = 2.0f;
+	//float movementSpeed = 2.0f;
 	/*if (m_pickup.isActive()) {
 		movementSpeed = 4.0f;
 	}*/
 
+	if (m_isSpeedBoosted && m_speedBoostClock.getElapsedTime() >= m_speedBoostDuration)
+	{
+		m_isSpeedBoosted = false;
+		m_speedBoostClock.restart();
+	}
+
+	if (!m_isSpeedBoosted && m_speedBoostClock.getElapsedTime() >= m_speedBoostCooldown)
+	{
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) || sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
+		{
+			m_movementSpeed = m_baseMovementSpeed * 1.5f; 
+			m_isSpeedBoosted = true; 
+			m_speedBoostClock.restart(); 
+		}
+		else
+		{
+			m_movementSpeed = m_baseMovementSpeed;
+		}
+	}
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-		m_playerPosition.y -= movementSpeed;
+		m_playerPosition.y -= m_movementSpeed;
 		m_playerDirection = Direction::Up;
 		isMoving = true;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-		m_playerPosition.y += movementSpeed;
+		m_playerPosition.y += m_movementSpeed;
 		m_playerDirection = Direction::Down;
 		isMoving = true;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-		m_playerPosition.x -= movementSpeed;
+		m_playerPosition.x -= m_movementSpeed;
 		m_playerDirection = Direction::Left;
 		isMoving = true;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-		m_playerPosition.x += movementSpeed;
+		m_playerPosition.x += m_movementSpeed;
 		m_playerDirection = Direction::Right;
 		isMoving = true;
 	}
