@@ -33,39 +33,39 @@
     </Font>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\ai_enemy.h" />
+    <ClInclude Include="include\AIEnemy.h" />
     <ClInclude Include="include\CollisionData.h" />
     <ClInclude Include="include\Door.h" />
     <ClInclude Include="include\Game.h" />
-    <ClInclude Include="include\grid.h" />
+    <ClInclude Include="include\Grid.h" />
     <ClInclude Include="include\Map.h" />
-    <ClInclude Include="include\particle.h" />
-    <ClInclude Include="include\pickup.h" />
-    <ClInclude Include="include\player.h" />
-    <ClInclude Include="include\projectile.h" />
+    <ClInclude Include="include\Particle.h" />
+    <ClInclude Include="include\Pickup.h" />
+    <ClInclude Include="include\Player.h" />
+    <ClInclude Include="include\Projectile.h" />
     <ClInclude Include="include\Room.h" />
     <ClInclude Include="include\ScreenSize.h" />
     <ClInclude Include="include\Structs.h" />
     <ClInclude Include="include\Weapon.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\ai_enemy.cpp" />
+    <ClCompile Include="src\AIEnemy.cpp" />
     <ClCompile Include="src\Color.cpp" />
     <ClCompile Include="src\Constants.cpp" />
     <ClCompile Include="src\DirectedLight.cpp" />
     <ClCompile Include="src\Door.cpp" />
     <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="src\grid.cpp" />
+    <ClCompile Include="src\Grid.cpp" />
     <ClCompile Include="src\LightingArea.cpp" />
     <ClCompile Include="src\LightSource.cpp" />
     <ClCompile Include="src\Line.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Map.cpp" />
-    <ClCompile Include="src\particle.cpp" />
-    <ClCompile Include="src\pickup.cpp" />
-    <ClCompile Include="src\player.cpp" />
+    <ClCompile Include="src\Particle.cpp" />
+    <ClCompile Include="src\Pickup.cpp" />
+    <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Polygon.cpp" />
-    <ClCompile Include="src\projectile.cpp" />
+    <ClCompile Include="src\Projectile.cpp" />
     <ClCompile Include="src\RadialLight.cpp" />
     <ClCompile Include="src\Room.cpp" />
     <ClCompile Include="src\VertexArray.cpp" />

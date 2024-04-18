@@ -64,7 +64,4 @@ private:
 	std::vector<cell> m_cells;
 	std::vector<cell> m_obstacleCells;
 
-
-
-
 };

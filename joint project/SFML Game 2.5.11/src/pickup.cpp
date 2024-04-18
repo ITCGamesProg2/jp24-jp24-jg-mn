@@ -1,4 +1,4 @@
-#include "pickup.h"
+#include "Pickup.h"
 
 Pickup::Pickup(sf::Texture& texture)
     : m_active(false)

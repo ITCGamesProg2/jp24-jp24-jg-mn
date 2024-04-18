@@ -4,28 +4,28 @@ Room::Room()
 {
 }
 
-void Room::init(sf::Vector2f t_position, int t_roomNumber) //make option either pass an enum and switch statement to change textures based on room
+void Room::init(sf::Vector2f t_position, int t_roomNumber) 
 {
 	
 	switch (t_roomNumber) {
 	case 0:
 		if (!m_roomTexture.loadFromFile("ASSETS\\IMAGES\\main_floor.png"))
 		{
-			std::cout << "Problem loading play button texture" << std::endl;
+			std::cout << "Problem loading main floor" << std::endl;
 		}
 		m_grid.generateGrid(0, t_position.x);
 		break;
 	case 1:
 		if (!m_roomTexture.loadFromFile("ASSETS\\IMAGES\\secondFLoor.png"))
 		{
-			std::cout << "Problem loading play button texture" << std::endl;
+			std::cout << "Problem loading second floor" << std::endl;
 		}
 		m_grid.generateGrid(1, t_position.x);
 		break;
 	case 2:
 		if (!m_roomTexture.loadFromFile("ASSETS\\IMAGES\\thirdFloor.png"))
 		{
-			std::cout << "Problem loading play button texture" << std::endl;
+			std::cout << "Problem loading third floor" << std::endl;
 		}
 		m_grid.generateGrid(2, t_position.x);
 		break;

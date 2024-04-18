@@ -25,6 +25,9 @@ private:
 	std::vector<RoomLayout> m_secondRoomLayout;
 	Room m_secondRoom;
 
+	std::vector <RoomLayout> m_thirdRoomLayout;
+	Room m_thirdRoom;
+
 	void linkDoors();
 };
 
