@@ -289,11 +289,15 @@ void Game::update(sf::Time t_deltaTime)
 			m_pickup.spawn(sf::Vector2f(rand() % 700 + 50, rand() % 500 + 50));
 		}
 
-		if (playerBounds.intersects(winBoxBounds) && collectedCount >= 1) 
+		if (playerBounds.intersects(winBoxBounds) && collectedCount >= 10) 
 		{
 			std::cout << "You win!" << std::endl;
 		
 			m_gameState = GameState::GameWin;
+		}
+		else if (playerBounds.intersects(winBoxBounds) && collectedCount < 10) 
+		{
+			std::cout << "go back not enough strawberries!" << std::endl;
 		}
 
 		std::stringstream ss;
@@ -448,7 +452,7 @@ void Game::render()
 			selectedCharacterText.setString("Selected Character:");
 		}
 
-		selectedCharacterText.setPosition(300.0f, 230.0f);
+		selectedCharacterText.setPosition(500.0f, 230.0f);
 		m_window.draw(selectedCharacterText);
 	}
 	else if (m_gameState == GameState::Playing)
@@ -529,7 +533,7 @@ void Game::setupFontAndText()
 	}
 	title.setFont(font);
 	title.setString("Wildlife Warfare");
-	title.setPosition(200.0f, 40.0f);
+	title.setPosition(400.0f, 40.0f);
 	title.setCharacterSize(100U);
 	title.setFillColor(sf::Color::Black);
 
@@ -552,17 +556,17 @@ void Game::setupFontAndText()
 void Game::setupSprite()
 {
 	m_crabSprite.setTexture(m_crabTexture);
-	m_crabSprite.setPosition(290.0f, 165.0f);
+	m_crabSprite.setPosition(490.0f, 165.0f);
 	m_crabSprite.setScale(3.0f, 3.0f);
 	m_crabSprite.setTextureRect(sf::IntRect(0, 0, 16, 16));
 
 	m_foxSprite.setTexture(m_foxTexture);
-	m_foxSprite.setPosition(360.0f, 165.0f);
+	m_foxSprite.setPosition(560.0f, 165.0f);
 	m_foxSprite.setScale(3.0f, 3.0f);
 	m_foxSprite.setTextureRect(sf::IntRect(0, 0, 16, 16));
 
 	m_goatSprite.setTexture(m_goatTexture);
-	m_goatSprite.setPosition(440.0f, 165.0f);
+	m_goatSprite.setPosition(640.0f, 165.0f);
 	m_goatSprite.setScale(3.0f, 3.0f);
 	m_goatSprite.setTextureRect(sf::IntRect(0, 0, 16, 16));
 
@@ -579,7 +583,7 @@ void Game::setupSprite()
 		std::cout << "Problem loading pause button texture" << std::endl;
 	}
 	m_pauseButtonSprite.setTexture(m_pauseButtonTexture);
-	m_pauseButtonSprite.setPosition(720.0f, 10.0f);
+	m_pauseButtonSprite.setPosition(900.0f, 10.0f);
 	m_pauseButtonSprite.setScale(sf::Vector2f(2, 2));
 	
 	if (!m_playButtonTexture.loadFromFile("ASSETS\\IMAGES\\play.png"))
@@ -587,7 +591,7 @@ void Game::setupSprite()
 		std::cout << "Problem loading play button texture" << std::endl;
 	}
 	m_playButtonSprite.setTexture(m_playButtonTexture);
-	m_playButtonSprite.setPosition(200.0f, 250.0f);
+	m_playButtonSprite.setPosition(400.0f, 250.0f);
 	m_playButtonSprite.setScale(sf::Vector2f(4, 4));
 
 	if (!m_exitButtonTexture.loadFromFile("ASSETS\\IMAGES\\exit.png"))
@@ -595,7 +599,7 @@ void Game::setupSprite()
 		std::cout << "Problem loading play button texture" << std::endl;
 	}
 	m_exitButtonSprite.setTexture(m_exitButtonTexture);
-	m_exitButtonSprite.setPosition(255.0f, 350.0f);
+	m_exitButtonSprite.setPosition(455.0f, 350.0f);
 	m_exitButtonSprite.setScale(sf::Vector2f(4, 4));
 
 	if (!backgroundTexture.loadFromFile("ASSETS\\IMAGES\\background.jpg"))
@@ -603,14 +607,14 @@ void Game::setupSprite()
 		std::cout << "Problem loading play button texture" << std::endl;
 	}
 	backgroundSprite.setTexture(backgroundTexture);
-	backgroundSprite.setScale(sf::Vector2f(1.7, 2.30));
+	backgroundSprite.setScale(sf::Vector2f(2.60,3.40));
 
 	if (!m_tileTexture.loadFromFile("ASSETS\\IMAGES\\tile.png"))
 	{
 		std::cout << "Problem loading play button texture" << std::endl;
 	}
 	m_tileSprite.setTexture(m_tileTexture);
-	m_tileSprite.setPosition(235.0f, 130.0f);
+	m_tileSprite.setPosition(435.0f, 130.0f);
 	m_tileSprite.setScale(sf::Vector2f(3, 3));
 }
 
