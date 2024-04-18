@@ -12,7 +12,6 @@
 #include "Player.h"
 #include "ScreenSize.h"
 #include "Map.h"
-#include "AIEnemy.h"
 
 struct Rectangle {
 	float x, y;
@@ -78,8 +77,6 @@ private:
 	sf::Sprite m_pauseButtonSprite;
 	sf::Texture m_pauseButtonTexture;
 
-
-
 	sf::Texture m_playButtonTexture;
 	sf::Sprite m_playButtonSprite;
 
@@ -92,7 +89,6 @@ private:
 
 	sf::Sprite m_goatSprite;
 
-	
 	sf::Font font;
 	sf::Text title;
 
@@ -110,16 +106,6 @@ private:
 
 	candle::LightingArea fog;
 	candle::RadialLight light;
-
-	Enemy m_enemy;
-	sf::Texture m_enemyTexture;
-	sf::Vector2f m_enemyPosition;
-	float m_enemySpeed;
-
-	void loadEnemyTexture();
-	void spawnEnemy();
-
-	
 
 	Rectangle rect1;
 	float x1 = 100.0f;

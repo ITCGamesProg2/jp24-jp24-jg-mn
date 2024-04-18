@@ -11,8 +11,7 @@ Game::Game() :
 	m_exitGame{ false }, 
 	m_gameState(GameState::MainMenu),
 	m_pickup(pickupTexture),
-	fog(candle::LightingArea::FOG, sf::Vector2f(-SCREEN_HEIGHT, -SCREEN_WIDTH) ,sf::Vector2f(SCREEN_WIDTH * 5,SCREEN_HEIGHT* 5)),
-	m_enemySpeed(1.5f)
+	fog(candle::LightingArea::FOG, sf::Vector2f(-SCREEN_HEIGHT, -SCREEN_WIDTH) ,sf::Vector2f(SCREEN_WIDTH * 5,SCREEN_HEIGHT* 5))
 {
 	fog.setAreaColor(sf::Color::Black);
 	light.setRange(400);
@@ -23,8 +22,6 @@ Game::Game() :
 	setupFontAndText(); 
 	setupSprite();
 	loadAudio();
-
-	spawnEnemy();
 
 	std::vector<Rectangle> buildings;
 	buildings.push_back(rect1);
@@ -159,11 +156,6 @@ void Game::loadTextures()
 	{
 		std::cout << "Problem loading goat projectile texture" << std::endl;
 	}
-
-	if (!m_enemyTexture.loadFromFile("ASSETS\\IMAGES\\gorillaSpritesheetpng.png")) 
-	{
-		std::cout << "Problem loading enemy texture" << std::endl;
-	}
 }
 
 
@@ -267,7 +259,6 @@ void Game::update(sf::Time t_deltaTime)
 	if (m_gameState == GameState::Playing)
 	{
 		setView(); // load view
-		m_enemy.update(m_player.getPosition(), m_enemySpeed);
 		if (m_pickup.isCollected(m_crabSprite.getGlobalBounds()))
 		{
 			m_pickup.applyEffect(m_player.getSprite());
@@ -321,23 +312,6 @@ void Game::drawParticles() {
 	}
 }
 
-
-bool Game::checkCollision(float objX, float objY, float objWidth, float objHeight, const Rectangle& rect) {
-	return (objX < rect.x + rect.width && objX + objWidth > rect.x &&
-		objY < rect.y + rect.height && objY + objHeight > rect.y);
-}
-
-bool Game::checkCollisions(float objX, float objY, float objWidth, float objHeight, const std::vector<Rectangle>& rectangles) {
-	for (const auto& rect : rectangles) {
-		if (checkCollision(objX, objY, objWidth, objHeight, rect)) {
-			
-			return true;
-		}
-	}
-	
-	return false;
-}
-
 void Game::render()
 {
 	fog.clear();
@@ -387,8 +361,6 @@ void Game::render()
 	{
 		m_map.render(m_window);
 
-
-
 		m_window.draw(m_pauseButtonSprite);
 
 		drawParticles();
@@ -402,9 +374,6 @@ void Game::render()
 
 		//sf::Vector2f worldPos = m_window.mapPixelToCoords(m_player.getPosition(),m_gameView);
 	//	m_player.setPosition(worldPos);
-
-		m_enemy.render(m_window);
-
 		//m_window.draw(fog);
 		//m_window.draw(light);
 		
@@ -439,7 +408,6 @@ void Game::setupFontAndText()
 	title.setCharacterSize(100U);
 	title.setFillColor(sf::Color::Black);
 }
-
 
 
 void Game::setupSprite()
@@ -508,11 +476,6 @@ void Game::setupSprite()
 	m_tileSprite.setTexture(m_tileTexture);
 	m_tileSprite.setPosition(235.0f, 130.0f);
 	m_tileSprite.setScale(sf::Vector2f(3, 3));
-}
-
-
-void Game::spawnEnemy() {
-	m_enemy.init(m_enemyTexture, sf::Vector2f(200.0f, 700.0f)); // Initial position of enemy
 }
 
 

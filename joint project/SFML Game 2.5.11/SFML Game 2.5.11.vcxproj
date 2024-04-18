@@ -33,7 +33,6 @@
     </Font>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\AIEnemy.h" />
     <ClInclude Include="include\CollisionData.h" />
     <ClInclude Include="include\Door.h" />
     <ClInclude Include="include\Game.h" />
@@ -49,7 +48,6 @@
     <ClInclude Include="include\Weapon.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\AIEnemy.cpp" />
     <ClCompile Include="src\Color.cpp" />
     <ClCompile Include="src\Constants.cpp" />
     <ClCompile Include="src\DirectedLight.cpp" />
