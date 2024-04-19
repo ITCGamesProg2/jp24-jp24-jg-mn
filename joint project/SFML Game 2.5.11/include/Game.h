@@ -121,6 +121,7 @@ private:
 	candle::RadialLight light;
 
 	sf::Text collectedCountText;
+	sf::Text notEnoughStrawberriesText;
 
 	void spawnEnemy();
 	AIenemy m_enemy;

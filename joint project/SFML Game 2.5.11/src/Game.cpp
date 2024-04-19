@@ -167,7 +167,7 @@ void Game::loadTextures()
 		std::cout << "Problem loading enemy texture" << std::endl;
 	}
 
-	if (!m_winBoxTexture.loadFromFile("ASSETS\\IMAGES\\strawberry.png"))
+	if (!m_winBoxTexture.loadFromFile("ASSETS\\IMAGES\\stawberry2.png"))
 	{
 		std::cout << "Error loading win box texture!" << std::endl;
 	}
@@ -583,7 +583,7 @@ void Game::setupSprite()
 		std::cout << "Problem loading pause button texture" << std::endl;
 	}
 	m_pauseButtonSprite.setTexture(m_pauseButtonTexture);
-	m_pauseButtonSprite.setPosition(900.0f, 10.0f);
+	m_pauseButtonSprite.setPosition(1100.0f, 10.0f);
 	m_pauseButtonSprite.setScale(sf::Vector2f(2, 2));
 	
 	if (!m_playButtonTexture.loadFromFile("ASSETS\\IMAGES\\play.png"))
