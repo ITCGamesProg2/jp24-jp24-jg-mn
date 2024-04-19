@@ -281,7 +281,8 @@ void Game::update(sf::Time t_deltaTime)
 		sf::FloatRect winBoxBounds = m_winBoxSprite.getGlobalBounds();
 
 		int collectedCount = m_pickup.getCollectedCount();
-		collectedCountText.setString("Strawberries collected: " + std::to_string(collectedCount));
+		collectedCountText.setString("Strawberries collected: " + std::to_string(collectedCount) + " /10");
+		//std::string message = "Strawberries collected: " + std::to_string(collectedCount) + " / 10";
 		if (m_pickup.isCollected(m_player.getSprite().getGlobalBounds()))
 		{
 			//m_pickup.applyEffect(m_player.getSprite());
