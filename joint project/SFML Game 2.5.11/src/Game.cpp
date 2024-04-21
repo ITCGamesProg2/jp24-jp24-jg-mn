@@ -34,7 +34,7 @@ Game::Game() :
 	setupFontAndText();  
 	setupSprite(); 
 
-
+	initialize();
 }
 
 Game::~Game()
@@ -326,9 +326,6 @@ void Game::update(sf::Time t_deltaTime)
 	        
 		}
 
-
-
-
 		light.setPosition(m_player.getPosition());
 
 		m_enemy.update(m_player.getPosition(), m_enemySpeed);
@@ -434,7 +431,9 @@ void Game::render()
 		sf::Text selectedCharacterText;
 		selectedCharacterText.setFont(font);
 		selectedCharacterText.setCharacterSize(30);
-		selectedCharacterText.setFillColor(sf::Color::Black);
+		selectedCharacterText.setFillColor(sf::Color::White);
+		selectedCharacterText.setOutlineColor(sf::Color::Black);
+		selectedCharacterText.setOutlineThickness(2);
 
 		if (m_player.getSelectedCharacter() == PlayerCharacter::Crab)
 		{
@@ -500,19 +499,75 @@ void Game::render()
 		m_window.draw(pauseText);
 
 	}
-	else if (m_gameState == GameState::GameOver)
+	else if (m_gameState == GameState::GameOver) 
 	{
+		sf::Texture m_gameOverTexture;
+		if (!m_gameOverTexture.loadFromFile("ASSETS\\IMAGES\\background.gif"))
+		{
+			std::cout << "error loading gameover background";
+		}
+		sf::Sprite m_gameOVerSprite;
+		m_gameOVerSprite.setTexture(m_gameOverTexture);
+		m_gameOVerSprite.setScale(static_cast<float>(SCREEN_WIDTH) / m_gameOVerSprite.getLocalBounds().width,
+			static_cast<float>(SCREEN_HEIGHT) / m_gameOVerSprite.getLocalBounds().height);
+		m_window.draw(m_gameOVerSprite);
+
 		sf::Text gameOverText;
 		gameOverText.setFont(font);
 		gameOverText.setString("Game Over!");
 		gameOverText.setCharacterSize(180);
+		gameOverText.setOutlineColor(sf::Color::White);
+		gameOverText.setOutlineThickness(2);
 		gameOverText.setFillColor(sf::Color::Red);
+
 		gameOverText.setPosition(400, 300);
 
+		sf::Text quitText;
+		quitText.setFont(font);
+		quitText.setString("Press Q to quit");
+		quitText.setCharacterSize(80);
+		quitText.setFillColor(sf::Color::White);
+		quitText.setOutlineColor(sf::Color::Black);
+		quitText.setOutlineThickness(2);
+		quitText.setPosition(475, 500);
+
+		sf::Text restartText;
+		restartText.setFont(font);
+		restartText.setString("Press R to restart");
+		restartText.setCharacterSize(80);
+		restartText.setFillColor(sf::Color::White);
+		restartText.setOutlineColor(sf::Color::Black);
+		restartText.setOutlineThickness(2);
+		restartText.setPosition(450, 600);
+
 		m_window.draw(gameOverText);
+		m_window.draw(quitText);
+		m_window.draw(restartText);
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+		{
+			m_window.close();
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+		{
+			restartGame();
+		}
 	}
 	else if (m_gameState == GameState::GameWin)
 	{
+
+		sf::Texture m_gameWinTexture;
+		if (!m_gameWinTexture.loadFromFile("ASSETS\\IMAGES\\backgroundq.gif"))
+		{
+			std::cout << "error loading gameover background";
+		}
+		sf::Sprite m_gameWinSprite;
+		m_gameWinSprite.setTexture(m_gameWinTexture);
+		m_gameWinSprite.setScale(static_cast<float>(SCREEN_WIDTH) / m_gameWinSprite.getLocalBounds().width,
+			static_cast<float>(SCREEN_HEIGHT) / m_gameWinSprite.getLocalBounds().height);
+		m_window.draw(m_gameWinSprite);
+
 		sf::Text gameWinText;
 		gameWinText.setFont(font);
 		gameWinText.setString("YOU WON!");
@@ -520,7 +575,35 @@ void Game::render()
 		gameWinText.setFillColor(sf::Color::Black);
 		gameWinText.setPosition(2300, 200);
 
+
+		sf::Text quitText;
+		quitText.setFont(font);
+		quitText.setString("Press Q to quit");
+		quitText.setCharacterSize(80);
+		quitText.setFillColor(sf::Color::Blue);
+		quitText.setPosition(2470, 300);
+
+		sf::Text restartText;
+		restartText.setFont(font);
+		restartText.setString("Press R to restart");
+		restartText.setCharacterSize(80);
+		restartText.setFillColor(sf::Color::Blue);
+		restartText.setPosition(2450, 400);
+
 		m_window.draw(gameWinText);
+		m_window.draw(quitText);
+		m_window.draw(restartText);
+		
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+		{
+			m_window.close();
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+		{
+			restartGame();
+		}
+		
 	}
 	m_window.display();
 }
@@ -536,7 +619,9 @@ void Game::setupFontAndText()
 	title.setString("Wildlife Warfare");
 	title.setPosition(400.0f, 40.0f);
 	title.setCharacterSize(100U);
-	title.setFillColor(sf::Color::Black);
+	title.setFillColor(sf::Color::White);
+	title.setOutlineColor(sf::Color::Black);
+	title.setOutlineThickness(2);
 
 
 	m_healthText.setFont(font);
@@ -545,11 +630,10 @@ void Game::setupFontAndText()
 	m_healthText.setPosition(10.f, 10.f);
 
 	
-	
 	collectedCountText.setFont(font);
 	collectedCountText.setCharacterSize(24);
 	collectedCountText.setFillColor(sf::Color::White);
-	collectedCountText.setPosition(10.f, 40.f); // Adjust position as needed
+	collectedCountText.setPosition(10.f, 40.f); 
 
 }
 
@@ -603,12 +687,13 @@ void Game::setupSprite()
 	m_exitButtonSprite.setPosition(455.0f, 350.0f);
 	m_exitButtonSprite.setScale(sf::Vector2f(4, 4));
 
-	if (!backgroundTexture.loadFromFile("ASSETS\\IMAGES\\background.jpg"))
+	if (!backgroundTexture.loadFromFile("ASSETS\\IMAGES\\background.gif"))
 	{
 		std::cout << "Problem loading play button texture" << std::endl;
 	}
 	backgroundSprite.setTexture(backgroundTexture);
-	backgroundSprite.setScale(sf::Vector2f(2.60,3.40));
+	backgroundSprite.setScale(static_cast<float>(SCREEN_WIDTH) / backgroundSprite.getLocalBounds().width,
+		static_cast<float>(SCREEN_HEIGHT) / backgroundSprite.getLocalBounds().height);
 
 	if (!m_tileTexture.loadFromFile("ASSETS\\IMAGES\\tile.png"))
 	{
@@ -617,6 +702,41 @@ void Game::setupSprite()
 	m_tileSprite.setTexture(m_tileTexture);
 	m_tileSprite.setPosition(435.0f, 130.0f);
 	m_tileSprite.setScale(sf::Vector2f(3, 3));
+}
+
+void Game::restartGame()
+{
+	m_gameState = GameState::MainMenu;
+	m_exitGame = false;
+	m_enemySpeed = 1.5f;
+
+	initialize();
+}
+
+void Game::initialize()
+{
+	m_window.create(sf::VideoMode{ SCREEN_WIDTH, SCREEN_HEIGHT, 32U }, "SFML Game");
+	m_gameState = GameState::MainMenu;
+	m_exitGame = false;
+	m_pickup = Pickup(pickupTexture);
+	fog.candle::LightingArea::FOG, sf::Vector2f(-SCREEN_HEIGHT, -SCREEN_WIDTH), sf::Vector2f(SCREEN_WIDTH * 5, SCREEN_HEIGHT * 5);
+	fog.setAreaColor(sf::Color::Black);
+	light.setRange(600);
+	light.setIntensity(0.5);
+	light.setColor(sf::Color(255, 140, 0, 150));
+
+	loadTextures();
+	setupFontAndText();
+	setupSprite();
+	loadAudio();
+	spawnEnemy();
+
+	std::vector<Rectangle> buildings;
+	buildings.push_back(rect1);
+	buildings.push_back(Rectangle{ x1, y1, width1, height1 });
+	setupFontAndText();
+	setupSprite();
+
 }
 
 void Game::spawnEnemy() {

@@ -51,7 +51,8 @@ private:
 	void setupFontAndText();
 	void loadTextures();
 	void setupSprite();
-
+	void restartGame();
+	void initialize();
 
 	void updateButtonColor(sf::Sprite& button, const sf::Vector2f& mousePosition);
 	void startPlaying();
