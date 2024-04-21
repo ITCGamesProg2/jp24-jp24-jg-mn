@@ -20,11 +20,19 @@ void Map::init()
 	RoomLayout temp1{ sf::Vector2f(1312,624),DetectorPositions::DOWN, CurrentRoom::Room2 }; 
 	m_secondRoomLayout.push_back(temp1);
 	
+<<<<<<< Updated upstream
 	RoomLayout temp2{ sf::Vector2f(1168,144),DetectorPositions::UP, CurrentRoom::Room2 };
 	m_secondRoomLayout.push_back(temp2);
 	m_secondRoom.setUpDoors(m_secondRoomLayout);
 
 	RoomLayout temp3{ sf::Vector2f(2168,576), DetectorPositions::DOWN, CurrentRoom::Room3 };
+=======
+	RoomLayout temp2{ sf::Vector2f(1192,240 ),DetectorPositions::UP, CurrentRoom::Room2 };
+	m_secondRoomLayout.push_back(temp2);
+	m_secondRoom.setUpDoors(m_secondRoomLayout);
+
+	RoomLayout temp3{ sf::Vector2f(2240,576), DetectorPositions::DOWN, CurrentRoom::Room3 };
+>>>>>>> Stashed changes
 	m_thirdRoomLayout.push_back(temp3);
 	m_thirdRoom.setUpDoors(m_thirdRoomLayout);
 
