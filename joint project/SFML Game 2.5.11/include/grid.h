@@ -57,7 +57,7 @@ public:
 	void render(sf::RenderWindow& t_window)
 	{
 		for (auto cell : m_cells) {
-			t_window.draw(cell.cellShape);
+			//t_window.draw(cell.cellShape);
 		}
 	};
 private:
